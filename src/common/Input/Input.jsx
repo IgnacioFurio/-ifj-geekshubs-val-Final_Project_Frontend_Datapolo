@@ -7,19 +7,19 @@ export const Input = ({className, type, name, placeholder, required, error, chan
     
         const nameConversor = (name) => {
 
-        let upperName = name.charAt(0).toUpperCase() + name.slice(1);
+            let upperName = name.charAt(0).toUpperCase() + name.slice(1);
 
-        let splitUpperName = upperName.split("_")
+            let splitUpperName = upperName.split("_")
 
-        let inputName = splitUpperName.join([" "])
+            let inputName = splitUpperName.join([" "])
 
-        
-        if( upperName === "Password2"){
-            inputName = 'Confirm Password';
+            
+            if( upperName === "Password2"){
+                inputName = 'Confirm Password';
+            };
+
+            return inputName;
         };
-
-        return inputName;
-    };
     
     return (
         <Form>
@@ -35,7 +35,7 @@ export const Input = ({className, type, name, placeholder, required, error, chan
                     onBlur={(e)=>blurFunction(e)}
                     maxLength={30}
                 />
-                <div>{error}</div>
+                <div className='mt-2'>{error}</div>
             </Form.Group>
         </Form>
     )

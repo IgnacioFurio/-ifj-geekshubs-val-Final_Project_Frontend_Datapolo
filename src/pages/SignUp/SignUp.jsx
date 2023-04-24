@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 //helper
 import { validate } from '../../helpers/useful';
+//apicall
+import { createUser } from '../../services/apiCalls';
 //render
 import Form from 'react-bootstrap/Form';
 import { Input } from '../../common/Input/Input';
 import './SignUp.css';
+import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
 
 export const SignUp = () => {
 
@@ -23,10 +26,10 @@ export const SignUp = () => {
     //validate the value inside the inputs
     const [validInputField, setValidInputfield] = useState(
         {
-            usernameValid: '',
-            emailValid: '',
-            passwordValid: '',
-            password2Valid: ''
+            usernameValid: false,
+            emailValid: false,
+            passwordValid: false,
+            password2Valid: false
         }
     );
 
@@ -56,14 +59,6 @@ export const SignUp = () => {
     }
 
     //USEEFFECT
-    useEffect(()=>{
-        console.log(newUser);
-        console.log(validInputField);
-        console.log(errorInputField);
-        console.log(submitActive);
-
-    })
-
     useEffect(() => {
         //functions to make submit button activated
         //in case that a field is empty
@@ -191,48 +186,80 @@ export const SignUp = () => {
         };
     }
 
+    //sing up function
+    const submitUser = () => {
+        
+        createUser(newUser)
+        .then(() => {
+
+            navigate('/')
+
+        })
+        .catch(error => {
+            
+            let backendErrorData = {
+            message: error.response.data.message,
+            valid: error.response.data.succes
+
+        }
+
+        errorInputField.passwordError = backendErrorData.message
+        })
+    };
+
+
     return (
         <>
-            <Input
-                className={errorInputField.usernameError === '' ? 'shadowBox' : 'shadowBoxError'}
-                type={'text'}
-                name={'username'}
-                placeholder={'CDW Turia'}
-                required={true}
-                error={errorInputField.usernameError}
-                changeFunction={(e)=>inputHandler(e)}
-                blurFunction={(e)=>checkError(e)}
-            />
-            <Input
-                className={errorInputField.emailError === '' ? 'shadowBox' : 'shadowBoxError'}
-                type={'email'}
-                name={'email'}
-                placeholder={'cdwturia@email.com'}
-                required={true}
-                error={errorInputField.emailError}
-                changeFunction={(e)=>inputHandler(e)}
-                blurFunction={(e)=>checkError(e)}
-            />
-            <Input
-                className={errorInputField.passwordError === '' ? 'shadowBox' : 'shadowBoxError'}
-                type={'password'}
-                name={'password'}
-                placeholder={'1234567W'}
-                required={true}
-                error={errorInputField.passwordError}
-                changeFunction={(e)=>inputHandler(e)}
-                blurFunction={(e)=>checkError(e)}
-            />
-            <Input
-                className={errorInputField.password2Error === '' ? 'shadowBox' : 'shadowBoxError'}
-                type={'password'}
-                name={'password2'}
-                placeholder={'1234567W'}
-                required={true}
-                error={errorInputField.password2Error}
-                changeFunction={(e)=>inputHandler(e)}
-                blurFunction={(e)=>confirmPass(e)}
-            />
+            <div>
+                <Input
+                    className={errorInputField.usernameError === '' ? 'shadowBox' : 'shadowBoxError'}
+                    type={'text'}
+                    name={'username'}
+                    placeholder={'CDW Turia'}
+                    required={true}
+                    error={errorInputField.usernameError}
+                    changeFunction={(e)=>inputHandler(e)}
+                    blurFunction={(e)=>checkError(e)}
+                />
+                <Input
+                    className={errorInputField.emailError === '' ? 'shadowBox' : 'shadowBoxError'}
+                    type={'email'}
+                    name={'email'}
+                    placeholder={'cdwturia@email.com'}
+                    required={true}
+                    error={errorInputField.emailError}
+                    changeFunction={(e)=>inputHandler(e)}
+                    blurFunction={(e)=>checkError(e)}
+                />
+                <Input
+                    className={errorInputField.passwordError === '' ? 'shadowBox' : 'shadowBoxError'}
+                    type={'password'}
+                    name={'password'}
+                    placeholder={'1234567W'}
+                    required={true}
+                    error={errorInputField.passwordError}
+                    changeFunction={(e)=>inputHandler(e)}
+                    blurFunction={(e)=>checkError(e)}
+                    />
+                <Input
+                    className={errorInputField.password2Error === '' ? 'shadowBox' : 'shadowBoxError'}
+                    type={'password'}
+                    name={'password2'}
+                    placeholder={'1234567W'}
+                    required={true}
+                    error={errorInputField.password2Error}
+                    changeFunction={(e)=>inputHandler(e)}
+                    blurFunction={(e)=>confirmPass(e)}
+                    />
+            </div>
+            <div className='d-flex justify-content-center align-items-center my-5'>
+                <SubmitButton
+                className={submitActive ? 'activeSubmit' : 'disableSubmit'}
+                name={'submit'}
+                clickFunction={submitActive ? () => submitUser() : () => {}}
+                />
+            </div>
+            
         </>
     )
 }

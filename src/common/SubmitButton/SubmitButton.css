@@ -1,0 +1,26 @@
+.disableSubmit{
+    color: #858585;
+    font-weight: bold;
+    background-color: #ebebeb;
+    border-radius: 0.3em;
+    height: 2em;
+    width: 7em;
+    box-shadow: 0.2em 0.2em 0.6em #F23005;
+}
+
+.activeSubmit{
+    color: #F2F2F2;
+    font-weight: bold;
+    background-color: #F23005;
+    border-radius: 0.3em;
+    height: 2em;
+    width: 7em;
+    box-shadow: 0.2em 0.2em 0.6em #F23005;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.activeSubmit:hover{
+    width: 7.5em;
+    box-shadow: 0.5em 0.5em 1em #F23005;
+    transition: 0.3s;
+}
