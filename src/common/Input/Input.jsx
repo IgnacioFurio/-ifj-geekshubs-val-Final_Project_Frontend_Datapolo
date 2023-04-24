@@ -1,5 +1,6 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form';
+import './Input.css'
 
 
 export const Input = ({className, type, name, placeholder, required, error, changeFunction, blurFunction}) => {

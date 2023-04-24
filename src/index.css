@@ -18,11 +18,3 @@ body{
     color: #F23005;
 }
 
-.shadowBox{
-    box-shadow: 0.2em 0.2em 0.6em #F23005;
-    transition: 0.3s;
-}
-.shadowBox:hover{
-    transition: 0.3s;
-    box-shadow: 0.5em 0.5em 1em #F23005;
-}
