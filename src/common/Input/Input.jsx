@@ -23,7 +23,7 @@ export const Input = ({className, type, name, placeholder, required, error, chan
     
     return (
         <Form>
-            <Form.Group className="my-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="m-3" controlId="exampleForm.ControlInput1">
                 <Form.Label className='font fw-bold'>{nameConversor(name)}</Form.Label>
                 <Form.Control 
                     className={className} 

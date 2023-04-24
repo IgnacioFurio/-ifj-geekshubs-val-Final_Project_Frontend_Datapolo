@@ -6,8 +6,8 @@ import { createUser } from '../../services/apiCalls';
 //render
 import Form from 'react-bootstrap/Form';
 import { Input } from '../../common/Input/Input';
-import './SignUp.css';
 import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
+import './SignUp.css';
 
 export const SignUp = () => {
 
