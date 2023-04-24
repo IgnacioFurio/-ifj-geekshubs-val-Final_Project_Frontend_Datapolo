@@ -46,6 +46,9 @@ export const SignUp = () => {
     //activate submit button
     const [submitActive, setSubmitActive] = useState(false);
 
+    //welcome message when log in
+    const [welcome, setWelcome] = useState("");
+
     //HANDLER
     const inputHandler = (e) => {
         
