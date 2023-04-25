@@ -67,7 +67,8 @@ export const LogIn = () => {
 
     //USEEFFECT
     useEffect(() => {
-        console.log(dataRdx.userCredentials.token);
+        console.log(dataRdx);
+        console.log(isAdminRdx);
     })
     useEffect(() => {
         //functions to make submit button activated
@@ -151,16 +152,16 @@ export const LogIn = () => {
 
             dispatch(login({userCredentials: backendData}));
 
-            getUserDataByEmail(userInfo.email)
+            getUserDataByEmail(userInfo.email, backendData)
                 .then((backendCall) => {
 
-                    let backendData = {
-                        token: dataRdx.userCredentials.token,
-                        message: dataRdx.userCredentials.message,
-                        success: dataRdx.userCredentials.success,
+                    backendData = {
+                        token: backendData.token,
+                        message: backendData.message,
+                        success: backendData.success,
                         user: backendCall.data.data[0]
                     };
-
+                    
                     setWelcome(backendData.message)
 
                     dispatch(login({userCredentials: backendData}));
@@ -178,19 +179,18 @@ export const LogIn = () => {
                     
                 })
                 
-                if(dataRdx.userCredentials.user.role_id === 1 || dataRdx.userCredentials.user.role_id === 2){
+                if(backendData.user.role_id === 1 || backendData.user.role_id === 2){
                     
                     dispatch(roleIn({isAdmin: true}));
                     
-                } else if (dataRdx.userCredentials.user.role_id === 3) {
+                } else if (backendData.user.role_id === 3) {
 
                     dispatch(roleIn({isAdmin: false}));
                 };
-
                 // setTimeout(() => {navigate('/')}, 3000)
             })
             .catch((error) => {
-
+                console.log(error);
                 let backendErrorData = {
                     message: error.response.data.message,
                     valid: error.response.succes
@@ -240,7 +240,7 @@ export const LogIn = () => {
                             />
                         </div>
                     </>
-                )}            
+                )}
         </>
     )
 }

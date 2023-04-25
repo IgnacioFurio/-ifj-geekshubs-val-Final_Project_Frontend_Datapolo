@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, userData } from '../../pages/Slices/userSlice';
-import { adminData } from '../../pages/Slices/isAdminSlice';
+import { adminData, roleOut } from '../../pages/Slices/isAdminSlice';
 //render
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
@@ -21,9 +21,9 @@ export const Header = () => {
     const isAdminRdx = useSelector(adminData);
 
     //USEEFFECT
-    useEffect(() => {
-        console.log(dataRdx?.userCredentials?.user?.username);
-    })
+    // useEffect(() => {
+    //     console.log(dataRdx);
+    // })
 
     //FUNCTIONS
     const logOut = () => {
@@ -51,7 +51,7 @@ export const Header = () => {
                                 
                             </Nav>
                             <Nav>
-                                <NavDropdown title={dataRdx.userCredentials.user.username} id="collasible-nav-dropdown">
+                                <NavDropdown title={dataRdx?.userCredentials?.user?.username} id="collasible-nav-dropdown">
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
                                         Profile
                                     </NavDropdown.Item>
