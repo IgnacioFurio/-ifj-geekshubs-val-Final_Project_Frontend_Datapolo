@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //redux
-import { useSelector } from 'react-redux';
-import { userData } from '../../pages/Slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, userData } from '../../pages/Slices/userSlice';
 import { adminData } from '../../pages/Slices/isAdminSlice';
 //render
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -12,73 +13,89 @@ import './Header.css'
 
 export const Header = () => {
 
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
     const dataRdx = useSelector(userData);
 
     const isAdminRdx = useSelector(adminData);
 
-    useState(() => {
-        console.log(dataRdx.userCredentials.token);
+    //USEEFFECT
+    useEffect(() => {
+        console.log(dataRdx?.userCredentials?.user?.username);
     })
 
+    //FUNCTIONS
+    const logOut = () => {
+        
+        let backendData = {}
+
+        dispatch(logout({userCredentials: backendData}));
+        dispatch(roleOut({isAdmin: false}));
+
+        setTimeout(() => {navigate('/')}, 1000)
+    };
+
     return (
-
-        <Navbar bg="dark" variant="dark" className='headerDesign'>
-            <Container>
-                <Navbar.Brand href="#home" className='fontNav fw-bold'>Datapolo</Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link href="#home" className='fontNav'>Home</Nav.Link>
-                    <Nav.Link href="#features" className='fontNav'>Features</Nav.Link>
-                    <Nav.Link href="#pricing" className='fontNav'>Pricing</Nav.Link>
-                </Nav>
-                {
-                    dataRdx.userCredentials.token ? (
-                        <>
-                        <NavDropdown title={dataRdx.userCredentials.user.userName} id="basic-nav-dropdown" className='dropDownDesign  fontNav fw-bold'>
-                            <NavDropdown.Item  onClick={()=>navigate('/')}>
-                                My profile
-                            </NavDropdown.Item>
-                            <NavDropdown.Item onClick={()=>navigate('/')}>
-                                My patients
-                            </NavDropdown.Item>
-                            <NavDropdown.Item className='fontNav' onClick={()=>navigate('/')}>
-                                My appointments
-                            </NavDropdown.Item>
-                            <NavDropdown.Item className='fontNav' onClick={()=>navigate('/')}>
-                                Doctor info
-                            </NavDropdown.Item>
-                            {
-                                isAdminRdx.isAdmin === true ? (
-                                <>
-                                <NavDropdown.Item className='fontNav' onClick={()=>navigate('/')}>
-                                Admin info
-                                </NavDropdown.Item>
-                                </>
-                                ) : (
-                                <></>
-                                )
-                            }
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item className='fontNav' onClick={()=>logOut()}>
-                                Log Out
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </>
-                    ) : (
-                    <>
-                        <NavDropdown title='Log In' id="basic-nav-dropdown" className='dropDownDesign'>
-                        <NavDropdown.Item onClick={()=>navigate('/register')}>
-                            Sign Up
-                        </NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item onClick={()=>navigate('/login')}>
-                            Sign In
-                        </NavDropdown.Item>
-                        </NavDropdown>
-                    </>
-                    ) 
-                }
-            </Container>
-        </Navbar>
-
+    <>
+        {dataRdx.userCredentials.token ? 
+            (
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Container>
+                        <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold'>Datapolo</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link className='fontNav' onClick={() => navigate('/')}>Features</Nav.Link>
+                                <Nav.Link className='fontNav' onClick={() => navigate('/')}>Pricing</Nav.Link>
+                                
+                            </Nav>
+                            <Nav>
+                                <NavDropdown title={dataRdx.userCredentials.user.username} id="collasible-nav-dropdown">
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
+                                        Profile
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
+                                        Action
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
+                                        Offensive data
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center'onClick={() => navigate('/')}>
+                                        Defensive Data
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => logOut()}>
+                                        Log Out
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+            ) : (
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Container>
+                        <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold'>Datapolo</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link className='fontNav' onClick={() => navigate('/')}>Features</Nav.Link>
+                                <Nav.Link className='fontNav' onClick={() => navigate('/')}>Pricing</Nav.Link>
+                                
+                            </Nav>
+                            <Nav>
+                            <Nav.Link className='fontNav' onClick={() => navigate('/signup')}>
+                                Sign Up
+                            </Nav.Link>
+                            <Nav.Link className='fontNav' onClick={() => navigate('/login')}>
+                                Log In
+                            </Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+            )}
+    </>
     )
 }

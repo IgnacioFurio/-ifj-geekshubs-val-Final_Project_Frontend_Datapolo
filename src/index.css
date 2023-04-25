@@ -21,4 +21,7 @@ body{
 .font{
     color: #F23005;
 }
+.font:hover{
+    font-weight: bold;
+}
 
