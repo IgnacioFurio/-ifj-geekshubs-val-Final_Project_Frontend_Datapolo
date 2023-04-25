@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+//redux
+import { useDispatch, useSelector } from 'react-redux';
+import { login, userData } from '../Slices/userSlice';
+import { adminData, roleIn } from '../Slices/isAdminSlice';
 //helper
 import { validate } from '../../helpers/useful';
 //apicall
@@ -9,10 +14,17 @@ import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
 
 export const LogIn = () => {
 
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
+    const dataRdx = useSelector(userData);
+
+    const isAdminRdx = useSelector(adminData);
+
         //HOOKS
 
     //set data for the new user
-    const [userData, setUserData] = useState(
+    const [userInfo, setUserInfo] = useState(
         {
             email: '',
             password: ''
@@ -38,10 +50,13 @@ export const LogIn = () => {
     //activate submit button
     const [submitActive, setSubmitActive] = useState(false);
 
+    //welcome message
+    const [welcome, setWelcome] = useState('');
+
     //HANDLER
     const inputHandler = (e) => {
     
-        setUserData((prevState)=>(
+        setUserInfo((prevState)=>(
                 {
                     ...prevState,
                     [e.target.name]: e.target.value
@@ -52,11 +67,14 @@ export const LogIn = () => {
 
     //USEEFFECT
     useEffect(() => {
+        console.log(dataRdx.userCredentials.token);
+    })
+    useEffect(() => {
         //functions to make submit button activated
         //in case that a field is empty
-        for(let empty in userData){
+        for(let empty in userInfo){
             
-            if(userData[empty] === ""){
+            if(userInfo[empty] === ""){
         
                 setSubmitActive(false);
                 
@@ -121,14 +139,58 @@ export const LogIn = () => {
     //logIn function
     const logUser = () => {
 
-        
-        getUserDataByEmail(userData.email)
+        logIn(userInfo)
             .then((backendCall) => {
-            
-                console.log(backendCall);
+                
+            let backendData = {
+                token: backendCall.data.token,
+                message: backendCall.data.message,
+                success: backendCall.data.success,
+                user: {}
+            };
 
+            dispatch(login({userCredentials: backendData}));
+
+            getUserDataByEmail(userInfo.email)
+                .then((backendCall) => {
+
+                    let backendData = {
+                        token: dataRdx.userCredentials.token,
+                        message: dataRdx.userCredentials.message,
+                        success: dataRdx.userCredentials.success,
+                        user: backendCall.data.data[0]
+                    };
+
+                    setWelcome(backendData.message)
+
+                    dispatch(login({userCredentials: backendData}));
+
+                })
+                .catch((error) => {
+                    let backendErrorData = {
+                        message: error.response.data.message,
+                        valid: error.response.succes
+                    }
+    
+                    errorInputField.passwordError = backendErrorData.message
+    
+                    setSubmitActive(false)
+                    
+                })
+                
+                if(dataRdx.userCredentials.user.role_id === 1 || dataRdx.userCredentials.user.role_id === 2){
+                    
+                    dispatch(roleIn({isAdmin: true}));
+                    
+                } else if (dataRdx.userCredentials.user.role_id === 3) {
+
+                    dispatch(roleIn({isAdmin: false}));
+                };
+
+                // setTimeout(() => {navigate('/')}, 3000)
             })
             .catch((error) => {
+
                 let backendErrorData = {
                     message: error.response.data.message,
                     valid: error.response.succes
@@ -138,76 +200,47 @@ export const LogIn = () => {
 
                 setSubmitActive(false)
             })
-        
-        // logIn(userData)
-        //     .then((backendCall) => {
-            //ToDo getUserData and then save it inside user instead of decoded token
-            // getUserData(userData.email)
-                
-                // let backendData = {
-                //     token: backendCall.data.token,
-                //     message: backendCall.data.message,
-                //     success: backendCall.data.success,
-                    // user: decodedToken
-                // };
-
-                // dispatch(login({userCredentials: backendData}));
-
-                // setWelcome(backendData.message)
-
-                // if(backendData.user.roleId === 1 || backendData.user.roleId === 2){
-                //     dispatch(roleIn({isAdmin: true}));
-                // } else if (backendData.user.roleId === 3) {
-                //     dispatch(roleIn({isAdmin: false}));
-                // };
-
-                
-                // setTimeout(() => {navigate('/')}, 3000)
-            // })
-            // .catch((error) => {
-            //     let backendErrorData = {
-            //         message: error.response.data.message,
-            //         valid: error.response.succes
-            //     }
-
-            //     errorInputField.passwordError = backendErrorData.message
-
-            //     setSubmitActive(false)
-            // })
 
     };
 
     return (
         <>
-            <div>
-                <Input
-                    className={errorInputField.emailError === '' ? 'shadowBox' : 'shadowBoxError'}
-                    type={'email'}
-                    name={'email'}
-                    placeholder={'cdwturia@email.com'}
-                    required={true}
-                    error={errorInputField.emailError}
-                    changeFunction={(e)=>inputHandler(e)}
-                    blurFunction={(e) => checkError(e)}
-                />
-                <Input
-                    className={errorInputField.passwordError === '' ? 'shadowBox' : 'shadowBoxError'}
-                    type={'password'}
-                    name={'password'}
-                    placeholder={'1234567W'}
-                    required={true}
-                    error={errorInputField.passwordError}
-                    changeFunction={(e)=>inputHandler(e)}
-                    blurFunction={(e) => checkError(e)}
-                />
-            </div>
-            <div className='d-flex justify-content-center align-items-center my-5'>
-                <SubmitButton
-                className={submitActive ? 'activeSubmit' : 'disableSubmit'}
-                name={'Log In'}
-                clickFunction={submitActive ? () =>logUser() : () => {}}
-                />
-            </div>
+            {dataRdx.userCredentials.token ?
+                (
+                    navigate('/') 
+                ):(
+                    <>
+                        <div>
+                            <Input
+                                className={errorInputField.emailError === '' ? 'shadowBox' : 'shadowBoxError'}
+                                type={'email'}
+                                name={'email'}
+                                placeholder={'cdwturia@email.com'}
+                                required={true}
+                                error={errorInputField.emailError}
+                                changeFunction={(e)=>inputHandler(e)}
+                                blurFunction={(e) => checkError(e)}
+                            />
+                            <Input
+                                className={errorInputField.passwordError === '' ? 'shadowBox' : 'shadowBoxError'}
+                                type={'password'}
+                                name={'password'}
+                                placeholder={'1234567W'}
+                                required={true}
+                                error={errorInputField.passwordError}
+                                changeFunction={(e)=>inputHandler(e)}
+                                blurFunction={(e) => checkError(e)}
+                            />
+                        </div>
+                        <div className='d-flex justify-content-center align-items-center my-5'>
+                            <SubmitButton
+                            className={submitActive ? 'activeSubmit' : 'disableSubmit'}
+                            name={'Log In'}
+                            clickFunction={submitActive ? () =>logUser() : () => {}}
+                            />
+                        </div>
+                    </>
+                )}            
         </>
     )
 }

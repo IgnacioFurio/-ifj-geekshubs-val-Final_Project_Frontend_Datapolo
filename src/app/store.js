@@ -4,9 +4,12 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 
 import thunk from 'redux-thunk';
+import userSlice from "../pages/Slices/userSlice";
+import isAdminSlice from "../pages/Slices/isAdminSlice";
 
 const reducers = combineReducers({
-    //insert reducers here
+    user: userSlice,
+    admin: isAdminSlice,
 })
 
 const persistConfig = {
