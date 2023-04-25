@@ -53,7 +53,7 @@ export const Header = () => {
                             <Nav>
                                 <NavDropdown title={dataRdx?.userCredentials?.user?.username} id="collasible-nav-dropdown">
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
-                                        Profile
+                                        My teams
                                     </NavDropdown.Item>
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
                                         Action
