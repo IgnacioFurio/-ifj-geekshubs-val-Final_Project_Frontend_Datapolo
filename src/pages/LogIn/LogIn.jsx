@@ -67,10 +67,6 @@ export const LogIn = () => {
 
     //USEEFFECT
     useEffect(() => {
-        console.log(dataRdx);
-        console.log(isAdminRdx);
-    })
-    useEffect(() => {
         //functions to make submit button activated
         //in case that a field is empty
         for(let empty in userInfo){
@@ -187,7 +183,7 @@ export const LogIn = () => {
 
                     dispatch(roleIn({isAdmin: false}));
                 };
-                // setTimeout(() => {navigate('/')}, 3000)
+                setTimeout(() => {navigate('/')}, 3000)
             })
             .catch((error) => {
                 console.log(error);
