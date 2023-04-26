@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { userData } from '../Slices/userSlice';
 import { getAllMyTeams } from '../../services/apiCalls';
+//render
+import { TableTeams } from '../../common/TableTeams/TableTeams';
 
 export const Teams = () => {
 
@@ -35,7 +37,16 @@ export const Teams = () => {
 
     },[userDataRdx]);
 
+    //FUNCTIONS
+
     return (
-        <div>Teams</div>
+        <>
+            {teamData.map(data =>
+                    {
+                        return <TableTeams key={data.id} teamName={data.team_name} clickFunction={()=>{}}/>
+                    }
+                )
+            }
+        </>
     )
 }

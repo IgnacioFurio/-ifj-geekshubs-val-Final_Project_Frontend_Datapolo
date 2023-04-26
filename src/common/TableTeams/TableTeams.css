@@ -1,0 +1,8 @@
+.selectedRow{
+    cursor: pointer;
+    transition: 0.3s;
+}
+.selectedRow:hover{
+    transition: 0.3s;
+    background-color: rgb(200, 200, 200);
+}
