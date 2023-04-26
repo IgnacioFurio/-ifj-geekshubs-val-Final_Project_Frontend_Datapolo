@@ -1,3 +1,13 @@
+.teamName{
+    height: 2.5em;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.teamName:hover{
+    transition: 0.3s;
+    font-weight: bold;
+}
+
 .selectedRow{
     cursor: pointer;
     transition: 0.3s;

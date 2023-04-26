@@ -25,3 +25,20 @@ body{
     font-weight: bold;
 }
 
+.updateIcon{
+    width: 1.5em;
+    height: 1.5em;
+}
+.updateIcon:hover{
+    width: 2em;
+    height: 2em;
+}
+.deleteIcon{
+    width: 1em;
+    height: 1em;
+}
+.deleteIcon:hover{
+    width: 1.5em;
+    height: 1.5em;
+}
+
