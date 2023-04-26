@@ -57,3 +57,14 @@ body{
     transition: 0.3s;
 }
 
+.spinnerDesign{
+    height: 5em;
+    width: 5em;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+

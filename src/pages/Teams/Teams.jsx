@@ -6,6 +6,7 @@ import { getAllMyTeams } from '../../services/apiCalls';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
 import { TableTeams } from '../../common/TableTeams/TableTeams';
+import spiner from '../../assets/waterpolo.png'
 
 export const Teams = () => {
 
@@ -24,7 +25,7 @@ export const Teams = () => {
     useEffect(() => {
 
         if(teamData.length === 0){
-            
+
             dispatch(reload({updatedData: {}}))
 
             getAllMyTeams(userDataRdx.userCredentials.user.id ,userDataRdx.userCredentials.token)
@@ -52,12 +53,24 @@ export const Teams = () => {
 
     return (
         <>
-            {teamData.map(data =>
-                    {
-                        return <TableTeams key={data.id} id={data.id} teamName={data.team_name} clickFunction={()=>{}}/>
-                    }
+            {
+                teamData.length === 0 ? (
+                    <>
+                        <img src={spiner} className="spinnerDesign m-5 " alt="spinner"/>
+                        <h3 className='font fw-bold'>Looking for your information.</h3>
+                    </>
+                ) : (
+                    <>
+                    {teamData.map(data =>
+                            {
+                                return <TableTeams key={data.id} id={data.id} teamName={data.team_name} clickFunction={()=>{}}/>
+                            }
+                            )
+                        }
+                    </>
                 )
             }
+            
         </>
     )
 }
