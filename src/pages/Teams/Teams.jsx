@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 //redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../Slices/userSlice';
 import { getAllMyTeams } from '../../services/apiCalls';
+import { bringData, reload } from '../Slices/reloadSlice';
 //render
 import { TableTeams } from '../../common/TableTeams/TableTeams';
 
 export const Teams = () => {
 
     const userDataRdx = useSelector(userData);
+
+    const updateInfo = useSelector(bringData);
+
+    const dispatch = useDispatch();
 
     //HOOKS
     const [teamData, setTeamData] = useState([]);
@@ -19,6 +24,8 @@ export const Teams = () => {
     useEffect(() => {
 
         if(teamData.length === 0){
+            
+            dispatch(reload({updatedData: {}}))
 
             getAllMyTeams(userDataRdx.userCredentials.user.id ,userDataRdx.userCredentials.token)
                 .then(
@@ -30,7 +37,16 @@ export const Teams = () => {
 
         };
 
-    },[userDataRdx]);
+    },[teamData]);
+
+    useEffect(() => {
+
+        if(updateInfo?.updatedData?.success){
+
+            setTeamData([]);
+
+        };
+    });
 
     //FUNCTIONS
 
