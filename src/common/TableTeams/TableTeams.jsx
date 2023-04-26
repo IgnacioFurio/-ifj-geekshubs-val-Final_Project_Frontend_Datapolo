@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 //helper
 import { validate } from '../../helpers/useful';
+//redux
+import { useSelector } from 'react-redux';
+import { userData } from '../../pages/Slices/userSlice';
+//apicall
+import { modifyTeam } from '../../services/apiCalls';
 //render
 import Modal from 'react-bootstrap/Modal';
 import { Input } from '../../common/Input/Input';
@@ -16,10 +21,13 @@ import './TableTeams.css'
 
 export const TableTeams = ({id, teamName, clickFunction}) => {
 
+    const userDataRdx = useSelector(userData);
+
     //HOOKS
     const [teamData, setTeamData] = useState(
         {
             id: id,
+            user_id: userDataRdx.userCredentials.user.id,
             new_name: teamName
         }
     );
@@ -53,6 +61,7 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
         setTeamData(
             {
                 id: id,
+                user_id: userDataRdx.userCredentials.user.id,
                 new_name: teamName
             }
         )
@@ -73,9 +82,9 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
     //USEEFFECT
     useEffect(() => {
-        console.log(teamData);
-        console.log(errorInputField);
-        console.log(validInputField);
+        // console.log(teamData);
+        // console.log(errorInputField);
+        // console.log(validInputField);
     })
 
     useEffect(() => {
@@ -95,7 +104,7 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
         if(validInputField === false){
     
             setSubmitActive(false);
-            
+
             return;
         };
         
@@ -130,6 +139,33 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
     };
 
+    const newName = () => {
+
+        modifyTeam(teamData, userDataRdx.userCredentials.token)
+            .then(
+                result => {
+                        console.log(result.data.message);
+
+                        setTeamData(
+                            {
+                                id: id,
+                                user_id: userDataRdx.userCredentials.user.id,
+                                new_name: teamName
+                            }
+                        )
+
+                        setErrorInputField('')
+
+                        setValidInputfield(false)
+
+                        setShowUpdate(false)
+
+                    }
+                )
+            .catch(error => console.log(error))
+
+    }
+
     return (
         <>
             <Container fluid>
@@ -137,11 +173,11 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
                     <Col xs={10} className='d-flex justify-content-start' onClick={clickFunction}>
                     {teamName}
                     </Col>
-                    <Col><img src={update} alt="update" className='updateIcon' onClick={handleUpdateShow}/></Col>                    
+                    <Col><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
                     <Col><img src={del} alt="delete" className='deleteIcon' /></Col>
                 </Row>
             </Container>
-            <Modal show={showUpdate} onHide={handleUpdateClose}>
+            <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
                 <Modal.Header closeButton>
                     <Modal.Title>Change the name of the team</Modal.Title>
                 </Modal.Header>
@@ -160,12 +196,12 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
                         />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={handleUpdateClose}>
+                    <Button variant="danger" onClick={() => handleUpdateClose()}>
                         Cancel Changes
                     </Button>
                     {
                         activeSubmit ? (
-                            <Button variant="success" onClick={handleUpdateClose}>
+                            <Button variant="success" onClick={() => newName()}>
                                 Save Changes
                             </Button>
                         ) : (

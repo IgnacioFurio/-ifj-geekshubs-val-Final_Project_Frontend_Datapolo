@@ -17,11 +17,6 @@ export const Teams = () => {
     //
     // USEEFFECT
     useEffect(() => {
-        console.log(teamData);
-        console.log(userDataRdx);
-    },[userDataRdx]);
-
-    useEffect(() => {
 
         if(teamData.length === 0){
 

@@ -41,15 +41,23 @@ export const getAllMyTeams = async (body, token) => {
     return await axios.post(`${root}/api/get-my-teams`, userId, config)
 };
 
+//ToDo createTeam
+
 export const modifyTeam = async (body, token) => {
 
     let data = {
-        'user_id': body
+        'id': body.id,
+        'user_id': body.user_id,
+        'team_name': body.new_name
     }
+    
+    console.log(data);
 
     let config = {
         headers: {
             'Authorization': 'Bearer '+ token,
         }
     }
+
+    return await axios.put(`${root}/api/my-teams`, data, config)
 };
