@@ -28,8 +28,11 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
     const [validInputField, setValidInputfield] = useState(false);
 
-    //set accept/cancel button for modify info
+    //set update modal
     const [showUpdate, setShowUpdate] = useState(false);
+
+    //set active button
+    const [activeSubmit, setSubmitActive] = useState(false);
 
     //HANDLER
     //input
@@ -56,9 +59,17 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
         setShowUpdate(false)
 
+        setErrorInputField('')
+
+        setValidInputfield(false)
+
     };
 
-    const handleUpdateShow = () => setShowUpdate(true);
+    const handleUpdateShow = () => {
+
+        setShowUpdate(true)
+
+    };
 
     //USEEFFECT
     useEffect(() => {
@@ -66,6 +77,39 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
         console.log(errorInputField);
         console.log(validInputField);
     })
+
+    useEffect(() => {
+        //functions to make submit button activated
+        //in case that a field is empty
+        for(let empty in teamData){
+            
+            if(teamData[empty] === ""){
+        
+                setSubmitActive(false);
+                
+                return;
+                };
+        };
+    
+        //in case that a field is not valid        
+        if(validInputField === false){
+    
+            setSubmitActive(false);
+            
+            return;
+        };
+        
+        //in case that a field shows an error  
+        if(errorInputField !== ''){
+            
+            setSubmitActive(false);
+
+            return;
+        };
+        
+        //in case the data it's full validated
+        setSubmitActive(true);
+    });
 
     //FUNCTIONS
     const checkError = (e) => {
@@ -83,6 +127,7 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
         setValidInputfield(check.valid);
     
         setErrorInputField(error);
+
     };
 
     return (
@@ -118,9 +163,17 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
                     <Button variant="danger" onClick={handleUpdateClose}>
                         Cancel Changes
                     </Button>
-                    <Button variant="success" onClick={handleUpdateClose}>
-                        Save Changes
-                    </Button>
+                    {
+                        activeSubmit ? (
+                            <Button variant="success" onClick={handleUpdateClose}>
+                                Save Changes
+                            </Button>
+                        ) : (
+                            <Button variant="secondary">
+                                Save Changes
+                            </Button>
+                        )
+                    }
                 </Modal.Footer>
             </Modal>
         </>
