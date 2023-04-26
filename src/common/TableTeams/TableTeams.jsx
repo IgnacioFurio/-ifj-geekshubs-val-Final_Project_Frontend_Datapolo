@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../pages/Slices/userSlice';
 import { bringData, reload } from '../../pages/Slices/reloadSlice';
 //apicall
-import { modifyTeam } from '../../services/apiCalls';
+import { deleteTeam, modifyTeam } from '../../services/apiCalls';
 //render
 import Modal from 'react-bootstrap/Modal';
 import { Input } from '../../common/Input/Input';
@@ -20,7 +20,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './TableTeams.css'
 
-export const TableTeams = ({id, teamName, clickFunction}) => {
+export const TableTeams = ({id, teamName}) => {
 
     const dispatch = useDispatch();
 
@@ -41,6 +41,9 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
     //set update modal
     const [showUpdate, setShowUpdate] = useState(false);
+
+    //set delete modal
+    const [showDelete, setShowDelete] = useState(false);
 
     //set active button
     const [activeSubmit, setSubmitActive] = useState(false);
@@ -86,9 +89,31 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
     };
 
+    //delete modal
+    const handleDeleteClose = () => {
+        
+        setTeamData(
+            {
+                id: id,
+                user_id: userDataRdx.userCredentials.user.id,
+            }
+        )
+
+        setShowDelete(false)
+
+        setErrorInputField('')
+
+    };
+
+    const handleDeleteShow = () => {
+
+        setShowDelete(true)
+
+    };
+
     //USEEFFECT
     useEffect(() => {
-        // console.log(teamData);
+        console.log(message);
         // console.log(errorInputField);
         // console.log(validInputField);
     })
@@ -145,11 +170,11 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
     };
 
+    //function to update a team name
     const newName = () => {
 
         modifyTeam(teamData, userDataRdx.userCredentials.token)
-            .then(
-                backendCall=> {
+            .then(backendCall=> {
 
                     setTeamData(
                             {
@@ -174,6 +199,8 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
                         setValidInputfield(false)
 
+                        setMessage('')
+
                     }, 3000)
                     }
                 )
@@ -181,55 +208,101 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
 
     }
 
+    //function to delete a team
+    const destroyTeam = () => {
+
+        deleteTeam(teamData, userDataRdx.userCredentials.token)
+            .then(backendCall=> {                
+                
+                setMessage(backendCall.data.message)
+
+                let success = {success: backendCall.data.success}
+                
+                setTimeout(() => {
+                    
+                    dispatch(reload({updatedData: success}))
+
+                    setErrorInputField('')
+
+                    setValidInputfield(false)
+
+                    setMessage('')
+
+                }, 3000)
+                }
+            )
+            .catch(error => console.log(error))
+    };
+
     return (
         <>
             <Container fluid>
                 <Row className='teamName my-3 mx-2'>
-                    <Col xs={10} className='d-flex justify-content-start' onClick={clickFunction}>
+                    <Col xs={10} className='d-flex justify-content-start'>
                     {teamName}
                     </Col>
                     <Col><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
-                    <Col><img src={del} alt="delete" className='deleteIcon' /></Col>
+                    <Col><img src={del} alt="delete" className='deleteIcon' onClick={() => handleDeleteShow()}/></Col>
                 </Row>
             </Container>
             {
                 message === '' ? (
-                    <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Change the name of the team</Modal.Title>
-                        </Modal.Header>                        
-                            <Modal.Body>
-                                <div className='mx-3 fw-bold'>Previous Name:</div>
-                                <div className='mx-4'>{teamName}</div>
-                                <Input
-                                    className={''}
-                                    type={'text'}
-                                    name={'new_name'}
-                                    placeholder={'Type the new name here'}
-                                    required={true}
-                                    error={errorInputField}
-                                    changeFunction={(e)=>inputHandler(e)}
-                                    blurFunction={(e)=>checkError(e)}
-                                    />
-                            </Modal.Body>        
-                        <Modal.Footer>
-                            <Button variant="danger" onClick={() => handleUpdateClose()}>
-                                Cancel Changes
-                            </Button>
-                            {
-                                activeSubmit ? (
-                                    <Button variant="success" onClick={() => newName()}>
-                                        Save Changes
-                                    </Button>
-                                ) : (
-                                    <Button variant="secondary">
-                                        Save Changes
-                                    </Button>
-                                )
-                            }
-                        </Modal.Footer>
-                    </Modal>
+                    <>
+                        <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Change the name of the team</Modal.Title>
+                            </Modal.Header>                        
+                                <Modal.Body>
+                                    <div className='mx-3 fw-bold'>Previous Name:</div>
+                                    <div className='mx-4'>{teamName}</div>
+                                    <Input
+                                        className={''}
+                                        type={'text'}
+                                        name={'new_name'}
+                                        placeholder={'Type the new name here'}
+                                        required={true}
+                                        error={errorInputField}
+                                        changeFunction={(e)=>inputHandler(e)}
+                                        blurFunction={(e)=>checkError(e)}
+                                        />
+                                </Modal.Body>        
+                            <Modal.Footer>
+                                <Button variant="danger" onClick={() => handleUpdateClose()}>
+                                    Cancel Changes
+                                </Button>
+                                {
+                                    activeSubmit ? (
+                                        <Button variant="success" onClick={() => newName()}>
+                                            Save Changes
+                                        </Button>
+                                    ) : (
+                                        <Button variant="secondary">
+                                            Save Changes
+                                        </Button>
+                                    )
+                                }
+                            </Modal.Footer>
+                        </Modal>
+                        <Modal show={showDelete} onHide={() => handleDeleteClose()}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Do you really want to delete this team?</Modal.Title>
+                            </Modal.Header>                        
+                                <Modal.Body>
+                                    <div className='mx-3 fw-bold'>Team Name:</div>
+                                    <div className='mx-4'>{teamName}</div>                                    
+                                </Modal.Body>        
+                            <Modal.Footer>
+                                <Button variant="danger" onClick={() => handleDeleteClose()}>
+                                    Not really
+                                </Button>
+                                <Button variant="success" onClick={() => destroyTeam()}>
+                                    Delete it
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </>
                 ) : (
+                    <>
                     <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
                         <Modal.Header closeButton>
                             <Modal.Title>Change the name of the team</Modal.Title>
@@ -249,9 +322,22 @@ export const TableTeams = ({id, teamName, clickFunction}) => {
                                     />                            
                             </Modal.Body>        
                         <Modal.Footer>
-                            <h4 className='d-flex justify-content-center font'>{message}</h4>
+                            <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
                         </Modal.Footer>
                     </Modal>
+                    <Modal show={showDelete} onHide={() => handleUpdateClose()}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Do you really want to delete this team?</Modal.Title>
+                        </Modal.Header>                        
+                            <Modal.Body>                            
+                                <div className='mx-3 fw-bold'>Team Name:</div>
+                                <div className='mx-4'>{teamName}</div>                                                      
+                            </Modal.Body>        
+                        <Modal.Footer>
+                            <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
+                        </Modal.Footer>
+                    </Modal>
+                </>
                 )
             }
             

@@ -63,7 +63,7 @@ export const Teams = () => {
                     <>
                     {teamData.map(data =>
                             {
-                                return <TableTeams key={data.id} id={data.id} teamName={data.team_name} clickFunction={()=>{}}/>
+                                return <TableTeams key={data.id} id={data.id} teamName={data.team_name}/>
                             }
                             )
                         }

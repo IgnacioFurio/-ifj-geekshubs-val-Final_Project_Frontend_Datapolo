@@ -50,8 +50,6 @@ export const modifyTeam = async (body, token) => {
         'user_id': body.user_id,
         'team_name': body.new_name
     }
-    
-    console.log(data);
 
     let config = {
         headers: {
@@ -60,4 +58,17 @@ export const modifyTeam = async (body, token) => {
     }
 
     return await axios.put(`${root}/api/my-teams`, data, config)
+};
+
+export const deleteTeam = async (body, token) => {
+
+    let data = {
+        'id': body.id,
+    }
+
+    const headers = {
+            'Authorization': 'Bearer '+ token,
+        }
+
+    return await axios.delete(`${root}/api/my-teams`, {headers, data})
 };
