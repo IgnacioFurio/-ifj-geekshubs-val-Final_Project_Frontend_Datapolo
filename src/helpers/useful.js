@@ -37,6 +37,25 @@ export const validate = (name, data, required) => {
 
         return {message: "", valid: true};
 
+    // USERNAME
+        case "new_name":
+
+            if(data === "" && required === true){
+
+            return {message: "Field 'New name' required.", valid: false};
+
+            } else if (!/^(?=.{8,30}$).*/.test(data)) {
+
+                return {message: "Team name must have a minimum of 8 characters and a maximum of 30 characters.", valid: false};
+
+            } else if (!/^[A-Za-z][A-Za-z0-9_]/.test(data)) {
+
+                return {message: "Team name only can contain alphanumeric characters.", valid: false};
+
+            };
+
+            return {message: "", valid: true};
+
     // EMAIL
     case "email":
 

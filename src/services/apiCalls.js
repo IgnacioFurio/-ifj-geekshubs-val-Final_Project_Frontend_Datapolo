@@ -27,7 +27,6 @@ export const getUserDataByEmail = async (body) => {
 
 //TEAMS
 export const getAllMyTeams = async (body, token) => {
-    console.log(body);
 
     let userId = {
         'user_id': body
@@ -40,4 +39,17 @@ export const getAllMyTeams = async (body, token) => {
     }
 
     return await axios.post(`${root}/api/get-my-teams`, userId, config)
+};
+
+export const modifyTeam = async (body, token) => {
+
+    let data = {
+        'user_id': body
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
 };
