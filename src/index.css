@@ -6,10 +6,6 @@ body{
     padding: 0%;
 }
 
-.bodyDesign{
-    min-height: 60vh;
-}
-
 .fontNav{
     color: #F23005;
 }
@@ -23,6 +19,10 @@ body{
 }
 .font:hover{
     font-weight: bold;
+}
+
+.fontNoHover{
+    color: #F23005;
 }
 
 

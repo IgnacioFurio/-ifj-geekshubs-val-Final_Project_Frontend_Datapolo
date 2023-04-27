@@ -1,0 +1,28 @@
+.footerDesign{
+    background-color: rgb(12, 12, 12);
+    color: white;
+    padding: 2em;
+}
+
+.footerInfo{
+    display: flex;
+    flex-direction: column;
+}
+
+.footerLogo{
+    width: 2em;
+    height: 2em;
+
+    margin: 0.5em;
+}
+
+.geekshubsLogo{
+    height: 2em;
+    margin: 0.5em;
+    cursor: pointer;
+}
+.turiaLogo{
+    height: 2.5em;
+    margin: 0.5em;
+    cursor: pointer;
+}

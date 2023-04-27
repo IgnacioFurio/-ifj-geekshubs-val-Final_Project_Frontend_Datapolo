@@ -168,8 +168,10 @@ export const Teams = () => {
             {
                 teamData.length === 0 ? (
                     <>
-                        <img src={spiner} className="spinnerDesign m-5 " alt="spinner"/>
-                        <h3 className='font fw-bold'>Looking for your information.</h3>
+                        <Container fluid>
+                            <img src={spiner} className="spinnerDesign m-5" alt="spinner"/>
+                            <h3 className='font fw-bold'>Looking for your information.</h3>
+                        </Container>
                     </>
                 ) : (
                     <>

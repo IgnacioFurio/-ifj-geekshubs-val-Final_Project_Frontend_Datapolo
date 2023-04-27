@@ -9,12 +9,14 @@ import { Teams } from '../Teams/Teams'
 export const Body = () => {
     return (
         <>
-            <Routes classname='bodyDesign'>
-                <Route path='/' element={ <Home />} />
-                <Route path='/signup' element={ <SignUp />} />
-                <Route path='/login' element={ <LogIn />} />
-                <Route path='/teams' element={ <Teams />} />
-            </Routes>
+            <div classname='bodyDesign'>
+                <Routes>
+                    <Route path='/' element={ <Home />} />
+                    <Route path='/signup' element={ <SignUp />} />
+                    <Route path='/login' element={ <LogIn />} />
+                    <Route path='/teams' element={ <Teams />} />
+                </Routes>
+            </div>
         </>
     )
 }
