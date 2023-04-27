@@ -41,7 +41,21 @@ export const getAllMyTeams = async (body, token) => {
     return await axios.post(`${root}/api/get-my-teams`, userId, config)
 };
 
-//ToDo createTeam
+export const createNewTeam = async (body, token) => {
+
+    let data = {
+        'user_id': body.user_id,
+        'team_name': body.new_team
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,  
+        }
+    }
+
+    return await axios.post(`${root}/api/my-teams`, data, config)
+};
 
 export const modifyTeam = async (body, token) => {
 

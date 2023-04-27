@@ -25,21 +25,12 @@ body{
     font-weight: bold;
 }
 
-.acceptIcon{
-    width: 1.2em;
-    height: 1.2em;
-    transition: 0.3s;
-}
-.acceptIcon:hover{
-    width: 1.5em;
-    height: 1.5em;
-    transition: 0.3s;
-}
 
 .updateIcon{
     width: 1.5em;
     height: 1.5em;
     transition: 0.3s;
+    cursor: pointer;
 }
 .updateIcon:hover{
     width: 2em;
@@ -50,6 +41,8 @@ body{
     width: 1em;
     height: 1em;
     transition: 0.3s;
+    cursor: pointer;
+
 }
 .deleteIcon:hover{
     width: 1.5em;

@@ -9,12 +9,10 @@ import { bringData, reload } from '../../pages/Slices/reloadSlice';
 import { deleteTeam, modifyTeam } from '../../services/apiCalls';
 //render
 import Modal from 'react-bootstrap/Modal';
-import { Input } from '../../common/Input/Input';
+import {Input} from '../../common/Input/Input';
 import Button from 'react-bootstrap/Button';
 import update from '../../assets/actualizar-flecha.png';
 import del from '../../assets/borrar.png';
-import accept from '../../assets/comprobado.png';
-import cancel from '../../assets/cancelado.png'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -113,7 +111,7 @@ export const TableTeams = ({id, teamName}) => {
 
     //USEEFFECT
     useEffect(() => {
-        console.log(message);
+        // console.log(message);
         // console.log(errorInputField);
         // console.log(validInputField);
     })

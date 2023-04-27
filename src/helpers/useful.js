@@ -39,10 +39,11 @@ export const validate = (name, data, required) => {
 
     // USERNAME
         case "new_name":
+        case "new_team":
 
             if(data === "" && required === true){
 
-            return {message: "Field 'New name' required.", valid: false};
+            return {message: "Field required.", valid: false};
 
             } else if (!/^(?=.{8,30}$).*/.test(data)) {
 
