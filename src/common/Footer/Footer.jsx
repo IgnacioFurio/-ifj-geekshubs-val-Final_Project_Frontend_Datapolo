@@ -23,10 +23,10 @@ export const Footer = () => {
                     </Col>
                     <Col xs={12} md={4} >                        
                         <h6 className='d-flex justify-content-center text-decoration-underline fw-bold'>SOCIAL MEDIA</h6>
-                        <div class="text-center">
+                        <div className="text-center">
                             <a href="https://github.com/IgnacioFurio"><img src={github} className="footerLogo" alt="GitHub"/></a>
                         </div>
-                        <div class="text-center">
+                        <div className="text-center">
                             <a href="https://www.linkedin.com/in/ignacio-furi%C3%B3-0a9010233/"><img src={linkedIn} className="footerLogo" alt="LinkedIn"/></a>
                         </div>
                     </Col>

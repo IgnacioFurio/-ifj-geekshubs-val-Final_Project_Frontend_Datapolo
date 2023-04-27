@@ -106,7 +106,7 @@ export const Teams = () => {
                             )
                             .catch(error => console.log(error));
                             
-                        }, 4000)
+                        }, 3000)
             } catch (error) {
                 
                 setShowAddteam(true)
