@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+//apicall
+import { deletePlayer, modifyPlayer } from '../../services/apiCalls';
 //helper
 import { validate } from '../../helpers/useful';
 //redux
@@ -6,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../pages/Slices/userSlice';
 import { reload } from '../../pages/Slices/reloadSlice';
 //apicall
-import { deleteTeam, modifyTeam } from '../../services/apiCalls';
 //render
 import Modal from 'react-bootstrap/Modal';
 import {Input} from '../../common/Input/Input';
@@ -16,20 +17,20 @@ import del from '../../assets/borrar.png';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import './TableTeams.css'
+import './TablePlayers.css'
 
-export const TableTeams = ({id, teamName}) => {
+export const TablePlayers = ({id, playerName}) => {
 
     const dispatch = useDispatch();
 
     const userDataRdx = useSelector(userData);
 
     //HOOKS
-    const [teamData, setTeamData] = useState(
+    const [playerData, setPlayerData] = useState(
         {
             id: id,
             user_id: userDataRdx.userCredentials.user.id,
-            new_name: teamName
+            new_name: playerName
         }
     );
 
@@ -53,7 +54,7 @@ export const TableTeams = ({id, teamName}) => {
     //input
     const inputHandler = (e) => {
         
-        setTeamData((prevState)=>(
+        setPlayerData((prevState)=>(
                 {
                     ...prevState,
                     [e.target.name]: e.target.value
@@ -65,11 +66,11 @@ export const TableTeams = ({id, teamName}) => {
     //update modal 
     const handleUpdateClose = () => {
         
-        setTeamData(
+        setPlayerData(
             {
                 id: id,
                 user_id: userDataRdx.userCredentials.user.id,
-                new_name: teamName
+                new_name: playerName
             }
         )
 
@@ -90,7 +91,7 @@ export const TableTeams = ({id, teamName}) => {
     //delete modal
     const handleDeleteClose = () => {
         
-        setTeamData(
+        setPlayerData(
             {
                 id: id,
                 user_id: userDataRdx.userCredentials.user.id,
@@ -111,39 +112,24 @@ export const TableTeams = ({id, teamName}) => {
 
     //USEEFFECT
     useEffect(() => {
-        // console.log(message);
-        // console.log(errorInputField);
-        // console.log(validInputField);
-    })
-
-    useEffect(() => {
         //functions to make submit button activated
         //in case that a field is empty
-        for(let empty in teamData){
+        for(let empty in playerData){
             
-            if(teamData[empty] === ""){
+            if(playerData[empty] === ""){
         
                 setSubmitActive(false);
                 
                 return;
                 };
         };
-    
-        //in case that a field is not valid        
-        if(validInputField === false){
-    
-            setSubmitActive(false);
 
-            return;
-        };
-        
-        //in case that a field shows an error  
-        if(errorInputField !== ''){
-            
-            setSubmitActive(false);
+        //in case that a field is not valid or shows an error
+        if(errorInputField !== '' || validInputField === false){
 
-            return;
-        };
+            return setSubmitActive(false);
+
+        }
         
         //in case the data it's full validated
         setSubmitActive(true);
@@ -169,36 +155,37 @@ export const TableTeams = ({id, teamName}) => {
     };
 
     //function to update a team name
-    const newName = () => {
+    const newPlayerName = () => {
 
-        modifyTeam(teamData, userDataRdx.userCredentials.token)
-            .then(backendCall=> {                
-                
-                setMessage(backendCall.data.message)
-
-                let success = {success: backendCall.data.success}
-
-                
-                setTimeout(() => {
+        modifyPlayer(playerData, userDataRdx.userCredentials.token)
+            .then(backendCall=> {                    
                     
-                    dispatch(reload({updatedData: success}))
+                    setMessage(backendCall.data.message)
 
-                    setErrorInputField('')
+                    let success = {success: backendCall.data.success}
 
-                    setValidInputfield(false)
+                    
+                    setTimeout(() => {
+                        
+                        dispatch(reload({updatedData: success}))
 
-                    setMessage('')
+                        setErrorInputField('')
 
-                }, 3000)
-                })
+                        setValidInputfield(false)
+
+                        setMessage('')
+
+                    }, 3000)
+                    }
+                )
             .catch(error => console.log(error))
 
     }
 
     //function to delete a team
-    const destroyTeam = () => {
+    const destroyPlayer = () => {
 
-        deleteTeam(teamData, userDataRdx.userCredentials.token)
+        deletePlayer(playerData, userDataRdx.userCredentials.token)
             .then(backendCall=> {                
                 
                 setMessage(backendCall.data.message)
@@ -224,9 +211,9 @@ export const TableTeams = ({id, teamName}) => {
     return (
         <>
             <Container fluid>
-                <Row className='teamName my-3 mx-2'>
+                <Row className='playerName my-3 mx-2'>
                     <Col xs={10} className='d-flex justify-content-start'>
-                    {teamName}
+                    {playerName}
                     </Col>
                     <Col><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
                     <Col><img src={del} alt="delete" className='deleteIcon' onClick={() => handleDeleteShow()}/></Col>
@@ -237,11 +224,11 @@ export const TableTeams = ({id, teamName}) => {
                     <>
                         <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Change the name of the team</Modal.Title>
+                                <Modal.Title>Change the player's name</Modal.Title>
                             </Modal.Header>                        
                                 <Modal.Body>
-                                    <div className='mx-3 fw-bold'>Previous Name:</div>
-                                    <div className='mx-4'>{teamName}</div>
+                                    <div className='mx-3 fw-bold'>Player's Name:</div>
+                                    <div className='mx-4'>{playerName}</div>
                                     <Input
                                         className={''}
                                         type={'text'}
@@ -259,7 +246,7 @@ export const TableTeams = ({id, teamName}) => {
                                 </Button>
                                 {
                                     activeSubmit ? (
-                                        <Button variant="success" onClick={() => newName()}>
+                                        <Button variant="success" onClick={() => newPlayerName()}>
                                             Save Changes
                                         </Button>
                                     ) : (
@@ -272,17 +259,17 @@ export const TableTeams = ({id, teamName}) => {
                         </Modal>
                         <Modal show={showDelete} onHide={() => handleDeleteClose()}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Do you really want to delete this team?</Modal.Title>
+                                <Modal.Title>Do you really want to delete this player?</Modal.Title>
                             </Modal.Header>                        
                                 <Modal.Body>
-                                    <div className='mx-3 fw-bold'>Team Name:</div>
-                                    <div className='mx-4'>{teamName}</div>                                    
+                                    <div className='mx-3 fw-bold'>Player's Name:</div>
+                                    <div className='mx-4'>{playerName}</div>                                    
                                 </Modal.Body>        
                             <Modal.Footer>
                                 <Button variant="danger" onClick={() => handleDeleteClose()}>
                                     Not really
                                 </Button>
-                                <Button variant="success" onClick={() => destroyTeam()}>
+                                <Button variant="success" onClick={() => destroyPlayer()}>
                                     Delete it
                                 </Button>
                             </Modal.Footer>
@@ -292,11 +279,11 @@ export const TableTeams = ({id, teamName}) => {
                     <>
                     <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Change the name of the team</Modal.Title>
+                            <Modal.Title>Change the player's name</Modal.Title>
                         </Modal.Header>                        
                             <Modal.Body>                            
-                                <div className='mx-3 fw-bold'>Previous Name:</div>
-                                <div className='mx-4'>{teamName}</div>
+                                <div className='mx-3 fw-bold'>Player's Name:</div>
+                                <div className='mx-4'>{playerName}</div>
                                 <Input
                                     className={''}
                                     type={'text'}
@@ -314,11 +301,11 @@ export const TableTeams = ({id, teamName}) => {
                     </Modal>
                     <Modal show={showDelete} onHide={() => handleUpdateClose()}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Do you really want to delete this team?</Modal.Title>
+                            <Modal.Title>Do you really want to delete this player?</Modal.Title>
                         </Modal.Header>                        
                             <Modal.Body>                            
-                                <div className='mx-3 fw-bold'>Team Name:</div>
-                                <div className='mx-4'>{teamName}</div>                                                      
+                                <div className='mx-3 fw-bold'>Player's Name:</div>
+                                <div className='mx-4'>{playerName}</div>                                                      
                             </Modal.Body>        
                         <Modal.Footer>
                             <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
@@ -331,4 +318,3 @@ export const TableTeams = ({id, teamName}) => {
         </>
     )
 };
-

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../Slices/userSlice';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
-import { TableTeams } from '../../common/TableTeams/TableTeams';
+import { TablePlayers } from '../../common/TablePlayers/TablePlayers';
 import spiner from '../../assets/waterpolo.png'
 import Modal from 'react-bootstrap/Modal';
 import {Input} from '../../common/Input/Input';
@@ -104,7 +104,7 @@ export const Players = () => {
 
                 }
             };
-            //in case that a field is not valid or 
+            //in case that a field is not valid or shows an error
             if(errorInputField !== '' || validInputField === false){
 
                 return setSubmitActive(false);
@@ -229,7 +229,7 @@ export const Players = () => {
                                     <Row>
                                         {playerData.map(data =>
                                                 {
-                                                    return <TableTeams key={data.id} id={data.id} teamName={data.name}/>
+                                                    return <TablePlayers key={data.id} id={data.id} playerName={data.name}/>
                                                 }
                                                 )
                                             }

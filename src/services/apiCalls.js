@@ -118,11 +118,12 @@ export const getAllMyPlayers = async (body, token) => {
 };
 
 export const createNewPlayer = async (body, token) => {
-
+    
     let data = {
         'user_id': body.user_id,
         'name': body.new_player
     }
+    console.log(data);
 
     let config = {
         headers: {
@@ -130,5 +131,35 @@ export const createNewPlayer = async (body, token) => {
         }
     }
 
-    return await axios.post(`${root}/api/my-teams`, data, config)
+    return await axios.post(`${root}/api/my-players`, data, config)
+};
+
+export const modifyPlayer = async (body, token) => {
+
+    let data = {
+        'id': body.id,
+        'user_id': body.user_id,
+        'name': body.new_name
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.put(`${root}/api/my-players`, data, config)
+};
+
+export const deletePlayer = async (body, token) => {
+
+    let data = {
+        'id': body.id,
+    }
+
+    const headers = {
+            'Authorization': 'Bearer '+ token,
+        }
+
+    return await axios.delete(`${root}/api/my-players`, {headers, data})
 };
