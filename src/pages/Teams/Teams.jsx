@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useDebugValue, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //helper
 import { validate } from '../../helpers/useful';
 //redux
@@ -25,12 +26,14 @@ export const Teams = () => {
 
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+
     //HOOKS
     const [teamData, setTeamData] = useState([]);
 
     const [newTeam, setNewTeam] = useState(
         {
-            user_id: userDataRdx.userCredentials.user.id,
+            user_id: userDataRdx?.userCredentials?.user.id,
             new_team: ''
         }
     );
@@ -66,7 +69,7 @@ export const Teams = () => {
         
         setNewTeam(
             {
-                user_id: userDataRdx.userCredentials.user.id,
+                user_id: userDataRdx?.userCredentials?.user.id,
                 new_team: ''
             }
         )
@@ -96,15 +99,14 @@ export const Teams = () => {
             try {
                 setTimeout(() => {
                 
-                    getAllMyTeams(userDataRdx.userCredentials.user.id ,userDataRdx.userCredentials.token)
+                    getAllMyTeams(userDataRdx?.userCredentials?.user?.id ,userDataRdx?.userCredentials?.token)
                         .then(
                             result => {
-                                console.log(result.data.data);
-                                result.data.data ? setTeamData(result.data.data) : ''                         
+                                setTeamData(result.data.data)                      
                             }
                             
-                            )
-                            .catch(error => console.log(error));
+                        )
+                        .catch(error => console.log(error));
                             
                         }, 3000)
             } catch (error) {
@@ -150,7 +152,7 @@ export const Teams = () => {
 
     const createTeam = () => {
 
-        createNewTeam(newTeam, userDataRdx.userCredentials.token)
+        createNewTeam(newTeam, userDataRdx?.userCredentials?.token)
         .then(backendCall=> {                
                 
             setMessage(backendCall.data.message)
@@ -178,7 +180,7 @@ export const Teams = () => {
 
     return (
         <>
-        <Container>
+        <Container fluid>
             <Row className='mt-5 mb-3'>
                 <Col xs={9} className='d-flex justify-content-start '>
                 <h2 className='font fw-bold'>Your Teams</h2>
@@ -193,11 +195,9 @@ export const Teams = () => {
             </Row>
                 {
                     teamData.length === 0 ? (
-                        <>
-                            <Container fluid>
-                                <img src={spiner} className="spinnerDesign m-5" alt="spinner"/>
-                                <h3 className='font fw-bold'>Looking for your information.</h3>
-                            </Container>
+                        <>                            
+                            <img src={spiner} className="spinnerDesign m-5" alt="spinner"/>
+                            <h3 className='font fw-bold'>Looking for your information.</h3>                            
                         </>
                     ) : (
                         <>

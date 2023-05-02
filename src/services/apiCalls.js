@@ -14,6 +14,18 @@ export const logIn = async (body) => {
     return await axios.post(`${root}/api/login`, body)
 };
 
+export const logoutApi = async(token, body) => {
+
+    body = null
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.post(`${root}/api/logout`,body, config)
+}
 
 //USER
 export const getUserDataByEmail = async (body) => {

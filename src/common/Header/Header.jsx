@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+//apicall
+import { logoutApi } from '../../services/apiCalls';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, userData } from '../../pages/Slices/userSlice';
 import { adminData, roleOut } from '../../pages/Slices/isAdminSlice';
+import { bringData, reload } from '../../pages/Slices/reloadSlice';
 //render
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
@@ -17,23 +20,39 @@ export const Header = () => {
 
     const dispatch = useDispatch();
     const dataRdx = useSelector(userData);
+    const updateInfo = useSelector(bringData);
 
     const isAdminRdx = useSelector(adminData);
 
     //USEEFFECT
-    // useEffect(() => {
-    //     console.log(dataRdx);
-    // })
+    useEffect(() => {
+        console.log(dataRdx?.userCredentials?.token);
+        console.log(isAdminRdx);
+    })
 
     //FUNCTIONS
-    const logOut = () => {
+    const logOutUser = () => {
         
-        let backendData = {}
+        logoutApi(dataRdx.userCredentials.token)
+            .then(backendCall => {
 
-        dispatch(logout({userCredentials: backendData}));
-        dispatch(roleOut({isAdmin: false}));
+                console.log(backendCall);
 
-        setTimeout(() => {navigate('/')}, 1000)
+                setTimeout(() => {
+                
+                    navigate('/')
+                    
+                    dispatch(logout({userCredentials: {}}));
+    
+                    dispatch(roleOut({isAdmin: false}));
+        
+                    dispatch(reload({updatedData: {}}))
+        
+                    }, 3000)
+                }
+            )
+            .catch(error => console.log(error))
+
     };
 
     return (
@@ -55,8 +74,8 @@ export const Header = () => {
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/teams')}>
                                         My teams
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
-                                        Action
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/players')}>
+                                        My players
                                     </NavDropdown.Item>
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
                                         Offensive data
@@ -65,7 +84,7 @@ export const Header = () => {
                                         Defensive Data
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => logOut()}>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => logOutUser()}>
                                         Log Out
                                     </NavDropdown.Item>
                                 </NavDropdown>
