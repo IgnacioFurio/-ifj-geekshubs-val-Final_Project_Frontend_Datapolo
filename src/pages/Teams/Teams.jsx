@@ -80,6 +80,8 @@ export const Teams = () => {
 
         setValidInputfield(false)
 
+        setSubmitActive(false)
+
     };
 
     const handleAddteamShow = () => {
@@ -90,6 +92,28 @@ export const Teams = () => {
 
     //
     // USEEFFECT
+    useEffect(() => {
+        //in case that a field is empty
+        for(let empty in newTeam){
+
+            if(newTeam[empty] === ''){
+
+                return setSubmitActive(false);
+
+            }
+        };
+        //in case that a field is not valid or 
+        if(errorInputField !== '' || validInputField === false){
+
+            return setSubmitActive(false);
+
+        }
+
+        //in case the data it's full validated
+        setSubmitActive(true);
+
+    });
+
     useEffect(() => {
 
         if(teamData.length === 0){
@@ -145,8 +169,6 @@ export const Teams = () => {
         setValidInputfield(check.valid);
     
         setErrorInputField(error);
-
-        setSubmitActive(true)
 
     };
 

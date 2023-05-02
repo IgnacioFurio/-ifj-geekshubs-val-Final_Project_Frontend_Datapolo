@@ -4,6 +4,7 @@ export const validate = (name, data, required) => {
     // REAL NAMES
     case "name":
     case "surname":
+    case "new_player":
 
         if (data === "" && required === true) {
         
@@ -11,7 +12,7 @@ export const validate = (name, data, required) => {
 
         } else if (!/[a-zA-Z]/.test(data)) {
 
-        return {message: "Please fill with a valid text", valid: false};
+        return {message: "Please use latin characters", valid: false};
 
         };
 

@@ -98,3 +98,37 @@ export const deleteTeam = async (body, token) => {
 
     return await axios.delete(`${root}/api/my-teams`, {headers, data})
 };
+
+
+//PLAYERS
+
+export const getAllMyPlayers = async (body, token) => {
+
+    let userId = {
+        'user_id': body
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.post(`${root}/api/get-my-players`, userId, config)
+};
+
+export const createNewPlayer = async (body, token) => {
+
+    let data = {
+        'user_id': body.user_id,
+        'name': body.new_player
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,  
+        }
+    }
+
+    return await axios.post(`${root}/api/my-teams`, data, config)
+};
