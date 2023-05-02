@@ -9,7 +9,9 @@ export const App = () => {
   return (
     <>
       <Header/>
-      <Body/>
+      <div className="bodyDesign">
+        <Body/>
+      </div>
       <Footer/>
     </>
   )

@@ -4,5 +4,8 @@
   padding: 2rem;
   text-align: center;
 }
+.bodyDesign{
+  min-height: 70vh;
+}
 
 
