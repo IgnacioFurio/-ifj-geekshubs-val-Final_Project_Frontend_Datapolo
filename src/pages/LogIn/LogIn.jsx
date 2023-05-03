@@ -19,8 +19,6 @@ export const LogIn = () => {
     const dispatch = useDispatch()
     const dataRdx = useSelector(userData);
 
-    const isAdminRdx = useSelector(adminData);
-
         //HOOKS
 
     //set data for the new user
@@ -139,52 +137,54 @@ export const LogIn = () => {
         logIn(userInfo)
             .then((backendCall) => {
                 
-            let backendData = {
-                token: backendCall.data.token,
-                message: backendCall.data.message,
-                success: backendCall.data.success,
-                user: {}
-            };
-
-            dispatch(login({userCredentials: backendData}));
-
-            getUserDataByEmail(userInfo.email, backendData)
-                .then((backendCall) => {
-
-                    backendData = {
-                        token: backendData.token,
-                        message: backendData.message,
-                        success: backendData.success,
-                        user: backendCall.data.data[0]
-                    };
-                    
-                    setWelcome(backendData.message)
-
-                    dispatch(login({userCredentials: backendData}));
-
-                })
-                .catch((error) => {
-                    let backendErrorData = {
-                        message: error.response.data.message,
-                        valid: error.response.succes
-                    }
-    
-                    errorInputField.passwordError = backendErrorData.message
-    
-                    setSubmitActive(false)
-                    
-                })
-                
-                if(backendData.user.role_id === 1 || backendData.user.role_id === 2){
-                    
-                    dispatch(roleIn({isAdmin: true}));
-                    
-                } else if (backendData.user.role_id === 3) {
-
-                    dispatch(roleIn({isAdmin: false}));
+                let backendData = {
+                    token: backendCall.data.token,
+                    message: backendCall.data.message,
+                    success: backendCall.data.success,
+                    user: {}
                 };
-                setTimeout(() => {navigate('/')}, 3000)
-            })
+
+                dispatch(login({userCredentials: backendData}));
+
+                getUserDataByEmail(userInfo.email, backendData)
+                    .then((backendCall) => {
+
+                        backendData = {
+                            token: backendData.token,
+                            message: backendData.message,
+                            success: backendData.success,
+                            user: backendCall.data.data[0]
+                        };
+                        
+                        setWelcome(backendData.message)
+
+                        dispatch(login({userCredentials: backendData}));
+
+                        if(backendData.user.role_id === 1 || backendData.user.role_id === 2){
+                            
+                            dispatch(roleIn({isAdmin: true}));
+                            
+                        } else if (backendData.user.role_id === 3) {
+                            
+                            dispatch(roleIn({isAdmin: false}));
+                        };
+
+                        setTimeout(() => {navigate('/')}, 3000)
+                    })
+
+                    .catch((error) => {
+                        let backendErrorData = {
+                            message: error.response.data.message,
+                            valid: error.response.succes
+                        }
+        
+                        errorInputField.passwordError = backendErrorData.message
+        
+                        setSubmitActive(false)
+                        
+                    })
+
+                })
             .catch((error) => {
                 console.log(error);
                 let backendErrorData = {

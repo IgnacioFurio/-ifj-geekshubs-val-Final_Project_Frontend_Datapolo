@@ -26,7 +26,7 @@ export const Header = () => {
 
     //USEEFFECT
     useEffect(() => {
-        console.log(dataRdx?.userCredentials?.token);
+        console.log(dataRdx?.userCredentials?.user?.role_id);
         console.log(isAdminRdx);
     })
 
@@ -48,7 +48,7 @@ export const Header = () => {
         
                     dispatch(reload({updatedData: {}}))
         
-                    }, 3000)
+                    }, 1000)
                 }
             )
             .catch(error => console.log(error))
@@ -67,9 +67,28 @@ export const Header = () => {
                             <Nav className="me-auto">
                                 <Nav.Link className='fontNav' onClick={() => navigate('/')}>Features</Nav.Link>
                                 <Nav.Link className='fontNav' onClick={() => navigate('/')}>Pricing</Nav.Link>
-                                
                             </Nav>
                             <Nav>
+                                <NavDropdown title="Admin" id="collasible-nav-dropdown">
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/teams')}>
+                                        Teams
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/players')}>
+                                        Players
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/admin/seasons')}>
+                                        Seasons
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center'onClick={() => navigate('/')}>
+                                        Games
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
+                                        Goals
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
+                                        Trophies
+                                    </NavDropdown.Item>
+                                </NavDropdown>
                                 <NavDropdown title={dataRdx?.userCredentials?.user?.username} id="collasible-nav-dropdown">
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/teams')}>
                                         My teams
