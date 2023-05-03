@@ -26,7 +26,6 @@ export const Header = () => {
 
     //USEEFFECT
     useEffect(() => {
-        console.log(isAdminRdx);
     })
 
     //FUNCTIONS

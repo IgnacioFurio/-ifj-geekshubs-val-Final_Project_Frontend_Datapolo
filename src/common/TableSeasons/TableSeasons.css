@@ -1,0 +1,17 @@
+.seasonData{
+    height: 2.5em;
+    transition: 0.3s;
+}
+.seasonData:hover{
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.selectedRow{
+    cursor: pointer;
+    transition: 0.3s;
+}
+.selectedRow:hover{
+    transition: 0.3s;
+    background-color: rgb(200, 200, 200);
+}

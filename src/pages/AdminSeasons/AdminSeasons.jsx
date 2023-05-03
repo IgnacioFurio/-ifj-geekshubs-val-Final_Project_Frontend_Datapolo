@@ -10,6 +10,7 @@ import { adminData } from '../Slices/isAdminSlice';
 import { bringData, reload } from '../Slices/reloadSlice';
 import { userData } from '../Slices/userSlice';
 //render
+import { TableSeasons } from '../../common/TableSeasons/TableSeasons';
 import spiner from '../../assets/waterpolo.png'
 import Modal from 'react-bootstrap/Modal';
 import {Input} from '../../common/Input/Input';
@@ -18,7 +19,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
-import { TablePlayers } from '../../common/TablePlayers/TablePlayers';
 
 export const AdminSeasons = () => {
 
@@ -102,7 +102,6 @@ export const AdminSeasons = () => {
     },[])
 
     useEffect(() => {
-        console.log(newSeason);
         //in case that a field is empty
         for(let empty in newSeason){
 
@@ -236,7 +235,7 @@ export const AdminSeasons = () => {
                                     <Row>
                                         {seasonData.map(data =>
                                                 {
-                                                    return <TablePlayers key={data.id} id={data.id} playerName={data.season}/>
+                                                    return <TableSeasons key={data.id} id={data.id} seasonInfo={data.season}/>
                                                 }
                                                 )
                                             }

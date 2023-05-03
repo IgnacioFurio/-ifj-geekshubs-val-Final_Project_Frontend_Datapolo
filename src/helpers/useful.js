@@ -182,6 +182,7 @@ export const validate = (name, data, required) => {
 
     //SEASON FIELD
     case "season":
+    case "season_modified":
 
         if (data === "" && required === true) {
             

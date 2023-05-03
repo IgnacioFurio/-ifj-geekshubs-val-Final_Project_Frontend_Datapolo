@@ -190,3 +190,32 @@ export const createNewSeason = async (body, token) => {
 
     return await axios.post(`${root}/api/seasons`, data, config)
 };
+
+export const modifySeason = async (body, token) => {
+
+    let data = {
+        'id': body.id,
+        'season': body.season_modified
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.put(`${root}/api/seasons`, data, config)
+};
+
+export const deleteSeason = async (body, token) => {
+
+    let data = {
+        'id': body.id,
+    }
+
+    const headers = {
+            'Authorization': 'Bearer '+ token,
+        }
+
+    return await axios.delete(`${root}/api/seasons`, {headers, data})
+};
