@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //helper
 import { validate } from '../../helpers/useful';
 //apicall
@@ -10,6 +11,8 @@ import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
 import './SignUp.css';
 
 export const SignUp = () => {
+
+    const navigate = useNavigate()
 
     //HOOKS
 
