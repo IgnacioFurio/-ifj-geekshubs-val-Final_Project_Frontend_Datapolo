@@ -123,7 +123,6 @@ export const createNewPlayer = async (body, token) => {
         'user_id': body.user_id,
         'name': body.new_player
     }
-    console.log(data);
 
     let config = {
         headers: {
@@ -162,4 +161,32 @@ export const deletePlayer = async (body, token) => {
         }
 
     return await axios.delete(`${root}/api/my-players`, {headers, data})
+};
+
+//SEASONS
+export const getAllSeasons = async (token) => {
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.get(`${root}/api/seasons`, config)
+};
+
+
+export const createNewSeason = async (body, token) => {
+    
+    let data = {
+        'season': body.season
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,  
+        }
+    }
+
+    return await axios.post(`${root}/api/seasons`, data, config)
 };

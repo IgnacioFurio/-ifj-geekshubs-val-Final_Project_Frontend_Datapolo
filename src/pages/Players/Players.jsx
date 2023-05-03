@@ -15,9 +15,9 @@ import Modal from 'react-bootstrap/Modal';
 import {Input} from '../../common/Input/Input';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import add from '../../assets/agregar.png';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import add from '../../assets/agregar.png';
 
 export const Players = () => {
     
@@ -93,8 +93,6 @@ export const Players = () => {
     
         // USEEFFECT
         useEffect(() => {
-            console.log(playerData);
-            console.log(errorInputField);
             //in case that a field is empty
             for(let empty in newPlayer){
 

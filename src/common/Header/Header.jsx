@@ -24,11 +24,7 @@ export const Header = () => {
 
     const isAdminRdx = useSelector(adminData);
 
-    //USEEFFECT
-    useEffect(() => {
-        console.log(dataRdx?.userCredentials?.user?.role_id);
-        console.log(isAdminRdx);
-    })
+    //USEEFFECt
 
     //FUNCTIONS
     const logOutUser = () => {

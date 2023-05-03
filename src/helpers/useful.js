@@ -156,7 +156,7 @@ export const validate = (name, data, required) => {
 
         if (data === "" && required === true) {
 
-            return {message: "Field 'Post code' required", valid: false};
+            return {message: "Field 'Birth Date' required", valid: false};
 
         }
 
@@ -177,6 +177,17 @@ export const validate = (name, data, required) => {
             return {message: "Only latin character allowed", valid: false};
 
         };
+
+    return {message: "", valid: true};
+
+    //SEASON FIELD
+    case "season":
+
+        if (data === "" && required === true) {
+            
+            return {message: "Field 'New season' required", valid: false};
+
+        }
 
     return {message: "", valid: true};
 
