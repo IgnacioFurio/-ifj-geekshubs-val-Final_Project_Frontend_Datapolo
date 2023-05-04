@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //apicall
-import { createNewPlayer, getAllMyPlayers} from '../../services/apiCalls';
+import { getAllMyGames, getAllMyTeams } from '../../services/apiCalls';
 //helper
 import { validate } from '../../helpers/useful';
 //redux
@@ -9,17 +9,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../Slices/userSlice';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
-import { TablePlayers } from '../../common/TablePlayers/TablePlayers';
+import { TableGames } from '../../common/TableGames/TableGames';
+import { Select } from '../../common/Select/Select';
+import {Input} from '../../common/Input/Input';
 import spiner from '../../assets/waterpolo.png'
 import Modal from 'react-bootstrap/Modal';
-import {Input} from '../../common/Input/Input';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
 
-export const Players = () => {
+export const Games = () => {
     
         const userDataRdx = useSelector(userData);
 
@@ -30,9 +31,11 @@ export const Players = () => {
         const navigate = useNavigate();
     
         //HOOKS
-        const [playerData, setPlayerData] = useState([]);
+        const [gameData, setGameData] = useState([]);
+
+        const [teamData, setTeamData] = useState([]);
     
-        const [newPlayer, setNewPlayer] = useState(
+        const [newGame, setNewGame] = useState(
             {
                 user_id: userDataRdx?.userCredentials?.user.id,
                 new_player: ''
@@ -44,7 +47,7 @@ export const Players = () => {
         const [validInputField, setValidInputfield] = useState(false);
     
         //set add team modal
-        const [showAddPlayer, setShowAddPlayer] = useState();
+        const [showAddGame, setShowAddGame] = useState();
     
         //set active button
         const [activeSubmit, setSubmitActive] = useState(false);
@@ -56,7 +59,7 @@ export const Players = () => {
         //input
         const inputHandler = (e) => {
             
-            setNewPlayer((prevState)=>(
+            setNewGame((prevState)=>(
                     {
                         ...prevState,
                         [e.target.name]: e.target.value
@@ -68,14 +71,14 @@ export const Players = () => {
         //update modal 
         const handleAddPlayerClose = () => {
             
-            setNewPlayer(
+            setNewGame(
                 {
                     user_id: userDataRdx?.userCredentials?.user.id,
                     new_player: ''
                 }
             )
     
-            setShowAddPlayer(false)
+            setShowAddGame(false)
     
             setErrorInputField('')
     
@@ -87,16 +90,17 @@ export const Players = () => {
     
         const handleAddPlayerShow = () => {
     
-            setShowAddPlayer(true)
+            setShowAddGame(true)
     
         };
     
         // USEEFFECT
         useEffect(() => {
+            console.log(gameData);
             //in case that a field is empty
-            for(let empty in newPlayer){
+            for(let empty in newGame){
 
-                if(newPlayer[empty] === ''){
+                if(newGame[empty] === ''){
 
                     return setSubmitActive(false);
 
@@ -116,39 +120,45 @@ export const Players = () => {
 
         useEffect(() => {
     
-            if(playerData.length === 0){
+            if(gameData.length === 0){
     
                 dispatch(reload({updatedData: {}}))
     
                 try {
                     setTimeout(() => {
                     
-                        getAllMyPlayers(userDataRdx?.userCredentials?.user?.id ,userDataRdx?.userCredentials?.token)
+                        getAllMyGames(userDataRdx?.userCredentials?.token)
                             .then(
                                 result => {
-                                    setPlayerData(result.data.data)                      
+                                    setGameData(result.data.data.flat(2))                      
                                 }
                                 
                             )
                             .catch(error => console.log(error));
                                 
-                            }, 3000)
+                        getAllMyTeams(userDataRdx?.userCredentials?.user?.id ,userDataRdx?.userCredentials?.token)
+                            .then(
+                                result => {
+                                    setTeamData(result.data.data)                      
+                                }
+                                
+                            )
+                            .catch(error => console.log(error));
+                    }, 3000)
                 } catch (error) {
                     
-                    setShowAddPlayer(true)
-                }
-                
-                
+                    setShowAddGame(true)
+                } 
     
             };
     
-        },[playerData]);
+        },[gameData]);
     
         useEffect(() => {
     
             if(updateInfo?.updatedData?.success){
     
-                setPlayerData([]);
+                setGameData([]);
     
             };
         });
@@ -174,7 +184,7 @@ export const Players = () => {
     
         const createPlayer = () => {
     
-            createNewPlayer(newPlayer, userDataRdx?.userCredentials?.token)
+            createnewGame(newGame, userDataRdx?.userCredentials?.token)
             .then(backendCall=> {                
                     
                 setMessage(backendCall.data.message)
@@ -189,7 +199,7 @@ export const Players = () => {
     
                     setValidInputfield(false)
     
-                    setShowAddPlayer(false)
+                    setShowAddGame(false)
     
                     setMessage('')
     
@@ -205,10 +215,10 @@ export const Players = () => {
             <Container fluid>
                 <Row className='mt-5 mb-3'>
                     <Col xs={9} className='d-flex justify-content-start '>
-                    <h2 className='font fw-bold'>Your Players</h2>
+                    <h2 className='font fw-bold'>Your Games</h2>
                     </Col>
                     <Col xs={2} className='d-flex justify-content-end fw-bold text-primary'>
-                        <p>Add player</p>
+                        <p>Add Game</p>
                     </Col>
                     <Col xs={1}>
                         <img src={add} className="updateIcon" alt="addIcon" onClick={() => handleAddPlayerShow()}/>
@@ -216,7 +226,7 @@ export const Players = () => {
                     <hr className='font fw-bold'></hr>
                 </Row>
                     {
-                        playerData.length === 0 ? (
+                        gameData.length === 0 ? (
                             <>                            
                                 <img src={spiner} className="spinnerDesign m-5" alt="spinner"/>
                                 <h3 className='font fw-bold'>Looking for your information.</h3>                            
@@ -225,9 +235,14 @@ export const Players = () => {
                             <>
                                 <Container>                            
                                     <Row>
-                                        {playerData.map(data =>
+                                        {gameData.map(data =>
                                                 {
-                                                    return <TablePlayers key={data.id} id={data.id} playerName={data.name}/>
+                                                    return <TableGames 
+                                                                key={data.id} 
+                                                                seasonId={data.season_id}
+                                                                teamId={data.my_team_id} 
+                                                                rivalId={data.my_team_id}
+                                                                />
                                                 }
                                                 )
                                             }
@@ -239,21 +254,25 @@ export const Players = () => {
                     }
                     {
                         message === '' ? (
-                            <Modal show={showAddPlayer} onHide={() => handleAddPlayerClose()}>
+                            <Modal show={showAddGame} onHide={() => handleAddPlayerClose()}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Add a new player for your data.</Modal.Title>
+                                        <Modal.Title>Add a new game for your data.</Modal.Title>
                                     </Modal.Header>                        
                                         <Modal.Body>
-                                            <Input
-                                                className={''}
-                                                type={'text'}
-                                                name={'new_player'}
-                                                placeholder={"Type the new player's name here"}
-                                                required={true}
-                                                error={errorInputField}
-                                                changeFunction={((e)=>inputHandler(e))}
-                                                blurFunction={(e)=>checkError(e)}
-                                                />
+                                            {
+                                                teamData.map(data => 
+                                                    {
+                                                        <Select
+                                                            name={data}
+                                                            required={true}
+                                                            error={errorInputField}
+                                                            selectData={data}
+                                                            blurFunction={(e)=>checkError(e)}
+                                                            />
+                                                    }
+                                                    )
+                                            }
+                                            
                                         </Modal.Body>        
                                     <Modal.Footer>
                                         <Button variant="danger" onClick={() => handleUpdateClose()}>
@@ -273,7 +292,7 @@ export const Players = () => {
                                     </Modal.Footer>
                                 </Modal>
                             ) : (
-                                <Modal show={showAddPlayer} onHide={() => handleAddPlayerClose()}>
+                                <Modal show={showAddGame} onHide={() => handleAddPlayerClose()}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>Add a new player for your data.</Modal.Title>
                                     </Modal.Header>                        
@@ -297,6 +316,5 @@ export const Players = () => {
                     }
                 </Container>            
             </>
-        )
-    
+        )    
 }

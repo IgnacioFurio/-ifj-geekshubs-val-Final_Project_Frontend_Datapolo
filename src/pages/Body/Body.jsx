@@ -7,6 +7,7 @@ import { SignUp } from '../SignUp/SignUp'
 import { Teams } from '../Teams/Teams'
 import { Players } from '../Players/Players'
 import { AdminSeasons } from '../AdminSeasons/AdminSeasons'
+import { Games } from '../Games/Games'
 
 export const Body = () => {
     return (
@@ -18,6 +19,7 @@ export const Body = () => {
                 <Route path='/teams' element={ <Teams />} />
                 <Route path='/players' element={ <Players /> } />
                 <Route path='/admin/seasons' element={ <AdminSeasons /> } />
+                <Route path='/games' element={ <Games /> } />
             </Routes>
         </>
     )

@@ -117,6 +117,21 @@ export const getAllMyPlayers = async (body, token) => {
     return await axios.post(`${root}/api/get-my-players`, userId, config)
 };
 
+export const getMyPlayersById = async (body, token) => {
+
+    let data = {
+        'id': body
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.post(`${root}/api/get-my-players`, data, config)
+};
+
 export const createNewPlayer = async (body, token) => {
     
     let data = {
@@ -175,6 +190,21 @@ export const getAllSeasons = async (token) => {
     return await axios.get(`${root}/api/seasons`, config)
 };
 
+export const getSeasonsById = async (body, token) => {
+
+    let data = {
+        'id': body
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.post(`${root}/api/seasons-by-id`,data, config)
+};
+
 
 export const createNewSeason = async (body, token) => {
     
@@ -218,4 +248,17 @@ export const deleteSeason = async (body, token) => {
         }
 
     return await axios.delete(`${root}/api/seasons`, {headers, data})
+};
+
+//GAMES
+
+export const getAllMyGames = async (token) => {
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.get(`${root}/api/my-games`, config)
 };
