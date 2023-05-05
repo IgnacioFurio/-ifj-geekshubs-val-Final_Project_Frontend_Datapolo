@@ -38,6 +38,8 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     const [ seasonsData, setSeasonsData ] = useState([]);
 
+    const [ seasonDate, setSeasonsDate] = useState('');
+
     const [ myTeam, setMyTeam ] = useState('');
 
     const [ rivalTeam, setRivalTeam ] = useState('');
@@ -168,7 +170,27 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
         for (let i = 0 ; i < seasons.length; i++) {
 
-            // if(seasonId === seasonsData[i].id){}
+            if(seasonId === seasonsData[i]?.id){
+
+                setSeasonsDate(seasonsData[i]?.season)
+
+                i = seasons.length
+
+            }
+
+        }
+
+        for (let i = 0 ; i < teamsData.length ; i++) {
+
+            if(teamId === teamsData[i]?.id){
+
+                setMyTeam(teamsData[i]?.team_name)
+
+            } else if (rivalId === teamsData[i]?.id){
+
+                setRivalTeam(teamsData[i]?.team_name)
+
+            }
 
         }
     });
@@ -249,13 +271,13 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
         <>
             <Container fluid>
                 <Row className='teamId my-3 mx-2'>
-                    <Col xs={2} className='d-flex justify-content-start'>
-                    {seasonId}
+                    <Col xs={2} className='d-flex justify-content-start px-1'>
+                    {seasonDate}
                     </Col>
-                    <Col xs={4} className='d-flex justify-content-start'>
+                    <Col xs={4} className='d-flex justify-content-start px-1'>
                     {myTeam}
                     </Col>
-                    <Col xs={4} className='d-flex justify-content-start'>
+                    <Col xs={4} className='d-flex justify-content-start px-1'>
                     {rivalTeam}
                     </Col>
                     <Col xs={1}><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    

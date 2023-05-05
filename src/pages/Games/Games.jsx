@@ -169,12 +169,6 @@ export const Games = () => {
     
             };
         });
-
-        // useEffect(() => {
-            // console.log('Teams', teamData);
-            // console.log('Seasons',seasonData);
-        //     console.log('Games',gameData);
-        // });
     
         //FUNCTIONS
         const checkError = (e) => {
