@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-export const Select = ({title, name, dataMap, changeFunction, blurFunction}) => {
+export const Select = ({title, name, dataMap, required, changeFunction, blurFunction, error}) => {
     
     const dataMapping = dataMap
 
     const nameInput = name
 
     useEffect(() => {
-        console.log(dataMapping);
+        
     });
 
     return (
         <>
             <div className='font fw-bold'>{title}</div>
-            <select name={nameInput}  className={'form-select my-1 py-2'} onChange={changeFunction} onBlur={blurFunction}>
+            <select name={nameInput} className={'form-select my-1 py-2'} required={required} onChange={changeFunction} onBlur={blurFunction}>
                 <option value={"default"} >----------</option>
                     {
                         dataMapping.map(data => 
@@ -25,6 +25,7 @@ export const Select = ({title, name, dataMap, changeFunction, blurFunction}) => 
                             )
                     }
                 </select>
+                <div>{error}</div>
         </>
     )
 }

@@ -10,7 +10,9 @@ import { userData } from '../Slices/userSlice';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
 import { TableGames } from '../../common/TableGames/TableGames';
-import {Input} from '../../common/Input/Input';
+import { Input } from '../../common/Input/Input';
+import { Select } from '../../common/Select/Select';
+import Form from 'react-bootstrap/Form';
 import spiner from '../../assets/waterpolo.png'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -18,7 +20,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
-import { Select } from '../../common/Select/Select';
 
 export const Games = () => {
     
@@ -42,13 +43,27 @@ export const Games = () => {
                 user_id: userDataRdx?.userCredentials?.user.id,
                 season_id: '',
                 my_team_id: '',
-                myu_rival_id: ''
+                my_rival_id: '',
+                locale: false,
+                friendly: false
             }
         );
     
-        const [errorInputField, setErrorInputField] = useState('');
+        const [errorInputField, setErrorInputField] = useState(
+            {
+                season_idError: '',
+                my_team_idError: '',
+                my_rival_idError: ''
+            }
+        );
     
-        const [validInputField, setValidInputfield] = useState(false);
+        const [validInputField, setValidInputfield] = useState(
+            {
+                season_idValid: '',
+                my_team_idValid: '',
+                my_rival_idValid: '',
+            }
+        );
     
         //set add team modal
         const [showAddGame, setShowAddGame] = useState();
@@ -62,6 +77,7 @@ export const Games = () => {
         //HANDLER
         //input
         const inputHandler = (e) => {
+
             setNewGame((prevState)=>(
                 {
                     ...prevState,
@@ -72,20 +88,36 @@ export const Games = () => {
         }
     
         //update modal 
-        const handleAddPlayerClose = () => {
+        const handleAddGameClose = () => {
             
             setNewGame(
                 {
                     user_id: userDataRdx?.userCredentials?.user.id,
-                    new_player: ''
+                    season_id: '',
+                    my_team_id: '',
+                    my_rival_id: '',
+                    locale: false,
+                    friendly: false
                 }
             )
     
             setShowAddGame(false)
     
-            setErrorInputField('')
+            setErrorInputField(
+                {
+                    season_idError: '',
+                    my_team_idError: '',
+                    my_rival_idError: '',
+                }
+            )
     
-            setValidInputfield(false)
+            setValidInputfield(
+                {
+                    season_idValid: '',
+                    my_team_idValid: '',
+                    my_rival_idValid: '',
+                }
+            )
 
             setSubmitActive(false)
     
@@ -100,7 +132,7 @@ export const Games = () => {
         // USEEFFECT
         useEffect(() => {
             console.log(newGame);
-            console.log(teamData);
+            console.log(errorInputField);
             //in case that a field is empty
             for(let empty in newGame){
 
@@ -110,12 +142,26 @@ export const Games = () => {
 
                 }
             };
-            //in case that a field is not valid or shows an error
-            if(errorInputField !== '' || validInputField === false){
 
-                return setSubmitActive(false);
-
-            }
+            //in case that a field is not valid
+            for(let valid in validInputField){
+        
+                if(validInputField[valid] === false){
+        
+                    setSubmitActive(false);
+                    return;
+                };
+            };
+        
+            //in case that a field shows an error
+            for(let error in errorInputField){
+        
+                if(errorInputField[error]){
+                    
+                    setSubmitActive(false);
+                    return;
+                };
+            };
 
             //in case the data it's full validated
             setSubmitActive(true);
@@ -186,9 +232,21 @@ export const Games = () => {
                 
             error = check.message
         
-            setValidInputfield(check.valid);
+            setErrorInputField((prevState) => (
+                    {
+                    ...prevState,
+                    [e.target.name + 'Error']: error
+                    }
+                )
+            );
         
-            setErrorInputField(error);
+            setValidInputfield((prevState) => (
+                    {
+                        ...prevState,
+                        [e.target.name + 'Valid']: check.valid
+                    }
+                )
+            );
         
         };
     
@@ -205,9 +263,21 @@ export const Games = () => {
                     
                     dispatch(reload({updatedData: success}))
     
-                    setErrorInputField('')
+                    setErrorInputField(
+                        {
+                            season_idError: '',
+                            my_team_idError: '',
+                            my_rival_idError: '',
+                        }
+                    )
     
-                    setValidInputfield(false)
+                    setValidInputfield(
+                        {
+                            season_idValid: '',
+                            my_team_idValid: '',
+                            my_rival_idValid: ''
+                        }
+                    )
     
                     setShowAddGame(false)
     
@@ -220,6 +290,60 @@ export const Games = () => {
     
         };
     
+        const localeCheck = () =>  {
+
+            if(newGame.locale === false){
+                setNewGame(
+                    {
+                        user_id: userDataRdx?.userCredentials?.user.id,
+                        season_id: newGame.season_id,
+                        my_team_id: newGame.my_team_id,
+                        my_rival_id: newGame.my_rival_id,
+                        locale: true,
+                        friendly: newGame.friendly
+                    }
+                )
+            } else if (newGame.locale === true){
+                setNewGame(
+                    {
+                        user_id: userDataRdx?.userCredentials?.user.id,
+                        season_id: '',
+                        my_team_id: '',
+                        my_rival_id: '',
+                        locale: false,
+                        friendly: newGame.friendly
+                    }
+                )
+            } 
+        }
+
+        const friendlyCheck = () =>  {
+
+            if(newGame.friendly === false){
+                setNewGame(
+                    {
+                        user_id: userDataRdx?.userCredentials?.user.id,
+                        season_id: newGame.season_id,
+                        my_team_id: newGame.my_team_id,
+                        my_rival_id: newGame.my_rival_id,
+                        locale: newGame.locale,
+                        friendly: true
+                    }
+                )
+            } else if (newGame.friendly  === true){
+                setNewGame(
+                    {
+                        user_id: userDataRdx?.userCredentials?.user.id,
+                        season_id: '',
+                        my_team_id: '',
+                        my_rival_id: '',
+                        locale: newGame.locale,
+                        friendly: false
+                    }
+                )
+            } 
+        }
+
         return (
             <>
             <Container fluid>
@@ -278,7 +402,7 @@ export const Games = () => {
                     }
                     {
                         message === '' ? (
-                            <Modal show={showAddGame} onHide={() => handleAddPlayerClose()}>
+                            <Modal show={showAddGame} onHide={() => handleAddGameClose()}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>Add a new game for your data.</Modal.Title>
                                     </Modal.Header>                        
@@ -287,23 +411,45 @@ export const Games = () => {
                                                 title={'Select the season'}
                                                 name={"season_id"}
                                                 dataMap={seasonData}
+                                                required={true}
                                                 changeFunction={(e)=>inputHandler(e)}
-                                                blurFunction={()=>{}}
+                                                blurFunction={(e)=>checkError(e)}
+                                                error={errorInputField.season_idError}
                                                 />
                                             <Select
                                                 title={'Select your team'}
                                                 name={"my_team_id"}
                                                 dataMap={teamData}
+                                                required={true}
                                                 changeFunction={(e)=>inputHandler(e)}
-                                                blurFunction={()=>{}}
+                                                blurFunction={(e)=>checkError(e)}
+                                                error={errorInputField.my_team_idError}
                                                 />
                                             <Select
                                                 title={'Select your rival'}
                                                 name={"my_rival_id"}
                                                 dataMap={teamData}
+                                                required={true}
                                                 changeFunction={(e)=>inputHandler(e)}
-                                                blurFunction={()=>{}}
+                                                blurFunction={(e)=>checkError(e)}
+                                                error={errorInputField.my_rival_idError}
                                                 />
+                                            <Form>
+                                                <Form.Check // prettier-ignore
+                                                    type="switch"
+                                                    id="custom-switch"
+                                                    label="Locale Game"
+                                                    onClick={() => localeCheck()}
+                                                />                                            
+                                            </Form>
+                                            <Form>
+                                                <Form.Check // prettier-ignore
+                                                    type="switch"
+                                                    id="custom-switch"
+                                                    label="Friendly game"
+                                                    onClick={() => friendlyCheck()}
+                                                />                                            
+                                            </Form>
                                         </Modal.Body>        
                                     <Modal.Footer>
                                         <Button variant="danger" onClick={() => handleUpdateClose()}>
@@ -323,7 +469,7 @@ export const Games = () => {
                                     </Modal.Footer>
                                 </Modal>
                             ) : (
-                                <Modal show={showAddGame} onHide={() => handleAddPlayerClose()}>
+                                <Modal show={showAddGame} onHide={() => handleAddGameClose()}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>Add a new player for your data.</Modal.Title>
                                     </Modal.Header>                        

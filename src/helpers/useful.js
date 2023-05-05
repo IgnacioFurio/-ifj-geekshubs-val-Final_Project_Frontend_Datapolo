@@ -103,52 +103,6 @@ export const validate = (name, data, required) => {
         };
 
     return {message: "", valid: false};
-
-    //DNI
-    case "DNI":
-
-        if (data === "" && required === true) {
-
-            return {message: "Field 'DNI' required", valid: false};
-
-        } else if (!/^[0-9]{8}[a-zA-Z]{1}?$/.test(data)) {
-
-            return {message: "'DNI' must have 8 numbers and 1 character", valid: false};
-
-        };
-
-    return {message: "", valid: true};
-
-    // PHONE NUMBER SPAIN
-    case "phone_number":
-
-        if (data === "" && required === true) {
-
-            return {message: "Field 'phone number' required", valid: false};
-
-        } else if (!/^[\+]?[(]?[0-9]{2}[)]?[-\s\.]?[0-9]{3}?[-\s\.]?[0-9]{3}?[-\s\.]?[0-9]{3}$/.test(data)) {
-
-            return {message: "Phone number needs the area code plus the phone number", valid: false};
-
-        };
-
-    return {message: "", valid: true};
-
-    // POSTAL CODE SPAIN    
-
-    case "post_code":
-
-        if (data === "" && required === true) {
-
-            return {message: "Field 'Post code' required", valid: false};
-
-        } else if (!/^[0-9]{5}$/.test(data)) {
-
-            return {message: "Postal code must have 5 numbers", valid: false};
-
-        };
-
-    return {message: "", valid: true};
     
     // DATE ONLY YYYY-MM-DD
 
@@ -159,24 +113,6 @@ export const validate = (name, data, required) => {
             return {message: "Field 'Birth Date' required", valid: false};
 
         }
-
-    return {message: "", valid: true};
-    
-    // NON REQUIRED TEXT ONLY FIELD
-
-    case "allergy":
-    case "surgery":
-
-
-        if (data === "" && required === false) {
-            
-            return {message: "", valid: true};
-
-        }else if (!/[a-zA-Z]/.test(data)) {
-
-            return {message: "Only latin character allowed", valid: false};
-
-        };
 
     return {message: "", valid: true};
 
@@ -193,27 +129,26 @@ export const validate = (name, data, required) => {
     return {message: "", valid: true};
 
     // SELECTION FIELDS
+    case "season_id":
 
-    case "data_time":
-
-        if(data === ""){
-            return {message: "Please choose a date for the appointment", valid: false}
+        if(data === "" || data === "default"){
+            return {message: "Please choose a season for the game", valid: false}
         };
     
     return {message: "", valid: true};
     
-    case "patient_id":
+    case "my_team_id":
 
     if(data === "" || data === "default"){
-        return {message: "Please choose a patient for the appointment", valid: false}
+        return {message: "Please choose your team for the game", valid: false}
     };
 
     return {message: "", valid: true};
 
-    case "doctor_id":
+    case "my_rival_id":
 
     if(data === "" || data === "default"){
-        return {message: "Please choose a doctor for the appointment", valid: false}
+        return {message: "Please choose your rival for the game", valid: false}
     };
 
     return {message: "", valid: true};
