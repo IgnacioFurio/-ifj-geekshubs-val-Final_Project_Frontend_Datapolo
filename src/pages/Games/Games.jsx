@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //apicall
-import { getAllMyGames, getAllMyTeams } from '../../services/apiCalls';
+import { getAllMyGames, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
 //helper
 import { validate } from '../../helpers/useful';
 //redux
@@ -34,6 +34,8 @@ export const Games = () => {
         const [gameData, setGameData] = useState([]);
 
         const [teamData, setTeamData] = useState([]);
+
+        const [seasonData, setSeasonData] = useState([]);
     
         const [newGame, setNewGame] = useState(
             {
@@ -96,7 +98,6 @@ export const Games = () => {
     
         // USEEFFECT
         useEffect(() => {
-            console.log(gameData);
             //in case that a field is empty
             for(let empty in newGame){
 
@@ -125,7 +126,6 @@ export const Games = () => {
                 dispatch(reload({updatedData: {}}))
     
                 try {
-                    setTimeout(() => {
                     
                         getAllMyGames(userDataRdx?.userCredentials?.token)
                             .then(
@@ -144,15 +144,22 @@ export const Games = () => {
                                 
                             )
                             .catch(error => console.log(error));
-                    }, 3000)
+
+                        getAllSeasons(userDataRdx?.userCredentials?.token)
+                            .then(
+                                result => {
+                                    setSeasonData(result.data.data)                      
+                                }
+                                
+                            )
+                            .catch(error => console.log(error));
                 } catch (error) {
                     
                     setShowAddGame(true)
-                } 
-    
+                }     
             };
     
-        },[gameData]);
+        },[]);
     
         useEffect(() => {
     
@@ -162,6 +169,12 @@ export const Games = () => {
     
             };
         });
+
+        // useEffect(() => {
+            // console.log('Teams', teamData);
+            // console.log('Seasons',seasonData);
+        //     console.log('Games',gameData);
+        // });
     
         //FUNCTIONS
         const checkError = (e) => {
@@ -233,15 +246,29 @@ export const Games = () => {
                             </>
                         ) : (
                             <>
-                                <Container>                            
+                                <Container>  
+                                <Row className='teamId my-3 mx-2'>
+                                    <Col xs={2} className='d-flex justify-content-start'></Col>
+                                    <Col xs={4} className='d-flex justify-content-start font fw-bold'>
+                                    Local
+                                    </Col>
+                                    <Col xs={4} className='d-flex justify-content-start font fw-bold'>
+                                    Visitor
+                                    </Col>
+                                    <Col xs={2}></Col>                    
+                                </Row>                          
                                     <Row>
                                         {gameData.map(data =>
                                                 {
                                                     return <TableGames 
                                                                 key={data.id} 
+                                                                seasons={seasonData}
                                                                 seasonId={data.season_id}
-                                                                teamId={data.my_team_id} 
-                                                                rivalId={data.my_team_id}
+                                                                myTeams={teamData} 
+                                                                teamId= {data.my_team_id}
+                                                                rivalId={data.my_rival_id}
+                                                                locale={data.locale}
+                                                                friendly={data.friendly}
                                                                 />
                                                 }
                                                 )

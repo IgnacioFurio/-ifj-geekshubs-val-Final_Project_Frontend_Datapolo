@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../pages/Slices/userSlice';
 import { reload } from '../../pages/Slices/reloadSlice';
 //apicall
-import { deleteTeam, getSeasonsById, modifyTeam } from '../../services/apiCalls';
+import { deleteTeam, modifyTeam } from '../../services/apiCalls';
 //render
 import Modal from 'react-bootstrap/Modal';
 import {Input} from '../../common/Input/Input';
@@ -18,7 +18,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './TableGames.css'
 
-export const TableGames = ({id, seasonId, teamId, rivalId}) => {
+export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, locale, friendly}) => {
 
     const dispatch = useDispatch();
 
@@ -28,13 +28,15 @@ export const TableGames = ({id, seasonId, teamId, rivalId}) => {
     const [gameData, setGameData] = useState(
         {
             id: id,
-            season_id: seasonId,
-            my_team_id: teamId,
-            my_rival_id: rivalId
+            season_id: '',
+            my_team_id: '',
+            my_rival_id: ''
         }
     );
 
-    const [ season, setSeason ] = useState('');
+    const [ teamsData, setTeamsData ] = useState([]);
+
+    const [ seasonsData, setSeasonsData ] = useState([]);
 
     const [ myTeam, setMyTeam ] = useState('');
 
@@ -76,7 +78,7 @@ export const TableGames = ({id, seasonId, teamId, rivalId}) => {
             {
                 id: id,
                 user_id: userDataRdx.userCredentials.user.id,
-                my_team_id: teamId
+                my_team_id: ''
             }
         )
 
@@ -118,17 +120,6 @@ export const TableGames = ({id, seasonId, teamId, rivalId}) => {
 
     //USEEFFECT
     useEffect(() => {
-
-        getSeasonsById(seasonId, userDataRdx?.userCredentials?.token)
-            .then(backendCall=> {  
-
-                setSeason(backendCall.data.data[0].season)
-                
-                })
-            .catch(error => console.log(error))
-    },[])
-
-    useEffect(() => {
         //functions to make submit button activated
         //in case that a field is empty
         for(let empty in gameData){
@@ -159,6 +150,27 @@ export const TableGames = ({id, seasonId, teamId, rivalId}) => {
         
         //in case the data it's full validated
         setSubmitActive(true);
+    });
+
+    //manage information for the game and teams implied on it
+    useEffect(() => {
+
+        setSeasonsData(seasons);
+        setTeamsData(myTeams);
+
+        console.log('Seasons', seasonsData);
+        console.log('SeasonId', seasonId);
+        console.log('My Teams', teamsData);
+        console.log('Team Id', teamId);
+        console.log('Rival Id', rivalId);
+        console.log('Locale', locale);
+        console.log('Friendly', friendly);
+
+        for (let i = 0 ; i < seasons.length; i++) {
+
+            // if(seasonId === seasonsData[i].id){}
+
+        }
     });
 
     //FUNCTIONS
@@ -238,13 +250,13 @@ export const TableGames = ({id, seasonId, teamId, rivalId}) => {
             <Container fluid>
                 <Row className='teamId my-3 mx-2'>
                     <Col xs={2} className='d-flex justify-content-start'>
-                    {season}
+                    {seasonId}
                     </Col>
                     <Col xs={4} className='d-flex justify-content-start'>
-                    {teamId}
+                    {myTeam}
                     </Col>
                     <Col xs={4} className='d-flex justify-content-start'>
-                    {rivalId}
+                    {rivalTeam}
                     </Col>
                     <Col xs={1}><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
                     <Col xs={1}><img src={del} alt="delete" className='deleteIcon' onClick={() => handleDeleteShow()}/></Col>

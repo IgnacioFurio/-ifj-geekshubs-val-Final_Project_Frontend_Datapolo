@@ -53,6 +53,21 @@ export const getAllMyTeams = async (body, token) => {
     return await axios.post(`${root}/api/get-my-teams`, userId, config)
 };
 
+export const getMyTeamsById = async (body, token) => {
+
+    let data = {
+        'id': body
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.post(`${root}/api/get-my-teams-by-id`, data, config)
+}
+
 export const createNewTeam = async (body, token) => {
 
     let data = {
