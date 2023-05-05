@@ -1,40 +1,29 @@
-import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+import React, { useEffect, useState } from 'react';
 
-export const Select = ({name, required, error, blurFunction}) => {
+export const Select = ({name, dataMap, changeFunction, blurFunction}) => {
     
-    const nameConversor = (name) => {
+    const dataMapping = dataMap
 
-        let upperName = name.charAt(0).toUpperCase() + name.slice(1);
+    const nameInput = name
 
-        let splitUpperName = upperName.split("_")
-
-        let inputName = splitUpperName.join([" "])
-
-        
-        if( upperName === "Password2"){
-            inputName = 'Confirm Password';
-        };
-
-        return inputName;
-    };
+    useEffect(() => {
+        console.log(nameInput);
+    });
 
     return (
         <>
-            <h4 className='font fw-bold'>{nameConversor(name)}</h4>
-            <Dropdown>
-                <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-                    ---
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu variant="dark">
-                <Dropdown.Item active>
-                    Action
-                </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-            <div>{error}</div>
+            <select name={nameInput}  className={'form-select my-1 py-2'} onChange={changeFunction} onBlur={blurFunction}>
+                <option value={"default"} >----------</option>
+                    {
+                        dataMapping.map(data => 
+                                {
+                                    return <option active key={data.id} value={data.id}>
+                                                {data.team_name}
+                                            </option>
+                                }
+                            )
+                    }
+                </select>
         </>
     )
 }

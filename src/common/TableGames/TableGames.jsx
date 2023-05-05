@@ -156,17 +156,9 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     //manage information for the game and teams implied on it
     useEffect(() => {
-
+        console.log();
         setSeasonsData(seasons);
         setTeamsData(myTeams);
-
-        console.log('Seasons', seasonsData);
-        console.log('SeasonId', seasonId);
-        console.log('My Teams', teamsData);
-        console.log('Team Id', teamId);
-        console.log('Rival Id', rivalId);
-        console.log('Locale', locale);
-        console.log('Friendly', friendly);
 
         for (let i = 0 ; i < seasons.length; i++) {
 
@@ -270,14 +262,14 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
     return (
         <>
             <Container fluid>
-                <Row className='teamId my-3 mx-2'>
-                    <Col xs={2} className='d-flex justify-content-start px-1'>
+                <Row className='my-3 mx-2'>
+                    <Col xs={2} className='text-start px-1'>
                     {seasonDate}
                     </Col>
-                    <Col xs={4} className='d-flex justify-content-start px-1'>
+                    <Col xs={4} className='text-start'>
                     {myTeam}
                     </Col>
-                    <Col xs={4} className='d-flex justify-content-start px-1'>
+                    <Col xs={4} className='text-start'>
                     {rivalTeam}
                     </Col>
                     <Col xs={1}><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    

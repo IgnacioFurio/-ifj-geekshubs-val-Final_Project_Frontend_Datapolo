@@ -40,7 +40,7 @@ export const Games = () => {
         const [newGame, setNewGame] = useState(
             {
                 user_id: userDataRdx?.userCredentials?.user.id,
-                new_player: ''
+                my_team_id: ''
             }
         );
     
@@ -60,14 +60,13 @@ export const Games = () => {
         //HANDLER
         //input
         const inputHandler = (e) => {
-            
             setNewGame((prevState)=>(
-                    {
-                        ...prevState,
-                        [e.target.name]: e.target.value
-                    }
+                {
+                    ...prevState,
+                    [e.target.name]: e.target.value
+                }
                 )
-            );
+                );
         }
     
         //update modal 
@@ -98,6 +97,8 @@ export const Games = () => {
     
         // USEEFFECT
         useEffect(() => {
+            console.log(newGame);
+            console.log(teamData);
             //in case that a field is empty
             for(let empty in newGame){
 
@@ -279,21 +280,13 @@ export const Games = () => {
                                     <Modal.Header closeButton>
                                         <Modal.Title>Add a new game for your data.</Modal.Title>
                                     </Modal.Header>                        
-                                        <Modal.Body>
-                                            {
-                                                teamData.map(data => 
-                                                    {
-                                                        <Select
-                                                            name={data}
-                                                            required={true}
-                                                            error={errorInputField}
-                                                            selectData={data}
-                                                            blurFunction={(e)=>checkError(e)}
-                                                            />
-                                                    }
-                                                    )
-                                            }
-                                            
+                                        <Modal.Body>                                            
+                                            <Select
+                                                name={"my_team_id"}
+                                                dataMap={teamData}
+                                                changeFunction={(e)=>inputHandler(e)}
+                                                blurFunction={()=>{}}
+                                                />
                                         </Modal.Body>        
                                     <Modal.Footer>
                                         <Button variant="danger" onClick={() => handleUpdateClose()}>
