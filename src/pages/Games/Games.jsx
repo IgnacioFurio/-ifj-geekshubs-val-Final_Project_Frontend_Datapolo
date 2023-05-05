@@ -10,7 +10,6 @@ import { userData } from '../Slices/userSlice';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
 import { TableGames } from '../../common/TableGames/TableGames';
-import { Select } from '../../common/Select/Select';
 import {Input} from '../../common/Input/Input';
 import spiner from '../../assets/waterpolo.png'
 import Modal from 'react-bootstrap/Modal';
@@ -19,6 +18,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
+import { Select } from '../../common/Select/Select';
 
 export const Games = () => {
     
@@ -40,7 +40,9 @@ export const Games = () => {
         const [newGame, setNewGame] = useState(
             {
                 user_id: userDataRdx?.userCredentials?.user.id,
-                my_team_id: ''
+                season_id: '',
+                my_team_id: '',
+                myu_rival_id: ''
             }
         );
     
@@ -282,7 +284,22 @@ export const Games = () => {
                                     </Modal.Header>                        
                                         <Modal.Body>                                            
                                             <Select
+                                                title={'Select the season'}
+                                                name={"season_id"}
+                                                dataMap={seasonData}
+                                                changeFunction={(e)=>inputHandler(e)}
+                                                blurFunction={()=>{}}
+                                                />
+                                            <Select
+                                                title={'Select your team'}
                                                 name={"my_team_id"}
+                                                dataMap={teamData}
+                                                changeFunction={(e)=>inputHandler(e)}
+                                                blurFunction={()=>{}}
+                                                />
+                                            <Select
+                                                title={'Select your rival'}
+                                                name={"my_rival_id"}
                                                 dataMap={teamData}
                                                 changeFunction={(e)=>inputHandler(e)}
                                                 blurFunction={()=>{}}
