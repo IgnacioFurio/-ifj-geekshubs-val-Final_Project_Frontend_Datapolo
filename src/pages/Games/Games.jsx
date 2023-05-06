@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //apicall
-import { getAllMyGames, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
+import { createNewGame, getAllMyGames, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
 //helper
 import { validate } from '../../helpers/useful';
 //redux
@@ -35,16 +35,19 @@ export const Games = () => {
         const [gameData, setGameData] = useState([]);
 
         const [teamData, setTeamData] = useState([]);
+        const [team1, setTeam1] = useState('');
+        const [team2, setTeam2] = useState('');
 
         const [seasonData, setSeasonData] = useState([]);
-    
+        const [season, setSeason] = useState('')
+        
         const [newGame, setNewGame] = useState(
             {
                 user_id: userDataRdx?.userCredentials?.user.id,
                 season_id: '',
                 my_team_id: '',
                 my_rival_id: '',
-                locale: false,
+                locale: true,
                 friendly: false
             }
         );
@@ -97,7 +100,7 @@ export const Games = () => {
                     season_id: '',
                     my_team_id: '',
                     my_rival_id: '',
-                    locale: false,
+                    locale: true,
                     friendly: false
                 }
             )
@@ -132,6 +135,35 @@ export const Games = () => {
         };
     
         // USEEFFECT
+        //manage information for the game and teams implied on it
+        useEffect(() => {
+
+            for (let i = 0 ; i < seasonData?.length; i++) {
+
+                if(newGame?.season_id == seasonData[i]?.id){
+
+                    setSeason(seasonData[i].season)
+
+                    i = season.length
+
+                }
+            }
+
+            for (let i = 0 ; i < teamData.length ; i++) {
+
+                if(newGame?.my_team_id == teamData[i]?.id){
+
+                    setTeam1(teamData[i].team_name)
+
+                } else if (newGame?.my_rival_id == teamData[i]?.id){
+
+                    setTeam2(teamData[i]?.team_name)
+
+                }
+
+            }
+        }, [newGame]);
+
         useEffect(() => {
             //in case that a field is empty
             for(let empty in newGame){
@@ -169,10 +201,10 @@ export const Games = () => {
         })
 
         useEffect(() => {
-    
-            if(gameData.length === 0){
-    
-                dispatch(reload({updatedData: {}}))
+            
+            dispatch(reload({updatedData: {}}))
+            
+            if(gameData.length === 0){    
     
                 try {
                     
@@ -217,7 +249,7 @@ export const Games = () => {
                 setGameData([]);
     
             };
-        });
+        },[updateInfo]);
     
         //FUNCTIONS
         const checkError = (e) => {
@@ -274,43 +306,43 @@ export const Games = () => {
 
         };
     
-        const createPlayer = () => {
+        const createGame = () => {
     
-            createnewGame(newGame, userDataRdx?.userCredentials?.token)
-            .then(backendCall=> {                
+            createNewGame(newGame, userDataRdx?.userCredentials?.token)
+                .then(backendCall=> {                
+
+                    setMessage(backendCall.data.message)
+        
+                    let success = {success: backendCall.data.success}
                     
-                setMessage(backendCall.data.message)
-    
-                let success = {success: backendCall.data.success}
-                
-                setTimeout(() => {
-                    
-                    dispatch(reload({updatedData: success}))
-    
-                    setErrorInputField(
-                        {
-                            season_idError: '',
-                            my_team_idError: '',
-                            my_rival_idError: '',
-                            friendlyError: ''
-                        }
-                    )
-    
-                    setValidInputfield(
-                        {
-                            season_idValid: false,
-                            my_team_idValid: false,
-                            my_rival_idValid: false,
-                        }
-                    )
-    
-                    setShowAddGame(false)
-    
-                    setMessage('')
-    
-                }, 3000)
-                }
-            )
+                    setTimeout(() => {
+                        
+                        dispatch(reload({updatedData: success}))
+        
+                        setErrorInputField(
+                            [{
+                                season_idError: '',
+                                my_team_idError: '',
+                                my_rival_idError: '',
+                                friendlyError: ''
+                            }]
+                        )
+        
+                        setValidInputfield(
+                            [{
+                                season_idValid: false,
+                                my_team_idValid: false,
+                                my_rival_idValid: false,
+                            }]
+                        )
+        
+                        setShowAddGame(false)
+        
+                        setMessage('')
+        
+                    }, 3000)
+                    }
+                )
                 .catch(error => console.log(error))
     
         };
@@ -397,7 +429,7 @@ export const Games = () => {
                                 <Row className='teamId my-3 mx-2'>
                                     <Col xs={2} className='d-flex justify-content-start'></Col>
                                     <Col xs={4} className='d-flex justify-content-start font fw-bold'>
-                                    Local
+                                    Locale
                                     </Col>
                                     <Col xs={4} className='d-flex justify-content-start font fw-bold'>
                                     Visitor
@@ -465,7 +497,7 @@ export const Games = () => {
                                                     name='locale'
                                                     type="switch"
                                                     id="custom-switch"
-                                                    label="Locale Game"
+                                                    label="As visitor Game"
                                                     onClick={() => localeCheck()}
                                                     onBlur={(e) => checkError(e)}
                                                 />                                            
@@ -488,7 +520,7 @@ export const Games = () => {
                                         </Button>
                                         {
                                             activeSubmit ? (
-                                                <Button variant="success" onClick={() => createPlayer()}>
+                                                <Button variant="success" onClick={() => createGame()}>
                                                     Save Changes
                                                 </Button>
                                             ) : (
@@ -502,22 +534,19 @@ export const Games = () => {
                             ) : (
                                 <Modal show={showAddGame} onHide={() => handleAddGameClose()}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Add a new player for your data.</Modal.Title>
+                                        <Modal.Title>Add a new game for your data.</Modal.Title>
                                     </Modal.Header>                        
                                         <Modal.Body>
-                                            <Input
-                                                className={''}
-                                                type={'text'}
-                                                name={'new_player'}
-                                                placeholder={'Type the new player name here'}
-                                                required={true}
-                                                error={errorInputField}
-                                                changeFunction={((e)=>inputHandler(e))}
-                                                blurFunction={(e)=>checkError(e)}
-                                                />
+                                            <h4 className='font fw-bold'>Season</h4>
+                                            <div>{season}</div>
+                                            <h4 className='font fw-bold'>Locale</h4>
+                                            {newGame.locale ? (<div>{team1}</div>) : (<div>{team2}</div>)}
+                                            <h4 className='font fw-bold'>Visitor</h4>
+                                            {newGame.locale ? (<div>{team2}</div>) : (<div>{team1}</div>)}
+                                            {newGame.friendly ? (<h4 className='font fw-bold'>Friendly game</h4>) : (<h4 className='font fw-bold'>Official game</h4>)}
                                         </Modal.Body>        
                                     <Modal.Footer>
-                                    <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
+                                        <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
                                     </Modal.Footer>
                                 </Modal>
                             )

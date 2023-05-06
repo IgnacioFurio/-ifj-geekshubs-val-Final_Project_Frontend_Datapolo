@@ -122,6 +122,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     //USEEFFECT
     useEffect(() => {
+        console.log(locale);
         //functions to make submit button activated
         //in case that a field is empty
         for(let empty in gameData){
@@ -156,7 +157,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     //manage information for the game and teams implied on it
     useEffect(() => {
-        console.log();
+
         setSeasonsData(seasons);
         setTeamsData(myTeams);
 
@@ -267,10 +268,10 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                     {seasonDate}
                     </Col>
                     <Col xs={4} className='text-start'>
-                    {myTeam}
+                    {locale === true ? (<div className='fw-bold'>{myTeam}</div>) : (<div>{rivalTeam}</div>)}
                     </Col>
                     <Col xs={4} className='text-start'>
-                    {rivalTeam}
+                    {locale ? (<div>{rivalTeam}</div>) : (<div className='fw-bold'>{myTeam}</div>)}
                     </Col>
                     <Col xs={1}><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
                     <Col xs={1}><img src={del} alt="delete" className='deleteIcon' onClick={() => handleDeleteShow()}/></Col>
