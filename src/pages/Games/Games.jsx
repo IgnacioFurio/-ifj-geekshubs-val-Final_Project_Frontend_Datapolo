@@ -53,15 +53,16 @@ export const Games = () => {
             {
                 season_idError: '',
                 my_team_idError: '',
-                my_rival_idError: ''
+                my_rival_idError: '',
+                friendlyError: ''
             }
         );
     
         const [validInputField, setValidInputfield] = useState(
             {
-                season_idValid: '',
-                my_team_idValid: '',
-                my_rival_idValid: '',
+                season_idValid: false,
+                my_team_idValid: false,
+                my_rival_idValid: false,
             }
         );
     
@@ -108,14 +109,15 @@ export const Games = () => {
                     season_idError: '',
                     my_team_idError: '',
                     my_rival_idError: '',
+                    friendlyError: ''
                 }
             )
     
             setValidInputfield(
                 {
-                    season_idValid: '',
-                    my_team_idValid: '',
-                    my_rival_idValid: '',
+                    season_idValid: false,
+                    my_team_idValid: false,
+                    my_rival_idValid: false,
                 }
             )
 
@@ -123,7 +125,7 @@ export const Games = () => {
     
         };
     
-        const handleAddPlayerShow = () => {
+        const handleAddGameShow = () => {
     
             setShowAddGame(true)
     
@@ -131,8 +133,6 @@ export const Games = () => {
     
         // USEEFFECT
         useEffect(() => {
-            console.log(newGame);
-            console.log(errorInputField);
             //in case that a field is empty
             for(let empty in newGame){
 
@@ -155,7 +155,7 @@ export const Games = () => {
         
             //in case that a field shows an error
             for(let error in errorInputField){
-        
+
                 if(errorInputField[error]){
                     
                     setSubmitActive(false);
@@ -221,7 +221,7 @@ export const Games = () => {
     
         //FUNCTIONS
         const checkError = (e) => {
-            
+
             let error = "";
         
             let check = validate(
@@ -230,6 +230,7 @@ export const Games = () => {
                 e.target.required
                 );
                 
+
             error = check.message
         
             setErrorInputField((prevState) => (
@@ -247,7 +248,30 @@ export const Games = () => {
                     }
                 )
             );
-        
+
+            //in case my team and my rival team are the same
+            if(newGame.my_team_id === newGame.my_rival_id && newGame.friendly === false && newGame.my_team_id !== ""){
+
+                setErrorInputField(
+                    {
+                        season_idError: errorInputField.season_idError,
+                        my_team_idError: errorInputField.my_team_idError,
+                        my_rival_idError: errorInputField.my_rival_idError,
+                        friendlyError: 'Only a friendly match allows a team to play versus itself'
+                    }
+                )
+            }else if(newGame.my_team_id !== newGame.my_rival_id) {
+
+                setErrorInputField(
+                    {
+                        season_idError: errorInputField.season_idError,
+                        my_team_idError: errorInputField.my_team_idError,
+                        my_rival_idError: errorInputField.my_rival_idError,
+                        friendlyError: ''
+                    }
+                )
+            }
+
         };
     
         const createPlayer = () => {
@@ -268,14 +292,15 @@ export const Games = () => {
                             season_idError: '',
                             my_team_idError: '',
                             my_rival_idError: '',
+                            friendlyError: ''
                         }
                     )
     
                     setValidInputfield(
                         {
-                            season_idValid: '',
-                            my_team_idValid: '',
-                            my_rival_idValid: ''
+                            season_idValid: false,
+                            my_team_idValid: false,
+                            my_rival_idValid: false,
                         }
                     )
     
@@ -307,9 +332,9 @@ export const Games = () => {
                 setNewGame(
                     {
                         user_id: userDataRdx?.userCredentials?.user.id,
-                        season_id: '',
-                        my_team_id: '',
-                        my_rival_id: '',
+                        season_id: newGame.season_id,
+                        my_team_id: newGame.my_team_id,
+                        my_rival_id: newGame.my_rival_id,
                         locale: false,
                         friendly: newGame.friendly
                     }
@@ -334,14 +359,15 @@ export const Games = () => {
                 setNewGame(
                     {
                         user_id: userDataRdx?.userCredentials?.user.id,
-                        season_id: '',
-                        my_team_id: '',
-                        my_rival_id: '',
+                        season_id: newGame.season_id,
+                        my_team_id: newGame.my_team_id,
+                        my_rival_id: newGame.my_rival_id,
                         locale: newGame.locale,
                         friendly: false
                     }
                 )
             } 
+
         }
 
         return (
@@ -355,7 +381,7 @@ export const Games = () => {
                         <p>Add Game</p>
                     </Col>
                     <Col xs={1}>
-                        <img src={add} className="updateIcon" alt="addIcon" onClick={() => handleAddPlayerShow()}/>
+                        <img src={add} className="updateIcon" alt="addIcon" onClick={() => handleAddGameShow()}/>
                     </Col>
                     <hr className='font fw-bold'></hr>
                 </Row>
@@ -435,24 +461,29 @@ export const Games = () => {
                                                 error={errorInputField.my_rival_idError}
                                                 />
                                             <Form>
-                                                <Form.Check // prettier-ignore
+                                                <Form.Check className='my-3'
+                                                    name='locale'
                                                     type="switch"
                                                     id="custom-switch"
                                                     label="Locale Game"
                                                     onClick={() => localeCheck()}
+                                                    onBlur={(e) => checkError(e)}
                                                 />                                            
                                             </Form>
                                             <Form>
-                                                <Form.Check // prettier-ignore
+                                                <Form.Check className='my-3'
+                                                    name='friendly'
                                                     type="switch"
                                                     id="custom-switch"
                                                     label="Friendly game"
                                                     onClick={() => friendlyCheck()}
+                                                    onBlur={(e) => checkError(e)}
                                                 />                                            
                                             </Form>
+                                            <Container className='font fw-bold my-3'>{errorInputField.friendlyError}</Container>
                                         </Modal.Body>        
                                     <Modal.Footer>
-                                        <Button variant="danger" onClick={() => handleUpdateClose()}>
+                                        <Button variant="danger" onClick={() => handleAddGameClose()}>
                                             Cancel Changes
                                         </Button>
                                         {

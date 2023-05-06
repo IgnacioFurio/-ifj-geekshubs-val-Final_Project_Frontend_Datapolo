@@ -139,18 +139,24 @@ export const validate = (name, data, required) => {
     
     case "my_team_id":
 
-    if(data === "" || data === "default"){
-        return {message: "Please choose your team for the game", valid: false}
-    };
+        if(data === "" || data === "default"){
+            return {message: "Please choose your team for the game", valid: false}
+        };
 
     return {message: "", valid: true};
 
     case "my_rival_id":
 
-    if(data === "" || data === "default"){
-        return {message: "Please choose your rival for the game", valid: false}
-    };
+        if(data === "" || data === "default"){
+            return {message: "Please choose your rival for the game", valid: false}
+        };
 
+    return {message: "", valid: true};
+
+    case "locale":
+    return {message: "", valid: true};
+
+    case "friendly":
     return {message: "", valid: true};
 
     default:

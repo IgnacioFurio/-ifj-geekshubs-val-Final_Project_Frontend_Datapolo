@@ -18,7 +18,7 @@ export const Select = ({title, name, dataMap, required, changeFunction, blurFunc
                     {
                         dataMapping.map(data => 
                                 {
-                                    return <option active key={data.id} value={data.id}>
+                                    return <option  key={data.id} value={data.id}>
                                                 {data.season || data.team_name}
                                             </option>
                                 }
