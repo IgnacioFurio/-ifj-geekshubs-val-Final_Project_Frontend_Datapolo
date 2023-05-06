@@ -44,6 +44,8 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     const [ rivalTeam, setRivalTeam ] = useState('');
 
+    const localeGame = locale
+
     const [errorInputField, setErrorInputField] = useState('');
 
     const [validInputField, setValidInputfield] = useState(false);
@@ -122,7 +124,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     //USEEFFECT
     useEffect(() => {
-        console.log(locale);
+        console.log(localeGame);
         //functions to make submit button activated
         //in case that a field is empty
         for(let empty in gameData){
@@ -179,7 +181,9 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
                 setMyTeam(teamsData[i]?.team_name)
 
-            } else if (rivalId === teamsData[i]?.id){
+            }
+            
+            if(rivalId === teamsData[i]?.id){
 
                 setRivalTeam(teamsData[i]?.team_name)
 
@@ -268,10 +272,10 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                     {seasonDate}
                     </Col>
                     <Col xs={4} className='text-start'>
-                    {locale === true ? (<div className='fw-bold'>{myTeam}</div>) : (<div>{rivalTeam}</div>)}
+                    {localeGame == true ? (<div className='fw-bold'>{myTeam}</div>) : (<div>{rivalTeam}</div>)}
                     </Col>
                     <Col xs={4} className='text-start'>
-                    {locale ? (<div>{rivalTeam}</div>) : (<div className='fw-bold'>{myTeam}</div>)}
+                    {localeGame == true ? (<div>{rivalTeam}</div>) : (<div className='fw-bold'>{myTeam}</div>)}
                     </Col>
                     <Col xs={1}><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
                     <Col xs={1}><img src={del} alt="delete" className='deleteIcon' onClick={() => handleDeleteShow()}/></Col>

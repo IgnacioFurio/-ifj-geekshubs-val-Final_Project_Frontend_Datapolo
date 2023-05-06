@@ -10,7 +10,6 @@ import { userData } from '../Slices/userSlice';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
 import { TableGames } from '../../common/TableGames/TableGames';
-import { Input } from '../../common/Input/Input';
 import { Select } from '../../common/Select/Select';
 import Form from 'react-bootstrap/Form';
 import spiner from '../../assets/waterpolo.png'
@@ -88,7 +87,7 @@ export const Games = () => {
                     [e.target.name]: e.target.value
                 }
                 )
-                );
+            );
         }
     
         //update modal 
@@ -155,7 +154,9 @@ export const Games = () => {
 
                     setTeam1(teamData[i].team_name)
 
-                } else if (newGame?.my_rival_id == teamData[i]?.id){
+                }
+                
+                if (newGame?.my_rival_id == teamData[i]?.id){
 
                     setTeam2(teamData[i]?.team_name)
 
@@ -316,9 +317,20 @@ export const Games = () => {
                     let success = {success: backendCall.data.success}
                     
                     setTimeout(() => {
-                        
+                            
                         dispatch(reload({updatedData: success}))
-        
+                        
+                        setNewGame(
+                            {
+                                user_id: userDataRdx?.userCredentials?.user.id,
+                                season_id: '',
+                                my_team_id: '',
+                                my_rival_id: '',
+                                locale: true,
+                                friendly: false
+                            }
+                        )
+
                         setErrorInputField(
                             [{
                                 season_idError: '',
@@ -341,6 +353,7 @@ export const Games = () => {
                         setMessage('')
         
                     }, 3000)
+                    
                     }
                 )
                 .catch(error => console.log(error))
@@ -437,10 +450,11 @@ export const Games = () => {
                                     <Col xs={2}></Col>                    
                                 </Row>                          
                                     <Row>
-                                        {gameData.map(data =>
+                                        {gameData?.map(data =>
                                                 {
                                                     return <TableGames 
-                                                                key={data.id} 
+                                                                key={data.id}
+                                                                id={data.id} 
                                                                 seasons={seasonData}
                                                                 seasonId={data.season_id}
                                                                 myTeams={teamData} 
