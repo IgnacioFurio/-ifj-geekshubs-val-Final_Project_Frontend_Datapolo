@@ -296,3 +296,36 @@ export const createNewGame = async (body, token) => {
 
     return await axios.post(`${root}/api/my-games`, data, config)
 };
+
+export const modifyGame = async (body, token) => {
+
+    let data = {
+        "id": body.id,
+        "season_id": body.season_id,
+        "my_team_id": body.my_team_id,
+        "my_rival_id": body.my_rival_id,
+        "locale": body.locale,
+        "friendly": body.friendly
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.put(`${root}/api/my-games`, data, config)
+};
+
+export const deleteGame = async (body, token) => {
+
+    let data = {
+        'id': body.id,
+    }
+
+    const headers = {
+            'Authorization': 'Bearer '+ token,
+        }
+
+    return await axios.delete(`${root}/api/my-games`, {headers, data})
+};

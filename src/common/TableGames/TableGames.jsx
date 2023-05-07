@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../pages/Slices/userSlice';
 import { reload } from '../../pages/Slices/reloadSlice';
 //apicall
-import { deleteTeam, modifyTeam } from '../../services/apiCalls';
+import { deleteGame, modifyGame } from '../../services/apiCalls';
 //render
+import { Select } from '../Select/Select';
+import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import {Input} from '../../common/Input/Input';
 import Button from 'react-bootstrap/Button';
 import update from '../../assets/actualizar-flecha.png';
 import del from '../../assets/borrar.png';
@@ -18,19 +19,22 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './TableGames.css'
 
-export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, locale, friendly}) => {
+
+export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, locale, friendly, blurFunction}) => {
 
     const dispatch = useDispatch();
 
     const userDataRdx = useSelector(userData);
 
     //HOOKS
-    const [gameData, setGameData] = useState(
+    const [newGame, setNewGame] = useState(
         {
             id: id,
-            season_id: '',
-            my_team_id: '',
-            my_rival_id: ''
+            season_id: seasonId,
+            my_team_id: teamId,
+            my_rival_id: rivalId,
+            locale: true,
+            friendly: false
         }
     );
 
@@ -44,11 +48,24 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     const [ rivalTeam, setRivalTeam ] = useState('');
 
-    const localeGame = locale
+    const localeGame = locale;
 
-    const [errorInputField, setErrorInputField] = useState('');
+    const [errorInputField, setErrorInputField] = useState(
+        {
+            season_idError: '',
+            my_team_idError: '',
+            my_rival_idError: '',
+            friendlyError: ''
+        }
+    );
 
-    const [validInputField, setValidInputfield] = useState(false);
+    const [validInputField, setValidInputfield] = useState(
+        {
+            season_idValid: false,
+            my_team_idValid: false,
+            my_rival_idValid: false,
+        }
+    );
 
     //set update modal
     const [showUpdate, setShowUpdate] = useState(false);
@@ -66,7 +83,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
     //input
     const inputHandler = (e) => {
         
-        setGameData((prevState)=>(
+        setNewGame((prevState)=>(
                 {
                     ...prevState,
                     [e.target.name]: e.target.value
@@ -78,17 +95,27 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
     //update modal 
     const handleUpdateClose = () => {
         
-        setGameData(
+        setNewGame(
             {
                 id: id,
-                user_id: userDataRdx.userCredentials.user.id,
-                my_team_id: ''
+                season_id: seasonId,
+                my_team_id: teamId,
+                my_rival_id: rivalId,
+                locale: true,
+                friendly: false
             }
         )
 
         setShowUpdate(false)
 
-        setErrorInputField('')
+        setErrorInputField(
+            {
+                season_idError: '',
+                my_team_idError: '',
+                my_rival_idError: '',
+                friendlyError: ''
+            }
+        )
 
         setValidInputfield(false)
 
@@ -103,16 +130,25 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
     //delete modal
     const handleDeleteClose = () => {
         
-        setGameData(
+        setNewGame(
             {
                 id: id,
-                user_id: userDataRdx.userCredentials.user.id,
+                season_id: seasonId,
+                my_team_id: teamId,
+                my_rival_id: rivalId,
+                locale: true,
+                friendly: false
             }
         )
 
         setShowDelete(false)
 
-        setErrorInputField('')
+        setErrorInputField({
+            season_idError: '',
+            my_team_idError: '',
+            my_rival_idError: '',
+            friendlyError: ''
+        })
 
     };
 
@@ -124,35 +160,38 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     //USEEFFECT
     useEffect(() => {
-        console.log(localeGame);
         //functions to make submit button activated
         //in case that a field is empty
-        for(let empty in gameData){
+        for(let empty in newGame){
             
-            if(gameData[empty] === ""){
-        
+            if(newGame[empty] === ""){
+                
                 setSubmitActive(false);
                 
                 return;
-                };
-        };
-    
-        //in case that a field is not valid        
-        if(validInputField === false){
-    
-            setSubmitActive(false);
-
-            return;
+            };
         };
         
-        //in case that a field shows an error  
-        if(errorInputField !== ''){
-            
-            setSubmitActive(false);
-
-            return;
-        };
+        //in case that a field is not valid
+        for(let valid in validInputField){
         
+            if(validInputField[valid] === false){
+    
+                setSubmitActive(false);
+                return;
+            };
+        };
+    
+        //in case that a field shows an error
+        for(let error in errorInputField){
+
+            if(errorInputField[error]){
+                
+                setSubmitActive(false);
+                return;
+            };
+        };
+
         //in case the data it's full validated
         setSubmitActive(true);
     });
@@ -194,7 +233,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     //FUNCTIONS
     const checkError = (e) => {
-        
+
         let error = "";
     
         let check = validate(
@@ -203,18 +242,92 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
             e.target.required
             );
             
+
         error = check.message
     
-        setValidInputfield(check.valid);
+        if(e.target.name === "season_id" && e.target.value === "default"){
+
+            let value = seasonId
+
+            setNewGame((prevState)=>(
+                    {
+                        ...prevState,
+                        [e.target.name]: value
+                    }
+                )
+            );
+        } else if (e.target.name === "my_team_id" && e.target.value === "default"){
+
+            let value = teamId
+
+            setNewGame((prevState)=>(
+                    {
+                        ...prevState,
+                        [e.target.name]: value
+                    }
+                )
+            );
+        }else if (e.target.name === "my_rival_id" && e.target.value === "default") {
+            
+            let value = rivalId
+
+            setNewGame((prevState)=>(
+                    {
+                        ...prevState,
+                        [e.target.name]: value
+                    }
+                )
+            );
+        }
+        
+
+
+        setErrorInputField((prevState) => (
+                {
+                ...prevState,
+                [e.target.name + 'Error']: error
+                }
+            )
+        );
     
-        setErrorInputField(error);
+        setValidInputfield((prevState) => (
+                {
+                    ...prevState,
+                    [e.target.name + 'Valid']: check.valid
+                }
+            )
+        );
+
+        //in case my team and my rival team are the same
+        if(newGame.my_team_id === newGame.my_rival_id && newGame.friendly === false && newGame.my_team_id !== teamId){
+
+            setErrorInputField(
+                {
+                    season_idError: errorInputField.season_idError,
+                    my_team_idError: errorInputField.my_team_idError,
+                    my_rival_idError: errorInputField.my_rival_idError,
+                    friendlyError: 'Only a friendly match allows a team to play versus itself'
+                }
+            )
+        }else if(newGame.my_team_id !== newGame.my_rival_id) {
+
+            setErrorInputField(
+                {
+                    season_idError: errorInputField.season_idError,
+                    my_team_idError: errorInputField.my_team_idError,
+                    my_rival_idError: errorInputField.my_rival_idError,
+                    friendlyError: ''
+                }
+            )
+        }
+
 
     };
 
     //function to update a team name
-    const newName = () => {
+    const modGame = () => {
 
-        modifyTeam(gameData, userDataRdx.userCredentials.token)
+        modifyGame(newGame, userDataRdx.userCredentials.token)
             .then(backendCall=> {                
                 
                 setMessage(backendCall.data.message)
@@ -226,9 +339,22 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                     
                     dispatch(reload({updatedData: success}))
 
-                    setErrorInputField('')
+                    setErrorInputField(
+                        {
+                            season_idError: '',
+                            my_team_idError: '',
+                            my_rival_idError: '',
+                            friendlyError: ''
+                        }
+                    )
 
-                    setValidInputfield(false)
+                    setValidInputfield(
+                        {
+                            season_idValid: false,
+                            my_team_idValid: false,
+                            my_rival_idValid: false,
+                        }
+                    )
 
                     setMessage('')
 
@@ -239,9 +365,9 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
     }
 
     //function to delete a team
-    const destroyTeam = () => {
+    const destroyGame = () => {
 
-        deleteTeam(gameData, userDataRdx.userCredentials.token)
+        deleteGame(newGame, userDataRdx.userCredentials.token)
             .then(backendCall=> {                
                 
                 setMessage(backendCall.data.message)
@@ -252,9 +378,22 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                     
                     dispatch(reload({updatedData: success}))
 
-                    setErrorInputField('')
+                    setErrorInputField(
+                        {
+                            season_idError: '',
+                            my_team_idError: '',
+                            my_rival_idError: '',
+                            friendlyError: ''
+                        }
+                    )
 
-                    setValidInputfield(false)
+                    setValidInputfield(
+                        {
+                            season_idValid: false,
+                            my_team_idValid: false,
+                            my_rival_idValid: false,
+                        }
+                    )
 
                     setMessage('')
 
@@ -263,6 +402,61 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
             )
             .catch(error => console.log(error))
     };
+
+    const localeCheck = () =>  {
+
+        if(newGame.locale === false){
+            setNewGame(
+                {
+                    id: id,
+                    season_id: newGame.season_id,
+                    my_team_id: newGame.my_team_id,
+                    my_rival_id: newGame.my_rival_id,
+                    locale: true,
+                    friendly: newGame.friendly
+                }
+            )
+        } else if (newGame.locale === true){
+            setNewGame(
+                {
+                    id: id,
+                    season_id: newGame.season_id,
+                    my_team_id: newGame.my_team_id,
+                    my_rival_id: newGame.my_rival_id,
+                    locale: false,
+                    friendly: newGame.friendly
+                }
+            )
+        } 
+    }
+
+    const friendlyCheck = () =>  {
+
+        if(newGame.friendly === false){
+            setNewGame(
+                {
+                    id: id,
+                    season_id: newGame.season_id,
+                    my_team_id: newGame.my_team_id,
+                    my_rival_id: newGame.my_rival_id,
+                    locale: newGame.locale,
+                    friendly: true
+                }
+            )
+        } else if (newGame.friendly  === true){
+            setNewGame(
+                {
+                    id: id,
+                    season_id: newGame.season_id,
+                    my_team_id: newGame.my_team_id,
+                    my_rival_id: newGame.my_rival_id,
+                    locale: newGame.locale,
+                    friendly: false
+                }
+            )
+        } 
+
+    }
 
     return (
         <>
@@ -286,21 +480,63 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                     <>
                         <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Change the name of the team</Modal.Title>
+                                <Modal.Title>Change the data of the game.</Modal.Title>
                             </Modal.Header>                        
                                 <Modal.Body>
-                                    <div className='mx-3 fw-bold'>Previous Name:</div>
-                                    <div className='mx-4'>{teamId}</div>
-                                    <Input
-                                        className={''}
-                                        type={'text'}
-                                        name={'my_team_id'}
-                                        placeholder={'Type the new name here'}
-                                        required={true}
-                                        error={errorInputField}
+                                    <div className='my-3 fw-bold'>Season played:</div>
+                                    <div className='m-3'>{seasonDate}</div>
+                                    <Select
+                                        title={'Select a new season'}
+                                        name={"season_id"}
+                                        dataMap={seasonsData}
+                                        required={false}
                                         changeFunction={(e)=>inputHandler(e)}
                                         blurFunction={(e)=>checkError(e)}
+                                        error={errorInputField.season_idError}
                                         />
+                                    <div className='my-3 fw-bold'>Your team:</div>
+                                    <div className='m-3'>{myTeam}</div>
+                                    <Select
+                                        title={'Select your team'}
+                                        name={"my_team_id"}
+                                        dataMap={teamsData}
+                                        required={false}
+                                        changeFunction={(e)=>inputHandler(e)}
+                                        blurFunction={(e)=>checkError(e)}
+                                        error={errorInputField.my_team_idError}
+                                        />
+                                    <div className='my-3 fw-bold'>Your rival team:</div>
+                                    <div className='m-3'>{rivalTeam}</div>
+                                    <Select
+                                        title={'Select your team'}
+                                        name={"my_rival_id"}
+                                        dataMap={teamsData}
+                                        required={false}
+                                        changeFunction={(e)=>inputHandler(e)}
+                                        blurFunction={(e)=>checkError(e)}
+                                        error={errorInputField.my_rival_idError}
+                                        />
+                                    <Form>
+                                        <Form.Check className='my-3'
+                                            name='locale'
+                                            type="switch"
+                                            id="custom-switch"
+                                            label="As visitor Game"
+                                            onClick={() => localeCheck()}
+                                            onBlur={(e) => checkError(e)}
+                                        />                                            
+                                    </Form>
+                                    <Form>
+                                        <Form.Check className='my-3'
+                                            name='friendly'
+                                            type="switch"
+                                            id="custom-switch"
+                                            label="Friendly game"
+                                            onClick={() => friendlyCheck()}
+                                            onBlur={(e) => checkError(e)}
+                                        />                                            
+                                    </Form>
+                                    <Container className='font fw-bold my-3'>{errorInputField.friendlyError}</Container>
                                 </Modal.Body>        
                             <Modal.Footer>
                                 <Button variant="danger" onClick={() => handleUpdateClose()}>
@@ -308,7 +544,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                                 </Button>
                                 {
                                     activeSubmit ? (
-                                        <Button variant="success" onClick={() => newName()}>
+                                        <Button variant="success" onClick={() => modGame()}>
                                             Save Changes
                                         </Button>
                                     ) : (
@@ -324,14 +560,19 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                                 <Modal.Title>Do you really want to delete this team?</Modal.Title>
                             </Modal.Header>                        
                                 <Modal.Body>
-                                    <div className='mx-3 fw-bold'>Team Name:</div>
-                                    <div className='mx-4'>{teamId}</div>                                    
+                                    <h4 className='font fw-bold'>Season</h4>
+                                    <div>{seasonDate}</div>
+                                    <h4 className='font fw-bold'>Locale</h4>
+                                    {newGame.locale ? (<div>{myTeam}</div>) : (<div>{rivalTeam}</div>)}
+                                    <h4 className='font fw-bold'>Visitor</h4>
+                                    {newGame.locale ? (<div>{rivalTeam}</div>) : (<div>{myTeam}</div>)}
+                                    {newGame.friendly ? (<h4 className='font fw-bold'>Friendly game</h4>) : (<h4 className='font fw-bold'>Official game</h4>)}                                 
                                 </Modal.Body>        
                             <Modal.Footer>
                                 <Button variant="danger" onClick={() => handleDeleteClose()}>
                                     Not really
                                 </Button>
-                                <Button variant="success" onClick={() => destroyTeam()}>
+                                <Button variant="success" onClick={() => destroyGame()}>
                                     Delete it
                                 </Button>
                             </Modal.Footer>
@@ -341,21 +582,16 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                     <>
                     <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Change the name of the team</Modal.Title>
+                            <Modal.Title>Change the data of the game.</Modal.Title>
                         </Modal.Header>                        
                             <Modal.Body>                            
-                                <div className='mx-3 fw-bold'>Previous Name:</div>
-                                <div className='mx-4'>{teamId}</div>
-                                <Input
-                                    className={''}
-                                    type={'text'}
-                                    name={'my_team_id'}
-                                    placeholder={'Type the new name here'}
-                                    required={true}
-                                    error={errorInputField}
-                                    changeFunction={(e)=>inputHandler(e)}
-                                    blurFunction={(e)=>checkError(e)}
-                                    />                            
+                                <h4 className='font fw-bold'>Season</h4>
+                                <div>{seasonDate}</div>
+                                <h4 className='font fw-bold'>Locale</h4>
+                                {newGame.locale ? (<div>{myTeam}</div>) : (<div>{rivalTeam}</div>)}
+                                <h4 className='font fw-bold'>Visitor</h4>
+                                {newGame.locale ? (<div>{rivalTeam}</div>) : (<div>{myTeam}</div>)}
+                                {newGame.friendly ? (<h4 className='font fw-bold'>Friendly game</h4>) : (<h4 className='font fw-bold'>Official game</h4>)}                               
                             </Modal.Body>        
                         <Modal.Footer>
                             <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
@@ -365,10 +601,15 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                         <Modal.Header closeButton>
                             <Modal.Title>Do you really want to delete this team?</Modal.Title>
                         </Modal.Header>                        
-                            <Modal.Body>                            
-                                <div className='mx-3 fw-bold'>Team Name:</div>
-                                <div className='mx-4'>{teamId}</div>                                                      
-                            </Modal.Body>        
+                        <Modal.Body>                            
+                                <h4 className='font fw-bold'>Season</h4>
+                                <div>{seasonDate}</div>
+                                <h4 className='font fw-bold'>Locale</h4>
+                                {newGame.locale ? (<div>{myTeam}</div>) : (<div>{rivalTeam}</div>)}
+                                <h4 className='font fw-bold'>Visitor</h4>
+                                {newGame.locale ? (<div>{rivalTeam}</div>) : (<div>{myTeam}</div>)}
+                                {newGame.friendly ? (<h4 className='font fw-bold'>Friendly game</h4>) : (<h4 className='font fw-bold'>Official game</h4>)}                               
+                            </Modal.Body>         
                         <Modal.Footer>
                             <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
                         </Modal.Footer>

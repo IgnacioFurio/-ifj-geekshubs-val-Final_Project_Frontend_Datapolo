@@ -21,7 +21,7 @@ import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
 
 export const Games = () => {
-    
+
         const userDataRdx = useSelector(userData);
 
         const updateInfo = useSelector(bringData);
@@ -202,17 +202,19 @@ export const Games = () => {
         })
 
         useEffect(() => {
-            
+
             dispatch(reload({updatedData: {}}))
-            
+
             if(gameData.length === 0){    
-    
+                
                 try {
                     
                         getAllMyGames(userDataRdx?.userCredentials?.token)
                             .then(
-                                result => {
-                                    setGameData(result.data.data.flat(2))                      
+                                result => {                                    
+                                    let data = Object.values(result.data.data)
+
+                                    setGameData(data.flat(2))    
                                 }
                                 
                             )
@@ -241,12 +243,12 @@ export const Games = () => {
                 }     
             };
     
-        },[]);
+        }, [gameData]);
     
         useEffect(() => {
-    
+
             if(updateInfo?.updatedData?.success){
-    
+
                 setGameData([]);
     
             };
@@ -450,7 +452,7 @@ export const Games = () => {
                                     <Col xs={2}></Col>                    
                                 </Row>                          
                                     <Row>
-                                        {gameData?.map(data =>
+                                        {gameData.map(data =>
                                                 {
                                                     return <TableGames 
                                                                 key={data.id}
@@ -462,6 +464,7 @@ export const Games = () => {
                                                                 rivalId={data.my_rival_id}
                                                                 locale={data.locale}
                                                                 friendly={data.friendly}
+                                                                blurFunction={(e) => checkError(e)}
                                                                 />
                                                 }
                                                 )

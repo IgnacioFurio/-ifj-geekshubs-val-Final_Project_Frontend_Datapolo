@@ -7,7 +7,6 @@ export const Select = ({title, name, dataMap, required, changeFunction, blurFunc
     const nameInput = name
 
     useEffect(() => {
-        
     });
 
     return (

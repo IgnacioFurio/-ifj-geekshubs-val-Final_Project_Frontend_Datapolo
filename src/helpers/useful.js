@@ -131,13 +131,21 @@ export const validate = (name, data, required) => {
     // SELECTION FIELDS
     case "season_id":
 
+        if(required === false && data === "default"){
+            return {message: "", valid: true}
+        };
+
         if(data === "" || data === "default"){
             return {message: "Please choose a season for the game", valid: false}
         };
-    
+
     return {message: "", valid: true};
     
     case "my_team_id":
+
+        if(required === false && data === "default"){
+            return {message: "", valid: true}
+        };
 
         if(data === "" || data === "default"){
             return {message: "Please choose your team for the game", valid: false}
@@ -146,6 +154,10 @@ export const validate = (name, data, required) => {
     return {message: "", valid: true};
 
     case "my_rival_id":
+
+        if(required === false && data === "default"){
+            return {message: "", valid: true}
+        };
 
         if(data === "" || data === "default"){
             return {message: "Please choose your rival for the game", valid: false}
