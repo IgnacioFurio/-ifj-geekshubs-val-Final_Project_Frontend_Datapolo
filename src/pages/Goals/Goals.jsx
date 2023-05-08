@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //apicall
-import { createNewGame, getAllMyGames, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
+import { getAllMyGames, getAllMyGoals, getAllMyPlayers, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
 //helper
 import { validate } from '../../helpers/useful';
 //redux
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../Slices/userSlice';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
-import { TableGames } from '../../common/TableGames/TableGames';
+import { TableGoals } from '../../common/TableGoals/TableGoals';
 import { Select } from '../../common/Select/Select';
 import Form from 'react-bootstrap/Form';
 import spiner from '../../assets/waterpolo.png'
@@ -20,7 +20,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
 
-export const Games = () => {
+export const Goals = () => {
 
         const userDataRdx = useSelector(userData);
 
@@ -31,40 +31,47 @@ export const Games = () => {
         const navigate = useNavigate();
     
         //HOOKS
+        const [goalData, setGoalData] = useState([]);
+
         const [gameData, setGameData] = useState([]);
 
         const [teamData, setTeamData] = useState([]);
-        const [team1, setTeam1] = useState('');
-        const [team2, setTeam2] = useState('');
+        
+        const [playerData, setPlayerData] = useState([]);
 
         const [seasonData, setSeasonData] = useState([]);
-        const [season, setSeason] = useState('')
+
+        const [zoneData, setZoneData] = useState([1,2,3,4,5,6,7,8,9]);
+
+        const [capData, setCapData] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13]);
         
-        const [newGame, setNewGame] = useState(
+        const [newGoal, setNewGoal] = useState(
             {
-                user_id: userDataRdx?.userCredentials?.user.id,
-                season_id: '',
-                my_team_id: '',
-                my_rival_id: '',
-                locale: true,
-                friendly: false
+                team_id: '',
+                game_id: '',
+                player_id: '',
+                zone: true,
+                player_nº: false
             }
         );
     
         const [errorInputField, setErrorInputField] = useState(
             {
-                season_idError: '',
-                my_team_idError: '',
-                my_rival_idError: '',
-                friendlyError: ''
+                team_id: '',
+                game_id: '',
+                player_id: '',
+                zone: '',
+                player_nº: ''
             }
         );
     
         const [validInputField, setValidInputfield] = useState(
             {
-                season_idValid: false,
-                my_team_idValid: false,
-                my_rival_idValid: false,
+                team_id: false,
+                game_id: false,
+                player_id: false,
+                zone: false,
+                player_nº: false
             }
         );
     
@@ -81,7 +88,7 @@ export const Games = () => {
         //input
         const inputHandler = (e) => {
 
-            setNewGame((prevState)=>(
+            setNewGoal((prevState)=>(
                 {
                     ...prevState,
                     [e.target.name]: e.target.value
@@ -93,14 +100,14 @@ export const Games = () => {
         //update modal 
         const handleAddGameClose = () => {
             
-            setNewGame(
+            setNewGoal(
                 {
                     user_id: userDataRdx?.userCredentials?.user.id,
-                    season_id: '',
-                    my_team_id: '',
-                    my_rival_id: '',
-                    locale: true,
-                    friendly: false
+                    team_id: '',
+                    game_id: '',
+                    player_id: '',
+                    zone: true,
+                    player_nº: false
                 }
             )
     
@@ -108,18 +115,18 @@ export const Games = () => {
     
             setErrorInputField(
                 {
-                    season_idError: '',
-                    my_team_idError: '',
-                    my_rival_idError: '',
-                    friendlyError: ''
+                    team_idError: '',
+                    game_idError: '',
+                    player_idError: '',
+                    player_nºError: ''
                 }
             )
     
             setValidInputfield(
                 {
-                    season_idValid: false,
-                    my_team_idValid: false,
-                    my_rival_idValid: false,
+                    team_idValid: false,
+                    game_idValid: false,
+                    player_idValid: false,
                 }
             )
 
@@ -134,42 +141,48 @@ export const Games = () => {
         };
     
         // USEEFFECT
-        //manage information for the game and teams implied on it
         useEffect(() => {
+            // console.log(teamData);
+            // console.log(gameData);
+            // console.log(playerData);
+            // console.log(seasonData);
+        });
+        //manage information for the game and teams implied on it
+        // useEffect(() => {
 
-            for (let i = 0 ; i < seasonData?.length; i++) {
+        //     for (let i = 0 ; i < seasonData?.length; i++) {
 
-                if(newGame?.season_id == seasonData[i]?.id){
+        //         if(newGoal?.team_id == seasonData[i]?.id){
 
-                    setSeason(seasonData[i].season)
+        //             setSeason(seasonData[i].season)
 
-                    i = season.length
+        //             i = season.length
 
-                }
-            }
+        //         }
+        //     }
 
-            for (let i = 0 ; i < teamData.length ; i++) {
+        //     for (let i = 0 ; i < teamData.length ; i++) {
 
-                if(newGame?.my_team_id == teamData[i]?.id){
+        //         if(newGoal?.game_id == teamData[i]?.id){
 
-                    setTeam1(teamData[i].team_name)
+        //             setTeam1(teamData[i].team_name)
 
-                }
+        //         }
                 
-                if (newGame?.my_rival_id == teamData[i]?.id){
+        //         if (newGoal?.player_id == teamData[i]?.id){
 
-                    setTeam2(teamData[i]?.team_name)
+        //             setTeam2(teamData[i]?.team_name)
 
-                }
+        //         }
 
-            }
-        }, [newGame]);
+        //     }
+        // }, [newGoal]);
 
         useEffect(() => {
             //in case that a field is empty
-            for(let empty in newGame){
+            for(let empty in newGoal){
 
-                if(newGame[empty] === ''){
+                if(newGoal[empty] === ''){
 
                     return setSubmitActive(false);
 
@@ -205,16 +218,16 @@ export const Games = () => {
 
             dispatch(reload({updatedData: {}}))
 
-            if(gameData.length === 0){    
+            if(goalData.length === 0){    
                 
                 try {
                     
-                    getAllMyGames(userDataRdx?.userCredentials?.token)
+                    getAllMyGoals(userDataRdx?.userCredentials?.token)
                         .then(
                             result => {                                    
                                 let data = Object.values(result.data.data)
 
-                                setGameData(data.flat(2))    
+                                setGoalData(data.flat(2))    
                             }
                             
                         )
@@ -229,6 +242,17 @@ export const Games = () => {
                         )
                         .catch(error => console.log(error));
 
+                    getAllMyGames(userDataRdx?.userCredentials?.token)
+                    .then(
+                        result => {                                    
+                            let data = Object.values(result.data.data)
+
+                            setGameData(data.flat(2))    
+                        }
+                        
+                    )
+                    .catch(error => console.log(error));
+
                     getAllSeasons(userDataRdx?.userCredentials?.token)
                         .then(
                             result => {
@@ -237,19 +261,29 @@ export const Games = () => {
                             
                         )
                         .catch(error => console.log(error));
+
+                    getAllMyPlayers(userDataRdx?.userCredentials?.user?.id ,userDataRdx?.userCredentials?.token)
+                            .then(
+                                result => {
+                                    setPlayerData(result.data.data)                      
+                                }
+                                
+                            )
+                            .catch(error => console.log(error));
+
                 } catch (error) {
                     
                     setShowAddGame(true)
                 }     
             };
     
-        }, [gameData]);
+        }, [goalData]);
     
         useEffect(() => {
 
             if(updateInfo?.updatedData?.success){
 
-                setGameData([]);
+                setGoalData([]);
     
             };
         },[updateInfo]);
@@ -284,34 +318,11 @@ export const Games = () => {
                 )
             );
 
-            //in case my team and my rival team are the same
-            if(newGame.my_team_id === newGame.my_rival_id && newGame.friendly === false && newGame.my_team_id !== ""){
-
-                setErrorInputField(
-                    {
-                        season_idError: errorInputField.season_idError,
-                        my_team_idError: errorInputField.my_team_idError,
-                        my_rival_idError: errorInputField.my_rival_idError,
-                        friendlyError: 'Only a friendly match allows a team to play versus itself'
-                    }
-                )
-            }else if(newGame.my_team_id !== newGame.my_rival_id) {
-
-                setErrorInputField(
-                    {
-                        season_idError: errorInputField.season_idError,
-                        my_team_idError: errorInputField.my_team_idError,
-                        my_rival_idError: errorInputField.my_rival_idError,
-                        friendlyError: ''
-                    }
-                )
-            }
-
         };
     
         const createGame = () => {
     
-            createNewGame(newGame, userDataRdx?.userCredentials?.token)
+            createnewGoal(newGoal, userDataRdx?.userCredentials?.token)
                 .then(backendCall=> {                
 
                     setMessage(backendCall.data.message)
@@ -322,31 +333,31 @@ export const Games = () => {
                             
                         dispatch(reload({updatedData: success}))
                         
-                        setNewGame(
+                        setNewGoal(
                             {
                                 user_id: userDataRdx?.userCredentials?.user.id,
-                                season_id: '',
-                                my_team_id: '',
-                                my_rival_id: '',
-                                locale: true,
-                                friendly: false
+                                team_id: '',
+                                game_id: '',
+                                player_id: '',
+                                zone: true,
+                                player_nº: false
                             }
                         )
 
                         setErrorInputField(
                             [{
-                                season_idError: '',
-                                my_team_idError: '',
-                                my_rival_idError: '',
-                                friendlyError: ''
+                                team_idError: '',
+                                game_idError: '',
+                                player_idError: '',
+                                player_nºError: ''
                             }]
                         )
         
                         setValidInputfield(
                             [{
-                                season_idValid: false,
-                                my_team_idValid: false,
-                                my_rival_idValid: false,
+                                team_idValid: false,
+                                game_idValid: false,
+                                player_idValid: false,
                             }]
                         )
         
@@ -361,71 +372,16 @@ export const Games = () => {
                 .catch(error => console.log(error))
     
         };
-    
-        const localeCheck = () =>  {
-
-            if(newGame.locale === false){
-                setNewGame(
-                    {
-                        user_id: userDataRdx?.userCredentials?.user.id,
-                        season_id: newGame.season_id,
-                        my_team_id: newGame.my_team_id,
-                        my_rival_id: newGame.my_rival_id,
-                        locale: true,
-                        friendly: newGame.friendly
-                    }
-                )
-            } else if (newGame.locale === true){
-                setNewGame(
-                    {
-                        user_id: userDataRdx?.userCredentials?.user.id,
-                        season_id: newGame.season_id,
-                        my_team_id: newGame.my_team_id,
-                        my_rival_id: newGame.my_rival_id,
-                        locale: false,
-                        friendly: newGame.friendly
-                    }
-                )
-            } 
-        }
-
-        const friendlyCheck = () =>  {
-
-            if(newGame.friendly === false){
-                setNewGame(
-                    {
-                        user_id: userDataRdx?.userCredentials?.user.id,
-                        season_id: newGame.season_id,
-                        my_team_id: newGame.my_team_id,
-                        my_rival_id: newGame.my_rival_id,
-                        locale: newGame.locale,
-                        friendly: true
-                    }
-                )
-            } else if (newGame.friendly  === true){
-                setNewGame(
-                    {
-                        user_id: userDataRdx?.userCredentials?.user.id,
-                        season_id: newGame.season_id,
-                        my_team_id: newGame.my_team_id,
-                        my_rival_id: newGame.my_rival_id,
-                        locale: newGame.locale,
-                        friendly: false
-                    }
-                )
-            } 
-
-        }
 
         return (
             <>
             <Container fluid>
                 <Row className='mt-5 mb-3'>
                     <Col xs={9} className='d-flex justify-content-start '>
-                    <h2 className='font fw-bold'>Your Games</h2>
+                    <h2 className='font fw-bold'>Your Goals</h2>
                     </Col>
                     <Col xs={2} className='d-flex justify-content-end fw-bold text-primary'>
-                        <p>Add Game</p>
+                        <p>Add Goal</p>
                     </Col>
                     <Col xs={1}>
                         <img src={add} className="updateIcon" alt="addIcon" onClick={() => handleAddGameShow()}/>
@@ -433,7 +389,7 @@ export const Games = () => {
                     <hr className='font fw-bold'></hr>
                 </Row>
                     {
-                        gameData.length === 0 ? (
+                        goalData.length === 0 ? (
                             <>                            
                                 <img src={spiner} className="spinnerDesign m-5" alt="spinner"/>
                                 <h3 className='font fw-bold'>Looking for your information.</h3>                            
@@ -441,29 +397,33 @@ export const Games = () => {
                         ) : (
                             <>
                                 <Container>  
-                                <Row className='teamId my-3 mx-2'>
-                                    <Col xs={2} className='d-flex justify-content-start'></Col>
-                                    <Col xs={4} className='d-flex justify-content-start font fw-bold'>
-                                    Locale
-                                    </Col>
-                                    <Col xs={4} className='d-flex justify-content-start font fw-bold'>
-                                    Visitor
-                                    </Col>
-                                    <Col xs={2}></Col>                    
-                                </Row>                          
+                                    <Row className='d-flex justify-content-start my-2'>
+                                        <Col xs={3} className='d-flex justify-content-center font fw-bold'>
+                                            Game
+                                        </Col>
+                                        <Col xs={3} className='d-flex justify-content-center font fw-bold'>
+                                            Team
+                                        </Col>
+                                        <Col xs={3} className='d-flex justify-content-center font fw-bold'>
+                                            Player and cap 
+                                        </Col>
+                                        <Col xs={2}></Col>                    
+                                    </Row>                          
                                     <Row>
-                                        {gameData.map(data =>
+                                        {goalData.map(data =>
                                                 {
-                                                    return <TableGames 
+                                                    return <TableGoals
                                                                 key={data.id}
                                                                 id={data.id} 
-                                                                seasons={seasonData}
-                                                                seasonId={data.season_id}
-                                                                myTeams={teamData} 
-                                                                teamId= {data.my_team_id}
-                                                                rivalId={data.my_rival_id}
-                                                                locale={data.locale}
-                                                                friendly={data.friendly}
+                                                                gameId={data.game_id}
+                                                                teamId={data.team_id} 
+                                                                playerId={data.player_id}
+                                                                zones= {data.zone}
+                                                                capNumbers={data.player_nº}
+                                                                teamsInfo={teamData}
+                                                                gamesInfo={gameData}
+                                                                playersInfo={playerData}
+                                                                seasonsInfo={seasonData}
                                                                 blurFunction={(e) => checkError(e)}
                                                                 />
                                                 }
@@ -483,53 +443,34 @@ export const Games = () => {
                                     </Modal.Header>                        
                                         <Modal.Body>                                            
                                             <Select
-                                                title={'Select the season'}
-                                                name={"season_id"}
-                                                dataMap={seasonData}
-                                                required={true}
-                                                changeFunction={(e)=>inputHandler(e)}
-                                                blurFunction={(e)=>checkError(e)}
-                                                error={errorInputField.season_idError}
-                                                />
-                                            <Select
-                                                title={'Select your team'}
-                                                name={"my_team_id"}
+                                                title={'Select a team.'}
+                                                name={"team_id"}
                                                 dataMap={teamData}
                                                 required={true}
                                                 changeFunction={(e)=>inputHandler(e)}
                                                 blurFunction={(e)=>checkError(e)}
-                                                error={errorInputField.my_team_idError}
+                                                error={errorInputField.team_idError}
                                                 />
                                             <Select
-                                                title={'Select your rival'}
-                                                name={"my_rival_id"}
-                                                dataMap={teamData}
+                                                title={'Select a game.'}
+                                                name={"game_id"}
+                                                dataMap={gameData}
                                                 required={true}
                                                 changeFunction={(e)=>inputHandler(e)}
                                                 blurFunction={(e)=>checkError(e)}
-                                                error={errorInputField.my_rival_idError}
+                                                error={errorInputField.game_idError}
                                                 />
-                                            <Form>
-                                                <Form.Check className='my-3'
-                                                    name='locale'
-                                                    type="switch"
-                                                    id="custom-switch"
-                                                    label="As visitor Game"
-                                                    onClick={() => localeCheck()}
-                                                    onBlur={(e) => checkError(e)}
-                                                />                                            
-                                            </Form>
-                                            <Form>
-                                                <Form.Check className='my-3'
-                                                    name='friendly'
-                                                    type="switch"
-                                                    id="custom-switch"
-                                                    label="Friendly game"
-                                                    onClick={() => friendlyCheck()}
-                                                    onBlur={(e) => checkError(e)}
-                                                />                                            
-                                            </Form>
-                                            <Container className='font fw-bold my-3'>{errorInputField.friendlyError}</Container>
+                                            <Select
+                                                title={'Select a player.'}
+                                                name={"player_id"}
+                                                dataMap={playerData}
+                                                required={true}
+                                                changeFunction={(e)=>inputHandler(e)}
+                                                blurFunction={(e)=>checkError(e)}
+                                                error={errorInputField.player_idError}
+                                                />
+                                            
+                                            <Container className='font fw-bold my-3'>{errorInputField.player_nºError}</Container>
                                         </Modal.Body>        
                                     <Modal.Footer>
                                         <Button variant="danger" onClick={() => handleAddGameClose()}>
@@ -556,11 +497,11 @@ export const Games = () => {
                                         <Modal.Body>
                                             <h4 className='font fw-bold'>Season</h4>
                                             <div>{season}</div>
-                                            <h4 className='font fw-bold'>Locale</h4>
-                                            {newGame.locale ? (<div>{team1}</div>) : (<div>{team2}</div>)}
+                                            <h4 className='font fw-bold'>zone</h4>
+                                            {newGoal.zone ? (<div>{team1}</div>) : (<div>{team2}</div>)}
                                             <h4 className='font fw-bold'>Visitor</h4>
-                                            {newGame.locale ? (<div>{team2}</div>) : (<div>{team1}</div>)}
-                                            {newGame.friendly ? (<h4 className='font fw-bold'>Friendly game</h4>) : (<h4 className='font fw-bold'>Official game</h4>)}
+                                            {newGoal.zone ? (<div>{team2}</div>) : (<div>{team1}</div>)}
+                                            {newGoal.player_nº ? (<h4 className='font fw-bold'>player_nº game</h4>) : (<h4 className='font fw-bold'>Official game</h4>)}
                                         </Modal.Body>        
                                     <Modal.Footer>
                                         <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>

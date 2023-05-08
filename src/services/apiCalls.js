@@ -329,3 +329,15 @@ export const deleteGame = async (body, token) => {
 
     return await axios.delete(`${root}/api/my-games`, {headers, data})
 };
+
+//GOALS
+export const getAllMyGoals = async (token) => {
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.get(`${root}/api/my-goals`, config)
+};

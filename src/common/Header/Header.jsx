@@ -103,6 +103,9 @@ export const Header = () => {
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/games')}>
                                         My games
                                     </NavDropdown.Item>
+                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/goals')}>
+                                        My goals
+                                    </NavDropdown.Item>
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
                                         Offensive data
                                     </NavDropdown.Item>
