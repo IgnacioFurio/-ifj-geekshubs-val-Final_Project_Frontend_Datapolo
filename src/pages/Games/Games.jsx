@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //apicall
-import { createNewGame, getAllMyGames, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
+import { createNewGame, getAllMyGames, getAllMyPlayers, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
 //helper
 import { validate } from '../../helpers/useful';
 //redux
@@ -39,6 +39,8 @@ export const Games = () => {
 
         const [seasonData, setSeasonData] = useState([]);
         const [season, setSeason] = useState('')
+
+        const [playerData, setPlayerData] = useState([]); 
         
         const [newGame, setNewGame] = useState(
             {
@@ -237,6 +239,16 @@ export const Games = () => {
                             
                         )
                         .catch(error => console.log(error));
+                    
+                    getAllMyPlayers(userDataRdx?.userCredentials?.user?.id ,userDataRdx?.userCredentials?.token)
+                    .then(
+                        result => {
+                            setPlayerData(result.data.data)                      
+                        }
+                        
+                    )
+                    .catch(error => console.log(error));
+
                 } catch (error) {
                     
                     setShowAddGame(true)
@@ -466,6 +478,7 @@ export const Games = () => {
                                                                 seasons={seasonData}
                                                                 seasonId={data.season_id}
                                                                 myTeams={teamData} 
+                                                                myPlayers={playerData}
                                                                 teamId= {data.my_team_id}
                                                                 rivalId={data.my_rival_id}
                                                                 locale={data.locale}

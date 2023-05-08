@@ -7,29 +7,7 @@ export const Select = ({title, name, dataMap, extraData, required, changeFunctio
     const nameInput = name
 
     useEffect(() => {
-        // console.log(dataMap);
-        // console.log(extraData);
-        
-        // for (let i = 0 ; i < extraData?.length ; i++) {
-            
-        //     if(gameId === gamesData[i]?.id){
-                
-        //         setMyRivalId(gamesData[i]?.my_rival_id)
-        //         setSeasonId(gamesData[i]?.season_id)
-                
-        //     }
-            
-        // }
 
-        // for (let i = 0 ; i < seasonsData?.length ; i++) {
-
-        //     if(seasonId === seasonsData[i]?.id){
-
-        //         setSeasonDate(seasonsData[i]?.season)
-
-        //     }
-
-        // }
 
     });
 
