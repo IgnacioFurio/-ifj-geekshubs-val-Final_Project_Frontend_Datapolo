@@ -420,6 +420,12 @@ export const Games = () => {
         return (
             <>
             <Container fluid>
+                <Row className='font fw-bold text-start pt-3'>
+                    If you want to know more about the game, like the information about the goals, just click the information button to the side of the game.
+                </Row>
+                <Row className='font fw-bold text-start pt-3'>
+                    Teams resalted are your own teams.
+                </Row>
                 <Row className='mt-5 mb-3'>
                     <Col xs={9} className='d-flex justify-content-start '>
                     <h2 className='font fw-bold'>Your Games</h2>
@@ -441,15 +447,15 @@ export const Games = () => {
                         ) : (
                             <>
                                 <Container>  
-                                <Row className='teamId my-3 mx-2'>
-                                    <Col xs={2} className='d-flex justify-content-start'></Col>
-                                    <Col xs={4} className='d-flex justify-content-start font fw-bold'>
+                                <Row className='my-3 '>
+                                    <Col xs={1} className='d-flex justify-content-center'></Col>
+                                    <Col xs={4} className='d-flex justify-content-center font fw-bold'>
                                     Locale
                                     </Col>
-                                    <Col xs={4} className='d-flex justify-content-start font fw-bold'>
+                                    <Col xs={4} className='d-flex justify-content-center font fw-bold'>
                                     Visitor
                                     </Col>
-                                    <Col xs={2}></Col>                    
+                                    <Col xs={3}></Col>                    
                                 </Row>                          
                                     <Row>
                                         {gameData.map(data =>

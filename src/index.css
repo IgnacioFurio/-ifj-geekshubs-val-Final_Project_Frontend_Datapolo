@@ -26,6 +26,18 @@ body{
 }
 
 
+.infoIcon{
+    width: 1.2em;
+    height: 1.2em;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.infoIcon:hover{
+    width: 1.7em;
+    height: 1.7em;
+    transition: 0.3s;
+}
+
 .updateIcon{
     width: 1.5em;
     height: 1.5em;

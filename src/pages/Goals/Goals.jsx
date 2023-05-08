@@ -19,6 +19,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
+import { SelectGame } from '../../common/SelectGame/SelectGame';
 
 export const Goals = () => {
 
@@ -439,22 +440,24 @@ export const Goals = () => {
                         message === '' ? (
                             <Modal show={showAddGame} onHide={() => handleAddGameClose()}>
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Add a new game for your data.</Modal.Title>
+                                        <Modal.Title>Add a new goal for your data.</Modal.Title>
                                     </Modal.Header>                        
                                         <Modal.Body>                                            
+                                            <SelectGame
+                                                title={'Select a game.'}
+                                                name={"game_id"}
+                                                gamesDataMap={gameData}
+                                                seasonsData={seasonData}
+                                                teamsData={teamData}
+                                                required={true}
+                                                changeFunction={()=>{}}
+                                                blurFunction={()=>{}}
+                                                error={errorInputField.team_idError}
+                                                />
                                             <Select
                                                 title={'Select a team.'}
                                                 name={"team_id"}
                                                 dataMap={teamData}
-                                                required={true}
-                                                changeFunction={(e)=>inputHandler(e)}
-                                                blurFunction={(e)=>checkError(e)}
-                                                error={errorInputField.team_idError}
-                                                />
-                                            <Select
-                                                title={'Select a game.'}
-                                                name={"game_id"}
-                                                dataMap={gameData}
                                                 required={true}
                                                 changeFunction={(e)=>inputHandler(e)}
                                                 blurFunction={(e)=>checkError(e)}

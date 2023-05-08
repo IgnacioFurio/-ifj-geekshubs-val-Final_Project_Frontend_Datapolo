@@ -341,3 +341,19 @@ export const getAllMyGoals = async (token) => {
 
     return await axios.get(`${root}/api/my-goals`, config)
 };
+
+export const getAllMyGoalsByTeamIdAndGameId = async (body, token) => {
+    
+    let data = {
+        "team_id": body.team_id,
+        "game_id": body.game_id
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,  
+        }
+    }
+
+    return await axios.post(`${root}/api/my-goals-by-team-id-game-id`, data, config)
+};

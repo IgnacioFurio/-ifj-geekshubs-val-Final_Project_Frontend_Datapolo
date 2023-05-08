@@ -222,10 +222,6 @@ export const TableGoals = ({id, gameId, teamId, playerId , zones, capNumbers, te
         setGamesData(gamesInfo)
         setPlayersData(playersInfo)
         setSeasonsData(seasonsInfo)
-
-        console.log(seasonId);
-        console.log('seasonsData',seasonsData);
-        console.log('seasonDate',seasonDate);
         
         for (let i = 0 ; i < gamesData?.length ; i++) {
             

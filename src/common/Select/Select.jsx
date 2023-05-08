@@ -1,12 +1,36 @@
 import React, { useEffect, useState } from 'react';
 
-export const Select = ({title, name, dataMap, required, changeFunction, blurFunction, error}) => {
+export const Select = ({title, name, dataMap, extraData, required, changeFunction, blurFunction, error}) => {
     
     const dataMapping = dataMap
 
     const nameInput = name
 
     useEffect(() => {
+        // console.log(dataMap);
+        // console.log(extraData);
+        
+        // for (let i = 0 ; i < extraData?.length ; i++) {
+            
+        //     if(gameId === gamesData[i]?.id){
+                
+        //         setMyRivalId(gamesData[i]?.my_rival_id)
+        //         setSeasonId(gamesData[i]?.season_id)
+                
+        //     }
+            
+        // }
+
+        // for (let i = 0 ; i < seasonsData?.length ; i++) {
+
+        //     if(seasonId === seasonsData[i]?.id){
+
+        //         setSeasonDate(seasonsData[i]?.season)
+
+        //     }
+
+        // }
+
     });
 
     return (
@@ -18,7 +42,7 @@ export const Select = ({title, name, dataMap, required, changeFunction, blurFunc
                         dataMapping.map(data => 
                                 {
                                     return <option  key={data.id} value={data.id}>
-                                                {data.season || data.team_name}
+                                                {data.season || data.team_name || data.name}
                                             </option>
                                 }
                             )

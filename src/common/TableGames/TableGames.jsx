@@ -6,17 +6,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../pages/Slices/userSlice';
 import { reload } from '../../pages/Slices/reloadSlice';
 //apicall
-import { deleteGame, modifyGame } from '../../services/apiCalls';
+import { deleteGame, getAllMyGoalsByTeamIdAndGameId, modifyGame } from '../../services/apiCalls';
 //render
 import { Select } from '../Select/Select';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import info from '../../assets/info.png';
 import update from '../../assets/actualizar-flecha.png';
 import del from '../../assets/borrar.png';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import add from '../../assets/agregar.png';
 import './TableGames.css'
 
 
@@ -37,6 +39,25 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
             friendly: false
         }
     );
+
+    const [checkMyGoals, setCheckMyGoals] = useState(
+        {
+            team_id: teamId,
+            game_id: id
+        }
+    );
+
+    const [myGoals, setMyGoals] = useState([]);
+
+    const [checkRivalGoals, setCheckRivalGoals] = useState(
+        {
+            team_id: rivalId,
+            game_id: id
+        }
+    );
+
+    const [rivalGoals, setRivalGoals] = useState([]);
+
 
     const [ teamsData, setTeamsData ] = useState([]);
 
@@ -67,6 +88,9 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
         }
     );
 
+    //set info modal
+    const [showInfo, setShowInfo] = useState(false);
+
     //set update modal
     const [showUpdate, setShowUpdate] = useState(false);
 
@@ -91,7 +115,40 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
             )
         );
     }
+    //info modal
+    const handleInfoClose = () => {
 
+        setShowInfo(false)
+
+    };
+    
+    const handleInfoShow = () => {
+
+        setShowInfo(true)
+
+        getAllMyGoalsByTeamIdAndGameId(checkMyGoals, userDataRdx?.userCredentials?.token)
+            .then(
+                result => {                                    
+                    let data = Object.values(result.data.data)
+
+                    setMyGoals(data.flat(2))    
+                }
+                
+            )
+            .catch(error => console.log(error));
+
+        getAllMyGoalsByTeamIdAndGameId(checkRivalGoals, userDataRdx?.userCredentials?.token)
+            .then(
+                result => {                                    
+                    let data = Object.values(result.data.data)
+
+                    setRivalGoals(data.flat(2))    
+                }
+                
+            )
+            .catch(error => console.log(error));
+
+    };
     //update modal 
     const handleUpdateClose = () => {
         
@@ -160,6 +217,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
 
     //USEEFFECT
     useEffect(() => {
+        console.log(myGoals);
         //functions to make submit button activated
         //in case that a field is empty
         for(let empty in newGame){
@@ -462,15 +520,16 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
         <>
             <Container fluid>
                 <Row className='my-3 mx-2'>
-                    <Col xs={2} className='text-start px-1'>
+                    <Col xs={1} className='text-center px-1'>
                     {seasonDate}
                     </Col>
-                    <Col xs={4} className='text-start'>
+                    <Col xs={4} className='text-center'>
                     {localeGame == true ? (<div className='fw-bold'>{myTeam}</div>) : (<div>{rivalTeam}</div>)}
                     </Col>
-                    <Col xs={4} className='text-start'>
+                    <Col xs={4} className='text-center'>
                     {localeGame == true ? (<div>{rivalTeam}</div>) : (<div className='fw-bold'>{myTeam}</div>)}
                     </Col>
+                    <Col xs={1}><img src={info} alt="update" className='infoIcon' onClick={() => handleInfoShow()}/></Col>                    
                     <Col xs={1}><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
                     <Col xs={1}><img src={del} alt="delete" className='deleteIcon' onClick={() => handleDeleteShow()}/></Col>
                 </Row>
@@ -478,6 +537,26 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
             {
                 message === '' ? (
                     <>
+                        <Modal show={showInfo} onHide={() => handleInfoClose()}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Information about the game.</Modal.Title>
+                            </Modal.Header>                        
+                                <Modal.Body>
+                                    <div className='font fw-bold'>Result</div>                                
+                                    <div className='d-flex my-2'>
+                                        <div className='d-flex mx-2 fw-bold'>{myTeam}:</div>
+                                        <div className='d-flex mx-2 fontNoHover fw-bold'>{myGoals.length}</div>                                        
+                                    </div>   
+                                    <div className='d-flex my-2'>
+                                        <div className='d-flex mx-2'>{rivalTeam}:</div>
+                                        <div className='d-flex mx-2 fontNoHover fw-bold'>{rivalGoals.length}</div>                                        
+                                    </div>   
+                                </Modal.Body>        
+                            <Modal.Footer>
+                                <div xs={2} className='d-flex justify-content-end fw-bold text-primary'>Add goal</div>
+                                <img src={add} className="updateIcon" alt="addIcon" onClick={() => {}}/>
+                            </Modal.Footer>
+                        </Modal>
                         <Modal show={showUpdate} onHide={() => handleUpdateClose()}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Change the data of the game.</Modal.Title>
@@ -577,6 +656,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, teamId, rivalId, loc
                                 </Button>
                             </Modal.Footer>
                         </Modal>
+                        
                     </>
                 ) : (
                     <>
