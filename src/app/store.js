@@ -6,13 +6,15 @@ import { persistReducer } from 'redux-persist';
 import userSlice from "../pages/Slices/userSlice";
 import isAdminSlice from "../pages/Slices/isAdminSlice";
 import reloadSlice from "../pages/Slices/reloadSlice";
+import zoneSlice from "../pages/Slices/zoneSlice";
 
 import thunk from "redux-thunk";
 
 const reducers = combineReducers({
     user: userSlice,
     admin: isAdminSlice,
-    reload: reloadSlice
+    reload: reloadSlice,
+    zone: zoneSlice
 })
 
 const persistConfig = {
