@@ -237,7 +237,13 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
             }
         )
 
-        setValidInputfield(false)
+        setValidInputfield(
+            {
+                season_idValid: false,
+                my_team_idValid: false,
+                my_rival_idValid: false,
+            }
+        )
 
     };
 
@@ -477,8 +483,6 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
     //function to agg goal
     const addGoal = () => {
 
-        console.log('esther');
-
         createNewGoal(newGoal, userDataRdx?.userCredentials?.token)
             .then(backendCall=> {                
                 console.log(backendCall.data);
@@ -503,7 +507,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
 
         modifyGame(newGame, userDataRdx?.userCredentials?.token)
             .then(backendCall=> {                
-                console.log(backendCall.data);
+
                 setMessage(backendCall.data.message)
 
                 let success = {success: backendCall.data.success}
@@ -511,6 +515,34 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
                 setTimeout(() => {
                     
                     dispatch(reload({updatedData: success}))
+
+                    setNewGame(
+                        {
+                            id: id,
+                            season_id: seasonId,
+                            my_team_id: teamId,
+                            my_rival_id: rivalId,
+                            locale: true,
+                            friendly: false
+                        }
+                    );
+                
+                    setErrorInputField(
+                        {
+                            season_idError: '',
+                            my_team_idError: '',
+                            my_rival_idError: '',
+                            friendlyError: ''
+                        }
+                    );
+                
+                    setValidInputfield(
+                        {
+                            season_idValid: false,
+                            my_team_idValid: false,
+                            my_rival_idValid: false,
+                        }
+                    );
 
                     setMessage('')
 
@@ -534,6 +566,17 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
                     
                     dispatch(reload({updatedData: success}))
 
+                    setNewGame(
+                        {
+                            id: id,
+                            season_id: seasonId,
+                            my_team_id: teamId,
+                            my_rival_id: rivalId,
+                            locale: true,
+                            friendly: false
+                        }
+                    );
+                    
                     setErrorInputField(
                         {
                             season_idError: '',
