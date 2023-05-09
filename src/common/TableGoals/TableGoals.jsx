@@ -48,12 +48,12 @@ export const TableGoals = ({game_id, team_id, myPlayers}) => {
         <>
             <Container>
                 <Row>
-                    <Col xs={5} className='font fw-bold'>Goal by</Col>
-                    <Col xs={4} className='font fw-bold'>Cap Nº</Col>
+                    <Col xs={5} className='font fw-bold text-center'>Goal by</Col>
+                    <Col xs={4} className='font fw-bold text-center'>Cap Nº</Col>
                     <Col xs={1}></Col>                    
                     <Col xs={1}></Col>                    
                     <Col xs={1}></Col>
-                </Row>
+                </Row>                
                 {
                     goalsData.map(data=>
                         { 
