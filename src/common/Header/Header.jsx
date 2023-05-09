@@ -83,9 +83,6 @@ export const Header = () => {
                                                 Games
                                             </NavDropdown.Item>
                                             <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
-                                                Goals
-                                            </NavDropdown.Item>
-                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
                                                 Trophies
                                             </NavDropdown.Item>
                                         </NavDropdown>
@@ -102,9 +99,6 @@ export const Header = () => {
                                     </NavDropdown.Item>
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/games')}>
                                         My games
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/goals')}>
-                                        My goals
                                     </NavDropdown.Item>
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
                                         Offensive data

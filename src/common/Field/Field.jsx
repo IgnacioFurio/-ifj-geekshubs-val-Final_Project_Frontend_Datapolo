@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-//redux
-import { zoneRdx } from '../../pages/Slices/zoneSlice';
-import { useDispatch } from 'react-redux';
 //render
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,20 +9,7 @@ export const Field = ({clickFunction}) => {
 
     //HOOKS
     const [zone, setZone] = useState('');
-    const dispatch = useDispatch();
 
-    //HANDLER
-    //input
-    const inputHandler = (e) => {
-
-        dispatch(zoneRdx({zoneInfo: {}}))
-
-        setzoneDataInformation(e.target.title);
-
-        let zoneInformation = {data: zone}
-
-        dispatch(zoneRdx({zoneInfo: zoneInformation}))
-    }
 
     //USEEFFECT
     useEffect(() =>{

@@ -5,7 +5,6 @@ import { validate } from '../../helpers/useful';
 import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../pages/Slices/userSlice';
 import { reload } from '../../pages/Slices/reloadSlice';
-import { zoneInfoData } from '../../pages/Slices/zoneSlice';
 //apicall
 import { createNewGoal, deleteGame, getAllMyGoalsByTeamIdAndGameId, modifyGame } from '../../services/apiCalls';
 //render
@@ -21,6 +20,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
 import './TableGames.css'
+import { TableGoals } from '../TableGoals/TableGoals';
 
 
 export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, rivalId, locale, friendly, blurFunction}) => {
@@ -28,7 +28,6 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
     const dispatch = useDispatch();
 
     const userDataRdx = useSelector(userData);
-    const zoneDataRdx = useSelector(zoneInfoData);
 
     //HOOKS
     const [newGame, setNewGame] = useState(
@@ -576,7 +575,7 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
                             friendly: false
                         }
                     );
-                    
+
                     setErrorInputField(
                         {
                             season_idError: '',
@@ -686,15 +685,27 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
                                             <Modal.Title>Information about the game.</Modal.Title>
                                         </Modal.Header>                        
                                             <Modal.Body>
-                                                <div className='font fw-bold'>Result</div>                                
+                                                <div className='font fw-bold'>Result</div> 
+                                                <hr />                               
                                                 <div className='d-flex my-2'>
                                                     <div className='d-flex mx-2 fw-bold'>{myTeam}:</div>
                                                     <div className='d-flex mx-2 fontNoHover fw-bold'>{myGoals.length}</div>                                        
-                                                </div>   
+                                                </div>  
+                                                <TableGoals
+                                                    game_id={id}
+                                                    team_id={teamId}
+                                                    myPlayers={myPlayers}
+                                                /> 
+                                                <hr />
                                                 <div className='d-flex my-2'>
                                                     <div className='d-flex mx-2'>{rivalTeam}:</div>
                                                     <div className='d-flex mx-2 fontNoHover fw-bold'>{rivalGoals.length}</div>                                        
-                                                </div>   
+                                                </div>
+                                                <TableGoals
+                                                    game_id={id}
+                                                    team_id={rivalId}
+                                                    myPlayers={myPlayers}
+                                                /> 
                                             </Modal.Body>        
                                         <Modal.Footer>
                                             <div xs={2} className='d-flex justify-content-end fw-bold text-primary'>Add goal</div>
