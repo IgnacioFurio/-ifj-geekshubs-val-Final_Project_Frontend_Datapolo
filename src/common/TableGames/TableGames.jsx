@@ -20,10 +20,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
+import goal from '../../assets/jugador-de-waterpolo-con-las-bolas-en-el-agua.png';
 import './TableGames.css'
 
 
-export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, rivalId, locale, friendly, blurFunction}) => {
+export const TableGames = ({id, data, seasons, seasonId, myTeams, myPlayers, teamId, rivalId, locale, friendly, blurFunction}) => {
 
     const dispatch = useDispatch();
 
@@ -752,23 +753,44 @@ export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, r
                                                 }
                                             </select>
                                             <div className='font fw-bold my-2'>Click where the goal came from.</div>
-                                            <Container className='water'>
+                                            <Container>
                                                 <Row>
-                                                    <Col xs={4} className='zone1' title={1} onClick={(e)=>inputFieldHandler(e)}></Col>
-                                                    <Col xs={4} className='d-flex justify-content-center zone2' title={2} onClick={(e)=>inputFieldHandler(e)}> 
-                                                        <div className=' goal'></div>
+                                                    <Col></Col>
+                                                    <Col className=' goal'></Col>
+                                                    <Col></Col>
+                                                </Row>
+                                                <Row className='water'>
+                                                    <Col xs={4} className='zone1 d-flex justify-content-center align-items-center' title={1} onClick={(e)=>inputFieldHandler(e)}>
+                                                        {newGoal.zone == 1 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
                                                     </Col>
-                                                    <Col xs={4} className='zone3' title={3} onClick={(e)=>inputFieldHandler(e)}></Col>
+                                                    <Col xs={4} className='zone2 d-flex justify-content-center align-items-center' title={2} onClick={(e)=>inputFieldHandler(e)}> 
+                                                        {newGoal.zone == 2 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
+                                                    </Col>
+                                                    <Col xs={4} className='zone3 d-flex justify-content-center align-items-center' title={3} onClick={(e)=>inputFieldHandler(e)}>
+                                                        {newGoal.zone == 3 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
+                                                    </Col>
                                                 </Row>
-                                                <Row>
-                                                    <Col xs={4} className='zone4' title={4} onClick={(e)=>inputFieldHandler(e)}></Col>
-                                                    <Col xs={4} className='zone5 text-center font fw-bold' title={5} onClick={(e)=>inputFieldHandler(e)}>4m</Col>
-                                                    <Col xs={4} className='zone6' title={6} onClick={(e)=>inputFieldHandler(e)}></Col>
+                                                <Row className='water'>
+                                                    <Col xs={4} className='zone4 d-flex justify-content-center align-items-center' title={4} onClick={(e)=>inputFieldHandler(e)}>
+                                                        {newGoal.zone == 4 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
+                                                    </Col>
+                                                    <Col xs={4} className='zone5 d-flex justify-content-center align-items-center' title={5} onClick={(e)=>inputFieldHandler(e)}>
+                                                        {newGoal.zone == 5 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
+                                                    </Col>
+                                                    <Col xs={4} className='zone6 d-flex justify-content-center align-items-center' title={6} onClick={(e)=>inputFieldHandler(e)}>
+                                                        {newGoal.zone == 6 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
+                                                    </Col>
                                                 </Row>
-                                                <Row>
-                                                    <Col xs={4} className='zone7' title={7} onClick={(e)=>inputFieldHandler(e)}></Col>
-                                                    <Col xs={4} className='zone8 text-center font fw-bold' title={8} onClick={(e)=>inputFieldHandler(e)}>7m</Col>
-                                                    <Col xs={4} className='zone9' title={9} onClick={(e)=>inputFieldHandler(e)}></Col>
+                                                <Row className='water'>
+                                                    <Col xs={4} className='zone7 d-flex justify-content-center align-items-center' title={7} onClick={(e)=>inputFieldHandler(e)}>
+                                                        {newGoal.zone == 7 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
+                                                    </Col>
+                                                    <Col xs={4} className='zone8 d-flex justify-content-center align-items-center' title={8} onClick={(e)=>inputFieldHandler(e)}>
+                                                        {newGoal.zone == 8 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
+                                                    </Col>
+                                                    <Col xs={4} className='zone9 d-flex justify-content-center align-items-center' title={9} onClick={(e)=>inputFieldHandler(e)}>
+                                                        {newGoal.zone == 9 ? (<img src={goal} alt="goal" className='goalIcon'/>) : ('')}
+                                                    </Col>
                                                 </Row>
                                             </Container>
                                             </Modal.Body>        

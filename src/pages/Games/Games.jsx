@@ -474,7 +474,8 @@ export const Games = () => {
                                                 {
                                                     return <TableGames 
                                                                 key={data.id}
-                                                                id={data.id} 
+                                                                id={data.id}
+                                                                data={gameData} 
                                                                 seasons={seasonData}
                                                                 seasonId={data.season_id}
                                                                 myTeams={teamData} 
