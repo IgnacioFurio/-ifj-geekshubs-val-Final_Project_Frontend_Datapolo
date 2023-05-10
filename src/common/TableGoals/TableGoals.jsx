@@ -59,7 +59,10 @@ export const TableGoals = ({game_id, team_id, myPlayers}) => {
                         { 
                             return <TableGoalsInfo 
                                 key={data.id}
-                                goalData={data}
+                                goalData={data}                                
+                                id={data.id}
+                                gameId={data.game_id}
+                                teamId={data.team_id}
                                 playersData={myPlayers}                                
                             />                            
                         }

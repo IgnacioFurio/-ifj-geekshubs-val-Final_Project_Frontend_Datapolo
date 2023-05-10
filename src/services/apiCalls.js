@@ -376,3 +376,36 @@ export const createNewGoal = async (body, token) => {
 
     return await axios.post(`${root}/api/my-goals`, data, config)
 };
+
+export const modifyGoal = async (body, token) => {
+
+    let data = {
+        "id": body.id,
+        "team_id": body.team_id,
+        "game_id": body.game_id,
+        "player_id": body.player_id,
+        "zone": body.zone,
+        "player_nº": body.player_nº
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.put(`${root}/api/my-goals`, data, config)
+};
+
+export const deleteGoal = async (body, token) => {
+
+    let data = {
+        'id': body
+    }
+
+    const headers = {
+            'Authorization': 'Bearer '+ token,
+        }
+
+    return await axios.delete(`${root}/api/my-goals`, {headers, data})
+};

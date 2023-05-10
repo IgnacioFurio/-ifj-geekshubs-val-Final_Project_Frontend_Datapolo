@@ -8,6 +8,7 @@ import { reload } from '../../pages/Slices/reloadSlice';
 //apicall
 import { createNewGoal, deleteGame, getAllMyGoalsByTeamIdAndGameId, modifyGame } from '../../services/apiCalls';
 //render
+import { TableGoals } from '../TableGoals/TableGoals';
 import { Select } from '../Select/Select';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -20,7 +21,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
 import './TableGames.css'
-import { TableGoals } from '../TableGoals/TableGoals';
 
 
 export const TableGames = ({id, seasons, seasonId, myTeams, myPlayers, teamId, rivalId, locale, friendly, blurFunction}) => {
