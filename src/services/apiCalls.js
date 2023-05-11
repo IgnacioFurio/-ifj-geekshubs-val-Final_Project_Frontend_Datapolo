@@ -409,3 +409,23 @@ export const deleteGoal = async (body, token) => {
 
     return await axios.delete(`${root}/api/my-goals`, {headers, data})
 };
+
+//STADISTICS
+
+export const getAllMyGoalStadistics = async (body, token) => {
+
+    let data = {    
+        "team_id": body.team_id,
+        "rival_id": body.rival_id,
+        "season_id": body.season_id,
+        "locale": body.locale
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,  
+        }
+    }
+
+    return await axios.post(`${root}/api/my-goals-stadistics`, data, config)
+};

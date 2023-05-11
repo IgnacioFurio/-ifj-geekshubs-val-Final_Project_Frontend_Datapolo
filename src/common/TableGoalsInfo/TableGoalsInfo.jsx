@@ -119,8 +119,7 @@ export const TableGoalsInfo = ({id, teamId, goalData, playersData}) => {
 
     //USEEFFECT
     useEffect(()=>{        
-        console.log('Modify Goal', modGoal);
-        console.log('Message', message);
+        console.log('info', goalData);
     });
 
     useEffect(() => {
