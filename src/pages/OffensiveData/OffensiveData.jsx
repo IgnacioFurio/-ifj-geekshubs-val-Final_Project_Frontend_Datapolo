@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../Slices/userSlice';
 import { bringData } from '../Slices/reloadSlice';
 //render
+import { SelectNoDefault } from '../../common/SelectNoDefault/SelectNoDefault';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -60,7 +60,8 @@ export const OffensiveData = () => {
 
     //HANDLER
     const inputHandler = (e) => {
-            
+        
+
         setFilters((prevState)=>(
                 {
                     ...prevState,
@@ -193,10 +194,16 @@ export const OffensiveData = () => {
         getAllMyGoalStadistics(filters, userDataRdx?.userCredentials?.token)
             .then(
                 result => {
-                    
-                    let data = Object.values(result.data.data)
+                    console.log('data', result.data.message);
 
-                    setStadisticsData(data.flat(2))
+                    if (result?.data?.data) {
+                        let data = Object.values(result.data.data)
+                        
+                        setStadisticsData(data.flat(2))
+                    }
+
+
+                    setMessage(result.data.message)
                 }
                 
             )
@@ -239,7 +246,7 @@ export const OffensiveData = () => {
                         </Row>
                         <Row className='my-3'>
                             <Col xs={12} lg={4}>
-                                <Select
+                                <SelectNoDefault
                                     title={'Choose your team.*'}
                                     name={'team_id'}
                                     dataMap={teamsData}
@@ -250,7 +257,7 @@ export const OffensiveData = () => {
                                     /> 
                             </Col>
                             <Col xs={12} lg={4}>
-                                <Select
+                                <SelectNoDefault
                                     title={'Rival teams'}
                                     name={'rival_id'}
                                     dataMap={teamsData}
@@ -261,7 +268,7 @@ export const OffensiveData = () => {
                                     /> 
                             </Col>
                             <Col xs={12} lg={2}>
-                                <Select
+                                <SelectNoDefault
                                     title={'Season'}
                                     name={'season_id'}
                                     dataMap={seasonsData}
