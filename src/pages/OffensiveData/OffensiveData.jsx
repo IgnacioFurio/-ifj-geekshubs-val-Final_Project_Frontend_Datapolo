@@ -72,6 +72,7 @@ export const OffensiveData = () => {
 
     //USEEFFECT
     useEffect(()=>{
+        console.log(filters);
         console.log(zone1);
         console.log(zone2);
         console.log(zone3);
@@ -81,6 +82,7 @@ export const OffensiveData = () => {
         console.log(zone7);
         console.log(zone8);
         console.log(zone9);
+        console.log(stadisticsData);
     })
 
     useEffect(() => {
@@ -125,7 +127,7 @@ export const OffensiveData = () => {
         let z8= 0
         let z9= 0
 
-        for (let i = 0; i < stadisticsData.length; i++) {            
+        for (let i = 0; i < stadisticsData?.length; i++) {            
 
 
             if (stadisticsData[i]?.zone == 1) {
@@ -250,7 +252,7 @@ export const OffensiveData = () => {
                             <Col xs={12} lg={4}>
                                 <Select
                                     title={'Rival teams'}
-                                    name={'team_id'}
+                                    name={'rival_id'}
                                     dataMap={teamsData}
                                     required={false}
                                     changeFunction={(e)=>inputHandler(e)}
