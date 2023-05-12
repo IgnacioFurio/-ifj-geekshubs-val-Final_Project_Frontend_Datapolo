@@ -33,10 +33,10 @@ export const Footer = () => {
                     <Col xs={12} md={4} >
                         <h6 className='d-flex justify-content-center text-decoration-underline fw-bold'>SPECIAL THANKS TO</h6>                    
                         <div className='d-flex justify-content-center'>
-                            <a href="https://www.linkedin.com/in/ignacio-furi%C3%B3-0a9010233/"><img src={geekdhubs} className="geekshubsLogo" alt="LinkedIn"/></a>
+                            <a href="https://geekshubsacademy.com/"><img src={geekdhubs} className="geekshubsLogo" alt="LinkedIn"/></a>
                         </div>
                         <div className='d-flex justify-content-center'>
-                            <a href="https://www.linkedin.com/in/ignacio-furi%C3%B3-0a9010233/"><img src={turia} className="turiaLogo" alt="LinkedIn"/></a>
+                            <a href="https://waterpoloturiavalencia.es/"><img src={turia} className="turiaLogo" alt="LinkedIn"/></a>
                             </div>
                     </Col>
                     <Col xs={12} md={12} ></Col>
