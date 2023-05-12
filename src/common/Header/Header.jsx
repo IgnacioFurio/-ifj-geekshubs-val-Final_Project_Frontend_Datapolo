@@ -72,13 +72,13 @@ export const Header = () => {
                                 {
                                     isAdminRdx.isAdmin ? (
                                         <NavDropdown title="Admin" id="collasible-nav-dropdown">
-                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/teams')}>
-                                                Teams
+                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/admin-area')}>
+                                                Users
                                             </NavDropdown.Item>
-                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/players')}>
+                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('admin-area-players')}>
                                                 Players
                                             </NavDropdown.Item>
-                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/admin/seasons')}>
+                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/admin-area/seasons')}>
                                                 Seasons
                                             </NavDropdown.Item>
                                             <NavDropdown.Item className='font fw-bold d-flex justify-content-center'onClick={() => navigate('/')}>

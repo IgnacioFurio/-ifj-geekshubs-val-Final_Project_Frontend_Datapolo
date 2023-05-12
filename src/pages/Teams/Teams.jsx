@@ -45,7 +45,7 @@ export const Teams = () => {
     const [validInputField, setValidInputfield] = useState(false);
 
     //set add team modal
-    const [showAddTeam, setShowAddteam] = useState();
+    const [showAddTeam, setShowAddteam] = useState(false);
 
     //set active button
     const [activeSubmit, setSubmitActive] = useState(false);
