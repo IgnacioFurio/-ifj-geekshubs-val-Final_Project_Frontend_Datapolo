@@ -12,6 +12,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import spinner from '../../assets/waterpolo.png';
+
 import './Header.css'
 
 export const Header = () => {
@@ -59,12 +61,12 @@ export const Header = () => {
             (
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Container>
-                        <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold'>Datapolo</Navbar.Brand>
+                        <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold cursor-pointer d-flex px-3 align-center'>                            
+                            <div className='align-middle'><img src={spinner} class="img-fluid mx-3 rounded logo" alt="..."></img>Datapolo</div> 
+                        </Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">
-                                <Nav.Link className='fontNav' onClick={() => navigate('/')}>Features</Nav.Link>
-                                <Nav.Link className='fontNav' onClick={() => navigate('/')}>Pricing</Nav.Link>
                             </Nav>
                             <Nav>
                                 {
@@ -121,10 +123,7 @@ export const Header = () => {
                         <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold'>Datapolo</Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
-                            <Nav className="me-auto">
-                                <Nav.Link className='fontNav' onClick={() => navigate('/')}>Features</Nav.Link>
-                                <Nav.Link className='fontNav' onClick={() => navigate('/')}>Pricing</Nav.Link>
-                                
+                            <Nav className="me-auto">                                
                             </Nav>
                             <Nav>
                             <Nav.Link className='fontNav' onClick={() => navigate('/signup')}>

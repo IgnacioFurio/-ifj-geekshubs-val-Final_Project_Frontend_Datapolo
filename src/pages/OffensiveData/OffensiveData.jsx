@@ -189,19 +189,23 @@ export const OffensiveData = () => {
 
         setMessage('')
 
+        setZone1(0)
+        setZone2(0)
+        setZone3(0)
+        setZone4(0)
+        setZone5(0)
         setZone6(0)
+        setZone7(0)
+        setZone8(0)
+        setZone9(0)
 
         getAllMyGoalStadistics(filters, userDataRdx?.userCredentials?.token)
             .then(
                 result => {
-                    console.log('data', result.data.message);
 
-                    if (result?.data?.data) {
-                        let data = Object.values(result.data.data)
-                        
-                        setStadisticsData(data.flat(2))
-                    }
-
+                    let data = Object.values(result.data.data)
+                    
+                    setStadisticsData(data.flat(2))
 
                     setMessage(result.data.message)
                 }
@@ -220,7 +224,6 @@ export const OffensiveData = () => {
 
     return (
         <>
-            <Container>
             {
                 teamsData.length === 0 ? (
                     <>                            
@@ -229,6 +232,7 @@ export const OffensiveData = () => {
                     </>
                 ) : (
                     <>
+                    <Container fluid>
                         <Row className='my-3'>
                             <Col className='text-start'>
                                 <h3 className='font fw-bold'>Instructions:</h3>
@@ -287,7 +291,7 @@ export const OffensiveData = () => {
                                 </select>
                             </Col>
                         </Row>
-                        <Row className='my-3'>
+                        <Row className='my-3 '>
                             <Col></Col>
                             <Col>
                                 <Button variant="primary" onClick={() => bringStadistics()}>
@@ -296,13 +300,53 @@ export const OffensiveData = () => {
                             </Col>
                             <Col></Col>                            
                         </Row>
+                    </Container>
+                    <Container fluid className='fieldRow'>
                         <Row className='my-3'>
-                            <Col className='tex-center font fw-bold'><h2>{message}</h2></Col>
+                            <Col className='text-center font fw-bold'><h3>{message}</h3></Col>
                         </Row>
+                        <Row className='mt-2 px-5'>
+                                        <Col></Col>
+                                        <Col className='goal'></Col>
+                                        <Col></Col>
+                                    </Row>
+                        <Row className='water mx-2 fieldRow'>
+                            <Col xs={4} className='field1 d-flex justify-content-center align-items-center' title={1} >
+                                <h3 className='font fw-bold'>{zone1} %</h3>
+                            </Col>
+                            <Col xs={4} className='field2 d-flex justify-content-center align-items-center' title={2}> 
+                                <h3 className='font fw-bold'>{zone2} %</h3>
+                            </Col>
+                            <Col xs={4} className='field3 d-flex justify-content-center align-items-center' title={3}>
+                                <h3 className='font fw-bold'>{zone3} %</h3>
+                            </Col>
+                        </Row>
+                        <Row className='water mx-2 fieldRow'>
+                            <Col xs={4} className='field4 d-flex justify-content-center align-items-center' title={4}>
+                                <h3 className='font fw-bold'>{zone4} %</h3>
+                            </Col>
+                            <Col xs={4} className='field5 d-flex justify-content-center align-items-center' title={5}>
+                                <h3 className='font fw-bold'>{zone5} %</h3>
+                            </Col>
+                            <Col xs={4} className='field6 d-flex justify-content-center align-items-center' title={6}>
+                                <h3 className='font fw-bold'>{zone6} %</h3>
+                            </Col>
+                        </Row>
+                        <Row className='water mb-5 mx-2 fieldRow'>
+                            <Col xs={4} className='field7 d-flex justify-content-center align-items-center' title={7}>
+                                <h3 className='font fw-bold'>{zone7} %</h3> 
+                            </Col>
+                            <Col xs={4} className='field8 d-flex justify-content-center align-items-center' title={8}>
+                                <h3 className='font fw-bold'>{zone8} %</h3>
+                            </Col>
+                            <Col xs={4} className='field9 d-flex justify-content-center align-items-center' title={9}>
+                                <h3 className='font fw-bold'>{zone9} %</h3>
+                            </Col>
+                        </Row>
+                    </Container>
                     </>
                 )
             }            
-            </Container>
         </>
     )
 };

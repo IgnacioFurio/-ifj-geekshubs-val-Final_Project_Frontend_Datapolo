@@ -6,6 +6,10 @@ body{
     padding: 0%;
 }
 
+.logo{
+    height: 1.7em;
+}
+
 .fontNav{
     color: #F23005;
 }
@@ -78,13 +82,15 @@ body{
     100% { transform: rotate(360deg); }
 }
 
+.fieldRow{
+    max-width: 64em;
+}
 .water{
     background-color: rgba(127, 255, 212, 0.21);
     cursor: pointer;
 }
 .goal{
     height: 1em;
-    width: 100%;
     background-color: #f2310528;
     border-left: solid 0.3em #F23005;
     border-right: solid 0.3em #F23005;
@@ -253,4 +259,8 @@ body{
     border-bottom: solid 0.1em #F23005;
     border-top: solid 0.3em #14d737;
     transition: 0.3s;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }
