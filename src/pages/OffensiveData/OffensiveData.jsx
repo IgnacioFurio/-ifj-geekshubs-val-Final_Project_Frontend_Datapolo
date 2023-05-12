@@ -13,6 +13,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import spiner from '../../assets/waterpolo.png'
+import stadistics from '../../assets/Stadistics.jpg'
 
 
 export const OffensiveData = () => {
@@ -224,11 +225,24 @@ export const OffensiveData = () => {
 
     return (
         <>
+            <Container>
+                <Row>
+                    <Col>
+                    <img src={stadistics} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={9} className='d-flex justify-content-start '>
+                        <h2 className='font fw-bold'>Offensive Data</h2>
+                    </Col>
+                </Row>
+                <hr className='font fw-bold'/>
+            </Container>
             {
                 teamsData.length === 0 ? (
                     <>                            
                         <img src={spiner} className="spinnerDesign m-5" alt="spinner"/>
-                        <h3 className='font fw-bold'>Looking for your information.</h3>                            
+                        <h4 className='font fw-bold'>Looking for your information.</h4>                            
                     </>
                 ) : (
                     <>

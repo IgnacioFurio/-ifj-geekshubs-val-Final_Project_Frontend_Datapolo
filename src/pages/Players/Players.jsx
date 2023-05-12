@@ -18,6 +18,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
+import players from '../../assets/Players.jpg';
+
 
 export const Players = () => {
     
@@ -203,6 +205,11 @@ export const Players = () => {
         return (
             <>
             <Container fluid>
+                <Row>
+                    <Col>
+                        <img src={players} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                    </Col>
+                </Row>
                 <Row className='mt-5 mb-3'>
                     <Col xs={9} className='d-flex justify-content-start '>
                     <h2 className='font fw-bold'>Your Players</h2>

@@ -22,7 +22,7 @@ export const Home = () => {
         <Container fluid>
             <Row>
                 <Col>
-                <img src={pool} class="img-fluid my-3 rounded" alt="..."></img>
+                <img src={pool} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
                 </Col>
             </Row>
             <Row>
@@ -34,8 +34,8 @@ export const Home = () => {
                     to solve all this problems.
                 </p>
             </Row>
-            <Row className='py-5' >
-                <Col className='pt-3' >
+            <Row className='py-5 ' >
+                <Col className='pt-3 d-flex justify-content-center' md={4}>
                     <Cards
                         src={turia}
                         title={'¡Create teams without limits!'}
@@ -44,7 +44,7 @@ export const Home = () => {
                         textLink={'My teams'}
                     />
                 </Col>
-                <Col className='pt-3'>
+                <Col className='pt-3 d-flex justify-content-center' md={4}>
                     <Cards
                         src={team}
                         title={'Players, players and more players...'}
@@ -53,7 +53,7 @@ export const Home = () => {
                         textLink={'My players'}
                     />
                 </Col>
-                <Col  className='pt-3'>
+                <Col  className='pt-3 d-flex justify-content-center' md={4}>
                     <Cards
                         src={game}
                         title={'The players of the teams should match up.'}
@@ -62,7 +62,7 @@ export const Home = () => {
                         textLink={'My games'}
                     />
                 </Col>
-                <Col  className='pt-3'>
+                <Col  className='pt-3 d-flex justify-content-center' md={4}>
                     <Cards
                         src={goal}
                         title={'What would it be this game without goals.'}
@@ -71,7 +71,7 @@ export const Home = () => {
                         textLink={'My games'}
                     />
                 </Col>
-                <Col  className='pt-3'>
+                <Col  className='pt-3 d-flex justify-content-center' md={4}>
                     <Cards
                         src={data}
                         title={'Filter you data and then analize your goals.'}

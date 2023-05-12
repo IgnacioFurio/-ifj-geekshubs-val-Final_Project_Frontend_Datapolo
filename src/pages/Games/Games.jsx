@@ -19,6 +19,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import add from '../../assets/agregar.png';
+import games from '../../assets/Games.jpg';
+
 
 export const Games = () => {
 
@@ -432,11 +434,20 @@ export const Games = () => {
         return (
             <>
             <Container fluid>
-                <Row className='font fw-bold text-start pt-3'>
-                    If you want to know more about the game, like the information about the goals, just click the information button to the side of the game.
+                <Row>
+                    <Col>
+                        <img src={games} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                    </Col>
                 </Row>
                 <Row className='font fw-bold text-start pt-3'>
-                    Teams resalted are your own teams.
+                    <Col>
+                        If you want to know more about a game, like the information about the goals, just click the information button to the side of the game.
+                    </Col>
+                </Row>
+                <Row className='font fw-bold text-start pt-3'>
+                    <Col>
+                        Teams resalted in bold are your own teams.
+                    </Col>
                 </Row>
                 <Row className='mt-5 mb-3'>
                     <Col xs={9} className='d-flex justify-content-start '>
