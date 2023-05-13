@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const root = 'http://127.0.0.1:8000'
-// const root = 'https://ifj-backend-datapolo-production.up.railway.app'
+// const root = 'http://127.0.0.1:8000'
+const root = 'https://ifj-backend-datapolo-production.up.railway.app'
 
 //AUTH
 
