@@ -28,7 +28,6 @@ export const Header = () => {
 
     //FUNCTIONS
     const logOutUser = () => {
-        dispatch(logout({userCredentials: {}}));
 
         logoutApi(dataRdx.userCredentials.token)
             .then(backendCall => {
