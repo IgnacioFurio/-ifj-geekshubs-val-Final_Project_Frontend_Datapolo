@@ -450,7 +450,7 @@ export const Games = () => {
                     </Col>
                 </Row>
                 <Row className='mt-5 mb-3'>
-                    <Col xs={9} className='d-flex justify-content-start '>
+                    <Col xs={8} className='d-flex justify-content-start '>
                     <h2 className='font fw-bold'>Your Games</h2>
                     </Col>
                     <Col xs={2} className='d-flex justify-content-end fw-bold text-primary'>

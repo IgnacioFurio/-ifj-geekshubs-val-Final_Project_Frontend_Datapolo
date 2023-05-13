@@ -211,14 +211,14 @@ export const Teams = () => {
                 </Col>
             </Row>
             <Row className='mt-5 mb-3'>
-                <Col xs={9} className='d-flex justify-content-start '>
+                <Col xs={8} className='d-flex justify-content-start '>
                 <h2 className='font fw-bold'>Your Teams</h2>
                 </Col>
                 <Col xs={2} className='d-flex justify-content-end fw-bold text-primary'>
                     <p>Add team </p>
                 </Col>
                 <Col xs={1}>
-                    <img src={add} className="updateIcon" alt="addIcon" onClick={() => handleAddteamShow()}/>
+                    <img src={add} className="updateIcon " alt="addIcon" onClick={() => handleAddteamShow()}/>
                 </Col>
                 <hr className='font fw-bold'></hr>
             </Row>
