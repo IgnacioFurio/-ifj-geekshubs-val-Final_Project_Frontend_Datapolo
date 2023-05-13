@@ -5,16 +5,12 @@ import { validate } from '../../helpers/useful';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../Slices/userSlice';
-import { createNewTeam, getAllMyTeams } from '../../services/apiCalls';
+import { getAllUsers } from '../../services/apiCalls';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
 import { TableTeams } from '../../common/TableTeams/TableTeams';
 import spiner from '../../assets/waterpolo.png'
-import Modal from 'react-bootstrap/Modal';
-import {Input} from '../../common/Input/Input';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import add from '../../assets/agregar.png';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import teams from '../../assets/Teams2.jpg';
@@ -31,7 +27,7 @@ export const AdminUsers = () => {
     const navigate = useNavigate();
 
     //HOOKS
-    const [usersData, setusersData] = useState([]);
+    const [usersData, setUsersData] = useState([]);
 
     //HANDLER
     //input
@@ -57,15 +53,14 @@ export const AdminUsers = () => {
             try {
                 setTimeout(() => {
                 
-                    getAllMyTeams(userDataRdx?.userCredentials?.user?.id ,userDataRdx?.userCredentials?.token)
+                    getAllUsers(userDataRdx.userCredentials.token)
                         .then(
                             result => {
-                                setusersData(result.data.data)                      
+                                setUsersData(result.data.data)                      
                             }
                             
                         )
-                        .catch(error => console.log(error));
-                            
+                        .catch(error => console.log(error));                            
                         }, 3000)
             } catch (error) {
                 
@@ -82,7 +77,7 @@ export const AdminUsers = () => {
 
         if(updateInfo?.updatedData?.success){
 
-            setusersData([]);
+            setUsersData([]);
 
         };
     });
@@ -132,7 +127,7 @@ export const AdminUsers = () => {
                                 <Row>
                                     {usersData.map(data =>
                                             {
-                                                return <TableTeams key={data.id} id={data.id} teamName={data.team_name}/>
+                                                return <TableTeams key={data.id} id={data.id} teamName={data.username}/>
                                             }
                                             )
                                         }

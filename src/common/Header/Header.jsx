@@ -28,15 +28,13 @@ export const Header = () => {
 
     //USEEFFECT
     useEffect(() => {
+        console.log(dataRdx.userCredentials.token);
     })
 
     //FUNCTIONS
     const logOutUser = () => {
-        
         logoutApi(dataRdx.userCredentials.token)
             .then(backendCall => {
-
-                console.log(backendCall);
 
                 setTimeout(() => {
                 
