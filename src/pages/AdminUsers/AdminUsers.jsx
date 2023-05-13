@@ -1,19 +1,16 @@
 import React, { useDebugValue, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//helper
-import { validate } from '../../helpers/useful';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../Slices/userSlice';
 import { getAllUsers } from '../../services/apiCalls';
 import { bringData, reload } from '../Slices/reloadSlice';
 //render
-import { TableTeams } from '../../common/TableTeams/TableTeams';
+import { TableUsers } from '../../common/TableUsers/TableUsers';
 import spiner from '../../assets/waterpolo.png'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import teams from '../../assets/Teams2.jpg';
 
 
 export const AdminUsers = () => {
@@ -29,23 +26,8 @@ export const AdminUsers = () => {
     //HOOKS
     const [usersData, setUsersData] = useState([]);
 
-    //HANDLER
-    //input
-    const inputHandler = (e) => {
-        
-        setNewTeam((prevState)=>(
-                {
-                    ...prevState,
-                    [e.target.name]: e.target.value
-                }
-            )
-        );
-    }
-
-    //
     // USEEFFECT
     useEffect(() => {
-
         if(usersData.length === 0){
 
             dispatch(reload({updatedData: {}}))
@@ -82,33 +64,9 @@ export const AdminUsers = () => {
         };
     });
 
-    //FUNCTIONS
-    const checkError = (e) => {
-        
-        let error = "";
-    
-        let check = validate(
-            e.target.name,
-            e.target.value,
-            e.target.required
-            );
-            
-        error = check.message
-    
-        setValidInputfield(check.valid);
-    
-        setErrorInputField(error);
-
-    };
-
     return (
         <>
         <Container fluid>
-            <Row>
-                <Col>
-                    <img src={teams} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
-                </Col>
-            </Row>
             <Row className='mt-5 mb-3'>
                 <Col className='d-flex justify-content-start '>
                 <h2 className='font fw-bold'>Users</h2>
@@ -127,7 +85,13 @@ export const AdminUsers = () => {
                                 <Row>
                                     {usersData.map(data =>
                                             {
-                                                return <TableTeams key={data.id} id={data.id} teamName={data.username}/>
+                                                return <TableUsers 
+                                                    key={data.id} 
+                                                    id={data.id} 
+                                                    userName={data.username}
+                                                    userEmail={data.email}
+                                                    userRole={data.role_id}
+                                                    />
                                             }
                                             )
                                         }

@@ -40,6 +40,25 @@ export const getAllUsers = async (token) => {
     return await axios.get(`${root}/api/admin/users`, config)
 };
 
+export const modifyUser = async (body, token) => {
+    
+    let data = {
+        'id': body.id,
+        'username': body.new_name,
+        'email': body.new_email,
+        'role_id': body.new_role_id
+    }
+
+    let config = {
+        headers: {
+            'Authorization': 'Bearer '+ token,
+        }
+    }
+
+    return await axios.put(`${root}/api/admin/users`, data, config)
+};
+
+
 //USER
 export const getUserDataByEmail = async (body) => {
     

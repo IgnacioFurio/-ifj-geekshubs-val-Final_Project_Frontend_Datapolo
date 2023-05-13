@@ -26,13 +26,10 @@ export const Header = () => {
 
     const isAdminRdx = useSelector(adminData);
 
-    //USEEFFECT
-    useEffect(() => {
-        console.log(dataRdx.userCredentials.token);
-    })
-
     //FUNCTIONS
     const logOutUser = () => {
+        dispatch(logout({userCredentials: {}}));
+
         logoutApi(dataRdx.userCredentials.token)
             .then(backendCall => {
 

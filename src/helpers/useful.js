@@ -24,7 +24,11 @@ export const validate = (name, data, required) => {
 
         if(data === "" && required === true){
 
-        return {message: "Field 'Club name' required.", valid: false};
+            return {message: "Field 'Club name' required.", valid: false};
+
+        } else if (data === "" && required === false){
+        
+            return {message: "", valid: true};
 
         } else if (!/^(?=.{8,20}$).*/.test(data)) {
 
@@ -46,6 +50,10 @@ export const validate = (name, data, required) => {
 
             return {message: "Field required.", valid: false};
 
+            } else if (data === "" && required === false){
+        
+                return {message: "", valid: true};
+    
             } else if (!/^(?=.{8,30}$).*/.test(data)) {
 
                 return {message: "Team name must have a minimum of 8 characters and a maximum of 30 characters.", valid: false};
@@ -60,11 +68,16 @@ export const validate = (name, data, required) => {
 
     // EMAIL
     case "email":
+    case "new_email":
 
         if (data === "" && required === true) {
 
         return {message: "Field 'Email' required.", valid: false};
         
+        } else if (data === "" && required === false){
+            
+            return {message: "", valid: true};
+
         } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data)) {
 
         return {message: "Invalid E-mail format.", valid: false};
