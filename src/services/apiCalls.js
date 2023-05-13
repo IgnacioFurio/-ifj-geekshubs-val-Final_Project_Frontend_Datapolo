@@ -58,6 +58,20 @@ export const modifyUser = async (body, token) => {
     return await axios.put(`${root}/api/admin/users`, data, config)
 };
 
+export const deleteUser = async (body, token) => {
+
+    let data = {
+        'id': body.id,
+    }
+
+    const headers = {
+            'Authorization': 'Bearer '+ token,
+        }
+
+    return await axios.delete(`${root}/api/admin/users`, {headers, data})
+};
+
+
 
 //USER
 export const getUserDataByEmail = async (body) => {

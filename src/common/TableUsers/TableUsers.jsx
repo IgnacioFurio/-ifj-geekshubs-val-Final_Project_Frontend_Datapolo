@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 //apicall
-import { deletePlayer, modifyPlayer, modifyUser } from '../../services/apiCalls';
+import { deletePlayer, deleteUser, modifyPlayer, modifyUser } from '../../services/apiCalls';
 //helper
 import { validate } from '../../helpers/useful';
 //redux
@@ -287,7 +287,7 @@ export const TableUsers = ({id, userName, userEmail, userPass, userRole}) => {
     //function to delete a team
     const destroyPlayer = () => {
 
-        deletePlayer(userNewData, userDataRdx.userCredentials.token)
+        deleteUser(userNewData, userDataRdx.userCredentials.token)
             .then(backendCall=> {                
                 
                 setMessage(backendCall.data.message)
@@ -404,8 +404,12 @@ export const TableUsers = ({id, userName, userEmail, userPass, userRole}) => {
                                 <Modal.Title>Do you really want to delete this player?</Modal.Title>
                             </Modal.Header>                        
                                 <Modal.Body>
-                                    <div className='mx-3 fw-bold'>Player's Name:</div>
-                                    <div className='mx-4'>{userName}</div>                                    
+                                    <div className='mx-3 font fw-bold'>User Name:</div>
+                                    <div className='mx-4'>{userNewData.new_name}</div>  
+                                    <div className='mx-3 font fw-bold'>Email:</div>
+                                    <div className='mx-4'>{userNewData.new_email}</div>   
+                                    <div className='mx-3 font fw-bold'>Role:</div>
+                                    <div className='mx-4'>{userNewData.new_role === 1 ? 'SuperAdmin' : userNewData.new_role === 2 ? 'Admin' : 'User'}</div>                                     
                                 </Modal.Body>        
                             <Modal.Footer>
                                 <Button variant="danger" onClick={() => handleDeleteClose()}>
@@ -437,11 +441,15 @@ export const TableUsers = ({id, userName, userEmail, userPass, userRole}) => {
                     </Modal>
                     <Modal show={showDelete} onHide={() => handleUpdateClose()}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Do you really want to delete this player?</Modal.Title>
+                            <Modal.Title>Do you really want to delete this user?</Modal.Title>
                         </Modal.Header>                        
                             <Modal.Body>                            
-                                <div className='mx-3 fw-bold'>Player's Name:</div>
-                                <div className='mx-4'>{userName}</div>                                                      
+                                <div className='mx-3 font fw-bold'>New Name:</div>
+                                <div className='mx-4'>{userNewData.new_name}</div>  
+                                <div className='mx-3 font fw-bold'>New Email:</div>
+                                <div className='mx-4'>{userNewData.new_email}</div>   
+                                <div className='mx-3 font fw-bold'>New Role:</div>
+                                <div className='mx-4'>{userNewData.new_role === 1 ? 'SuperAdmin' : userNewData.new_role === 2 ? 'Admin' : 'User'}</div>                                                      
                             </Modal.Body>        
                         <Modal.Footer>
                             <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
