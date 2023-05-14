@@ -35,7 +35,7 @@ export const Teams = () => {
 
     const [newTeam, setNewTeam] = useState(
         {
-            user_id: userDataRdx?.userCredentials?.user.id,
+            user_id: userDataRdx?.userCredentials?.user?.id,
             new_team: ''
         }
     );
@@ -71,7 +71,7 @@ export const Teams = () => {
         
         setNewTeam(
             {
-                user_id: userDataRdx?.userCredentials?.user.id,
+                user_id: userDataRdx?.userCredentials?.user?.id,
                 new_team: ''
             }
         )
@@ -94,6 +94,15 @@ export const Teams = () => {
 
     //
     // USEEFFECT
+     // USESTATE
+    useEffect(() => {
+
+        if( !userDataRdx.userCredentials.token ){
+            navigate('/')
+        };
+
+    },[]); 
+
     useEffect(() => {
         //in case that a field is empty
         for(let empty in newTeam){
@@ -118,7 +127,7 @@ export const Teams = () => {
 
     useEffect(() => {
 
-        if(teamData.length === 0){
+        if(teamData.length === 0 && userDataRdx.userCredentials.token){
 
             dispatch(reload({updatedData: {}}))
 
@@ -207,7 +216,7 @@ export const Teams = () => {
         <Container fluid>
             <Row>
                 <Col>
-                    <img src={teams} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                    <img src={teams} className="img-fluid mb-3 rounded-bottom" alt="..."></img>
                 </Col>
             </Row>
             <Row className='mt-5 mb-3'>

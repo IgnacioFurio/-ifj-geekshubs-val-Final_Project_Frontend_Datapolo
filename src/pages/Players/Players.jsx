@@ -95,6 +95,14 @@ export const Players = () => {
     
         // USEEFFECT
         useEffect(() => {
+
+            if( !userDataRdx.userCredentials.token ){
+                navigate('/')
+            };
+    
+        }, []);
+
+        useEffect(() => {
             //in case that a field is empty
             for(let empty in newPlayer){
 
@@ -118,7 +126,7 @@ export const Players = () => {
 
         useEffect(() => {
     
-            if(playerData.length === 0){
+            if(playerData.length === 0 && userDataRdx.userCredentials.token){
     
                 dispatch(reload({updatedData: {}}))
     
@@ -207,7 +215,7 @@ export const Players = () => {
             <Container fluid>
                 <Row>
                     <Col>
-                        <img src={players} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                        <img src={players} className="img-fluid mb-3 rounded-bottom" alt="..."></img>
                     </Col>
                 </Row>
                 <Row className='mt-5 mb-3'>

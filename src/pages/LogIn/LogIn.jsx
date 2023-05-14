@@ -11,6 +11,9 @@ import { getUserDataByEmail, logIn } from '../../services/apiCalls';
 //render
 import { Input } from '../../common/Input/Input';
 import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export const LogIn = () => {
 
@@ -186,7 +189,6 @@ export const LogIn = () => {
 
                 })
             .catch((error) => {
-                console.log(error);
                 let backendErrorData = {
                     message: error.response.data.message,
                     valid: error.response.succes
@@ -206,36 +208,47 @@ export const LogIn = () => {
                     navigate('/') 
                 ):(
                     <>
-                        <div>
-                            <Input
-                                className={errorInputField.emailError === '' ? 'shadowBox' : 'shadowBoxError'}
-                                type={'email'}
-                                name={'email'}
-                                placeholder={'cdwturia@email.com'}
-                                required={true}
-                                error={errorInputField.emailError}
-                                changeFunction={(e)=>inputHandler(e)}
-                                blurFunction={(e) => checkError(e)}
-                            />
-                            <Input
-                                className={errorInputField.passwordError === '' ? 'shadowBox' : 'shadowBoxError'}
-                                type={'password'}
-                                name={'password'}
-                                placeholder={'1234567W'}
-                                required={true}
-                                error={errorInputField.passwordError}
-                                changeFunction={(e)=>inputHandler(e)}
-                                blurFunction={(e) => checkError(e)}
-                            />
-                        </div>
-                        <div className='d-flex justify-content-center align-items-center my-5'>
-                            <SubmitButton
-                            className={submitActive ? 'activeSubmit' : 'disableSubmit'}
-                            name={'Log In'}
-                            clickFunction={submitActive ? () =>logUser() : () => {}}
-                            />
-                        </div>
-                    </>
+                        <Container fluid>
+                            <Row>
+                                <Col  md={3}></Col>
+                                <Col xs={12} md={6}>
+                                    <Input
+                                        className={errorInputField.emailError === '' ? 'shadowBox' : 'shadowBoxError'}
+                                        type={'email'}
+                                        name={'email'}
+                                        placeholder={'cdwturia@email.com'}
+                                        required={true}
+                                        error={errorInputField.emailError}
+                                        changeFunction={(e)=>inputHandler(e)}
+                                        blurFunction={(e) => checkError(e)}
+                                        />
+                                    <Input
+                                        className={errorInputField.passwordError === '' ? 'shadowBox' : 'shadowBoxError'}
+                                        type={'password'}
+                                        name={'password'}
+                                        placeholder={'1234567W'}
+                                        required={true}
+                                        error={errorInputField.passwordError}
+                                        changeFunction={(e)=>inputHandler(e)}
+                                        blurFunction={(e) => checkError(e)}
+                                        />
+                                </Col>
+                                <Col md={3}></Col>
+                            </Row>
+                            <Row className='fontNoHover '>
+                                <Col xs={12} className='d-flex justify-content-center'>
+                                    <p>If you are not registered yet <b className='cursor-pointer' onClick={() => navigate('/signup')}>click here</b>.</p>  
+                                </Col>                           
+                            </Row>
+                            <div className='d-flex justify-content-center align-items-center my-3'>
+                                <SubmitButton
+                                className={submitActive ? 'activeSubmit' : 'disableSubmit'}
+                                name={'Log In'}
+                                clickFunction={submitActive ? () =>logUser() : () => {}}
+                                />
+                            </div>
+                        </Container>
+                    </>                                                
                 )}
         </>
     )

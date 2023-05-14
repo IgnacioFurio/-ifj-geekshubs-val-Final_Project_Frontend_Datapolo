@@ -249,38 +249,38 @@ export const TableUsers = ({id, userName, userEmail, userPass, userRole}) => {
 
         modifyUser(userNewData, userDataRdx.userCredentials.token)
             .then(backendCall=> {                    
-                    console.log(backendCall.data);
-                    setMessage(backendCall.data.message)
 
-                    let success = {success: backendCall.data.success}
+                setMessage(backendCall.data.message)
 
-                    
-                    setTimeout(() => {
+                        let success = {success: backendCall.data.success}
+
                         
-                        dispatch(reload({updatedData: success}))
+                        setTimeout(() => {
+                            
+                            dispatch(reload({updatedData: success}))
 
-                        setErrorInputField(
-                            {            
-                                new_nameError: '',
-                                new_emailError: '',
-                                new_role_idError: ''
-                            }
-                        )
+                            setErrorInputField(
+                                {            
+                                    new_nameError: '',
+                                    new_emailError: '',
+                                    new_role_idError: ''
+                                }
+                            )
 
-                        setValidInputField(
-                            {            
-                                new_nameValid: true,
-                                new_emailValid: true,
-                                new_role_idValid: true
-                            }
-                        )
+                            setValidInputField(
+                                {            
+                                    new_nameValid: true,
+                                    new_emailValid: true,
+                                    new_role_idValid: true
+                                }
+                            )
 
-                        setMessage('')
+                            setMessage('')
 
-                    }, 3000)
-                    }
-                )
-            .catch(error => console.log(error))
+                        }, 3000)
+                        }
+                    )
+                .catch(error => console.log(error))
 
     }
 

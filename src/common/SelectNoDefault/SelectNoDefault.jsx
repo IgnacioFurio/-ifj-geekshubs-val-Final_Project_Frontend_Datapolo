@@ -6,11 +6,6 @@ export const SelectNoDefault = ({title, name, dataMap, extraData, required, chan
 
     const nameInput = name
 
-    useEffect(() => {
-
-
-    });
-
     return (
         <>
             <div className='font fw-bold'>{title}</div>

@@ -6,11 +6,6 @@ export const Select = ({title, name, dataMap, extraData, required, changeFunctio
 
     const nameInput = name
 
-    useEffect(() => {
-
-
-    });
-
     return (
         <>
             <div className='font fw-bold'>{title}</div>

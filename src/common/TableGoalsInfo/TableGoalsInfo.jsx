@@ -118,10 +118,6 @@ export const TableGoalsInfo = ({id, teamId, goalData, playersData}) => {
     }
 
     //USEEFFECT
-    useEffect(()=>{        
-        console.log('info', goalData);
-    });
-
     useEffect(() => {
 
         for(let i = 0 ; i < playersData.length ; i++){

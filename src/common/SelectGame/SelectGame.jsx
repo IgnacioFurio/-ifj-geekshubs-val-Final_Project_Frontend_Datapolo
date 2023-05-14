@@ -12,10 +12,8 @@ export const SelectGame = ({title, name, gamesDataMap, seasonsData, teamsData, r
     const [ myRivalName, setMyRivalName ] = useState('');
     const [ myTeam, setMyTeam ] = useState('');
 
+    //USEEFFECT
     useEffect(() =>{
-        console.log(dataMapping);
-        console.log(seasonId);
-        console.log(teamsData);
 
         for (let i = 0 ; i < dataMapping?.length ; i++) {
             

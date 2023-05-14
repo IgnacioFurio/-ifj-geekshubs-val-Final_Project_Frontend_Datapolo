@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //apicalls
 import { Select } from '../../common/Select/Select';
 import { getAllMyGoalStadistics, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
@@ -23,6 +24,8 @@ export const OffensiveData = () => {
     const updateInfo = useSelector(bringData);
 
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     //HOOKS
     const [teamsData, setTeamsData] = useState([]);
@@ -73,23 +76,17 @@ export const OffensiveData = () => {
     }
 
     //USEEFFECT
-    useEffect(()=>{
-        console.log(filters);
-        console.log(zone1);
-        console.log(zone2);
-        console.log(zone3);
-        console.log(zone4);
-        console.log(zone5);
-        console.log(zone6);
-        console.log(zone7);
-        console.log(zone8);
-        console.log(zone9);
-        console.log(stadisticsData);
-    })
+    useEffect(() => {
+
+        if( !userDataRdx.userCredentials.token ){
+            navigate('/')
+        };
+
+    }, []);
 
     useEffect(() => {
 
-        if (teamsData.length === 0) {
+        if (teamsData.length === 0 && userDataRdx.userCredentials.token) {
             
             setTimeout(() => {
                 
@@ -228,7 +225,7 @@ export const OffensiveData = () => {
             <Container>
                 <Row>
                     <Col>
-                    <img src={stadistics} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                    <img src={stadistics} className="img-fluid mb-3 rounded-bottom" alt="..."></img>
                     </Col>
                 </Row>
                 <Row>

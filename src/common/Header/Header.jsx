@@ -56,7 +56,7 @@ export const Header = () => {
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Container>
                         <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold cursor-pointer d-flex px-3 align-center'>                            
-                            <div className='align-middle'><img src={spinner} class="img-fluid mx-3 rounded logo" alt="..."></img>Datapolo</div> 
+                            <div className='align-middle'><img src={spinner} className="img-fluid mx-3 rounded logo" alt="..."></img>Datapolo</div> 
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
@@ -69,18 +69,18 @@ export const Header = () => {
                                             <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/admin-area')}>
                                                 Users
                                             </NavDropdown.Item>
-                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('admin-area-players')}>
+                                            {/* <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('admin-area-players')}>
                                                 Players
-                                            </NavDropdown.Item>
+                                            </NavDropdown.Item> */}
                                             <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/admin-area/seasons')}>
                                                 Seasons
                                             </NavDropdown.Item>
-                                            <NavDropdown.Item className='font fw-bold d-flex justify-content-center'onClick={() => navigate('/')}>
+                                            {/* <NavDropdown.Item className='font fw-bold d-flex justify-content-center'onClick={() => navigate('/')}>
                                                 Games
                                             </NavDropdown.Item>
                                             <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/')}>
                                                 Trophies
-                                            </NavDropdown.Item>
+                                            </NavDropdown.Item> */}
                                         </NavDropdown>
                                     ) : (
                                         <></>
@@ -99,9 +99,9 @@ export const Header = () => {
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => navigate('/offensive-data')}>
                                         Offensive data
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item className='font fw-bold d-flex justify-content-center'onClick={() => navigate('/')}>
+                                    {/* <NavDropdown.Item className='font fw-bold d-flex justify-content-center'onClick={() => navigate('/')}>
                                         Defensive Data
-                                    </NavDropdown.Item>
+                                    </NavDropdown.Item> */}
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item className='font fw-bold d-flex justify-content-center' onClick={() => logOutUser()}>
                                         Log Out
@@ -114,7 +114,9 @@ export const Header = () => {
             ) : (
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Container>
-                        <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold'>Datapolo</Navbar.Brand>
+                        <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold cursor-pointer d-flex px-3 align-center'>                            
+                            <div className='align-middle'><img src={spinner} className="img-fluid mx-3 rounded logo" alt="..."></img>Datapolo</div> 
+                        </Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">                                

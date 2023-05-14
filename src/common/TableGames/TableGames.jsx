@@ -485,7 +485,7 @@ export const TableGames = ({id, data, seasons, seasonId, myTeams, myPlayers, tea
 
         createNewGoal(newGoal, userDataRdx?.userCredentials?.token)
             .then(backendCall=> {                
-                console.log(backendCall.data);
+
                 setMessage(backendCall.data.message)
 
                 let success = {success: backendCall.data.success}
