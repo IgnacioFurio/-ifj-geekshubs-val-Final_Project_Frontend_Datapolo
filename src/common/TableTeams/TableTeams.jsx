@@ -111,12 +111,6 @@ export const TableTeams = ({id, teamName}) => {
 
     //USEEFFECT
     useEffect(() => {
-        // console.log(message);
-        // console.log(errorInputField);
-        // console.log(validInputField);
-    })
-
-    useEffect(() => {
         //functions to make submit button activated
         //in case that a field is empty
         for(let empty in teamData){

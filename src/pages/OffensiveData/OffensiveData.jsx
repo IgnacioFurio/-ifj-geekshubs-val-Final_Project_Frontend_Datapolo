@@ -73,20 +73,6 @@ export const OffensiveData = () => {
     }
 
     //USEEFFECT
-    useEffect(()=>{
-        console.log(filters);
-        console.log(zone1);
-        console.log(zone2);
-        console.log(zone3);
-        console.log(zone4);
-        console.log(zone5);
-        console.log(zone6);
-        console.log(zone7);
-        console.log(zone8);
-        console.log(zone9);
-        console.log(stadisticsData);
-    })
-
     useEffect(() => {
 
         if (teamsData.length === 0) {

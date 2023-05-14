@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 //render
+import { useSelector } from 'react-redux';
+import { userData } from '../Slices/userSlice';
+//render
 import { Cards } from '../../common/Cards/Cards';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -18,11 +21,15 @@ export const Home = () => {
 
     const navigate = useNavigate();
 
+    const userDataRdx = useSelector(userData);
+
+
+
     return (
         <Container fluid>
             <Row>
                 <Col>
-                <img src={pool} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                <img src={pool} className="img-fluid mb-3 rounded-bottom" alt="..."></img>
                 </Col>
             </Row>
             <Row>
@@ -40,7 +47,7 @@ export const Home = () => {
                         src={turia}
                         title={'¡Create teams without limits!'}
                         text={'You may create your own teams and also your rival teams, ¡Without limits!, just visit the section "My teams" and explore the posibilities.'}
-                        link={() => navigate('/teams')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/login')}
                         textLink={'My teams'}
                     />
                 </Col>
@@ -49,7 +56,7 @@ export const Home = () => {
                         src={team}
                         title={'Players, players and more players...'}
                         text={"Every team deserve to have players, at least 13 for every game. ¡Don't forget to populate your data with a bunch of players!"}
-                        link={() => navigate('/players')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/players')}
                         textLink={'My players'}
                     />
                 </Col>
@@ -58,7 +65,7 @@ export const Home = () => {
                         src={game}
                         title={'The players of the teams should match up.'}
                         text={"Teams, players... and games. Add as much games as you need with usefull information, like the season when the game was played..."}
-                        link={() => navigate('/games')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/games')}
                         textLink={'My games'}
                     />
                 </Col>
@@ -67,7 +74,7 @@ export const Home = () => {
                         src={goal}
                         title={'What would it be this game without goals.'}
                         text={"It's time to add some goals to your games, just by doing click at the info button to the side of your games."}
-                        link={() => navigate('/games')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/games')}
                         textLink={'My games'}
                     />
                 </Col>
@@ -76,7 +83,7 @@ export const Home = () => {
                         src={data}
                         title={'Filter you data and then analize your goals.'}
                         text={"Once you have all the previous data registered, you will be able to check some stadistic data. ¡No more pencil and paper anymore!"}
-                        link={() => navigate('/offensive-data')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/offensive-data')}
                         textLink={'Offensive Data'}
                     />
                 </Col>

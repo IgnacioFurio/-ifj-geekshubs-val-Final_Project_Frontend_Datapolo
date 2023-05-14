@@ -186,7 +186,6 @@ export const LogIn = () => {
 
                 })
             .catch((error) => {
-                console.log(error);
                 let backendErrorData = {
                     message: error.response.data.message,
                     valid: error.response.succes

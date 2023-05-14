@@ -433,172 +433,172 @@ export const Games = () => {
 
         return (
             <>
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <img src={games} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
-                    </Col>
-                </Row>
-                <Row className='font fw-bold text-start pt-3'>
-                    <Col>
-                        If you want to know more about a game, like the information about the goals, just click the information button to the side of the game.
-                    </Col>
-                </Row>
-                <Row className='font fw-bold text-start pt-3'>
-                    <Col>
-                        Teams resalted in bold are your own teams.
-                    </Col>
-                </Row>
-                <Row className='mt-5 mb-3'>
-                    <Col xs={9} className='d-flex justify-content-start '>
-                    <h2 className='font fw-bold'>Your Games</h2>
-                    </Col>
-                    <Col xs={2} className='d-flex justify-content-end fw-bold text-primary'>
-                        <p>Add Game</p>
-                    </Col>
-                    <Col xs={1}>
-                        <img src={add} className="updateIcon" alt="addIcon" onClick={() => handleAddGameShow()}/>
-                    </Col>
-                    <hr className='font fw-bold'></hr>
-                </Row>
-                    {
-                        gameData.length === 0 ? (
-                            <>                            
-                                <img src={spiner} className="spinnerDesign m-5" alt="spinner"/>
-                                <h3 className='font fw-bold'>Looking for your information.</h3>                            
-                            </>
-                        ) : (
-                            <>
-                                <Container>  
-                                <Row className='my-3 '>
-                                    <Col xs={1} className='d-flex justify-content-center'></Col>
-                                    <Col xs={4} className='d-flex justify-content-center font fw-bold'>
-                                    Locale
-                                    </Col>
-                                    <Col xs={4} className='d-flex justify-content-center font fw-bold'>
-                                    Visitor
-                                    </Col>
-                                    <Col xs={3}></Col>                    
-                                </Row>                          
-                                    <Row>
-                                        {gameData.map(data =>
-                                                {
-                                                    return <TableGames 
-                                                                key={data.id}
-                                                                id={data.id}
-                                                                data={gameData} 
-                                                                seasons={seasonData}
-                                                                seasonId={data.season_id}
-                                                                myTeams={teamData} 
-                                                                myPlayers={playerData}
-                                                                teamId= {data.my_team_id}
-                                                                rivalId={data.my_rival_id}
-                                                                locale={data.locale}
-                                                                friendly={data.friendly}
-                                                                blurFunction={(e) => checkError(e)}
-                                                                />
+                <Container fluid>
+                    <Row>
+                        <Col>
+                            <img src={games} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                        </Col>
+                    </Row>
+                    <Row className='font fw-bold text-start pt-3'>
+                        <Col>
+                            If you want to know more about a game, like the information about the goals, just click the information button to the side of the game.
+                        </Col>
+                    </Row>
+                    <Row className='font fw-bold text-start pt-3'>
+                        <Col>
+                            Teams resalted in bold are your own teams.
+                        </Col>
+                    </Row>
+                    <Row className='mt-5 mb-3'>
+                        <Col xs={9} className='d-flex justify-content-start '>
+                        <h2 className='font fw-bold'>Your Games</h2>
+                        </Col>
+                        <Col xs={2} className='d-flex justify-content-end fw-bold text-primary'>
+                            <p>Add Game</p>
+                        </Col>
+                        <Col xs={1}>
+                            <img src={add} className="updateIcon" alt="addIcon" onClick={() => handleAddGameShow()}/>
+                        </Col>
+                        <hr className='font fw-bold'></hr>
+                    </Row>
+                        {
+                            gameData.length === 0 ? (
+                                <>                            
+                                    <img src={spiner} className="spinnerDesign m-5" alt="spinner"/>
+                                    <h3 className='font fw-bold'>Looking for your information.</h3>                            
+                                </>
+                            ) : (
+                                <>
+                                    <Container>  
+                                    <Row className='my-3 '>
+                                        <Col xs={1} className='d-flex justify-content-center'></Col>
+                                        <Col xs={4} className='d-flex justify-content-center font fw-bold'>
+                                        Locale
+                                        </Col>
+                                        <Col xs={4} className='d-flex justify-content-center font fw-bold'>
+                                        Visitor
+                                        </Col>
+                                        <Col xs={3}></Col>                    
+                                    </Row>                          
+                                        <Row>
+                                            {gameData.map(data =>
+                                                    {
+                                                        return <TableGames 
+                                                                    key={data.id}
+                                                                    id={data.id}
+                                                                    data={gameData} 
+                                                                    seasons={seasonData}
+                                                                    seasonId={data.season_id}
+                                                                    myTeams={teamData} 
+                                                                    myPlayers={playerData}
+                                                                    teamId= {data.my_team_id}
+                                                                    rivalId={data.my_rival_id}
+                                                                    locale={data.locale}
+                                                                    friendly={data.friendly}
+                                                                    blurFunction={(e) => checkError(e)}
+                                                                    />
+                                                    }
+                                                    )
                                                 }
+                                        </Row>
+                                    </Container>
+                                    
+                                </>
+                            )
+                        }
+                        {
+                            message === '' ? (
+                                <Modal show={showAddGame} onHide={() => handleAddGameClose()}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Add a new game for your data.</Modal.Title>
+                                        </Modal.Header>                        
+                                            <Modal.Body>                                            
+                                                <Select
+                                                    title={'Select the season'}
+                                                    name={"season_id"}
+                                                    dataMap={seasonData}
+                                                    required={true}
+                                                    changeFunction={(e)=>inputHandler(e)}
+                                                    blurFunction={(e)=>checkError(e)}
+                                                    error={errorInputField.season_idError}
+                                                    />
+                                                <Select
+                                                    title={'Select your team'}
+                                                    name={"my_team_id"}
+                                                    dataMap={teamData}
+                                                    required={true}
+                                                    changeFunction={(e)=>inputHandler(e)}
+                                                    blurFunction={(e)=>checkError(e)}
+                                                    error={errorInputField.my_team_idError}
+                                                    />
+                                                <Select
+                                                    title={'Select your rival'}
+                                                    name={"my_rival_id"}
+                                                    dataMap={teamData}
+                                                    required={true}
+                                                    changeFunction={(e)=>inputHandler(e)}
+                                                    blurFunction={(e)=>checkError(e)}
+                                                    error={errorInputField.my_rival_idError}
+                                                    />
+                                                <Form>
+                                                    <Form.Check className='my-3'
+                                                        name='locale'
+                                                        type="switch"
+                                                        id="custom-switch"
+                                                        label="As visitor Game"
+                                                        onClick={() => localeCheck()}
+                                                        onBlur={(e) => checkError(e)}
+                                                    />                                            
+                                                </Form>
+                                                <Form>
+                                                    <Form.Check className='my-3'
+                                                        name='friendly'
+                                                        type="switch"
+                                                        id="custom-switch"
+                                                        label="Friendly game"
+                                                        onClick={() => friendlyCheck()}
+                                                        onBlur={(e) => checkError(e)}
+                                                    />                                            
+                                                </Form>
+                                                <Container className='font fw-bold my-3'>{errorInputField.friendlyError}</Container>
+                                            </Modal.Body>        
+                                        <Modal.Footer>
+                                            <Button variant="danger" onClick={() => handleAddGameClose()}>
+                                                Cancel Changes
+                                            </Button>
+                                            {
+                                                activeSubmit ? (
+                                                    <Button variant="success" onClick={() => createGame()}>
+                                                        Save Changes
+                                                    </Button>
+                                                ) : (
+                                                    <Button variant="secondary">
+                                                        Save Changes
+                                                    </Button>
                                                 )
                                             }
-                                    </Row>
-                                </Container>
-                                
-                            </>
-                        )
-                    }
-                    {
-                        message === '' ? (
-                            <Modal show={showAddGame} onHide={() => handleAddGameClose()}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Add a new game for your data.</Modal.Title>
-                                    </Modal.Header>                        
-                                        <Modal.Body>                                            
-                                            <Select
-                                                title={'Select the season'}
-                                                name={"season_id"}
-                                                dataMap={seasonData}
-                                                required={true}
-                                                changeFunction={(e)=>inputHandler(e)}
-                                                blurFunction={(e)=>checkError(e)}
-                                                error={errorInputField.season_idError}
-                                                />
-                                            <Select
-                                                title={'Select your team'}
-                                                name={"my_team_id"}
-                                                dataMap={teamData}
-                                                required={true}
-                                                changeFunction={(e)=>inputHandler(e)}
-                                                blurFunction={(e)=>checkError(e)}
-                                                error={errorInputField.my_team_idError}
-                                                />
-                                            <Select
-                                                title={'Select your rival'}
-                                                name={"my_rival_id"}
-                                                dataMap={teamData}
-                                                required={true}
-                                                changeFunction={(e)=>inputHandler(e)}
-                                                blurFunction={(e)=>checkError(e)}
-                                                error={errorInputField.my_rival_idError}
-                                                />
-                                            <Form>
-                                                <Form.Check className='my-3'
-                                                    name='locale'
-                                                    type="switch"
-                                                    id="custom-switch"
-                                                    label="As visitor Game"
-                                                    onClick={() => localeCheck()}
-                                                    onBlur={(e) => checkError(e)}
-                                                />                                            
-                                            </Form>
-                                            <Form>
-                                                <Form.Check className='my-3'
-                                                    name='friendly'
-                                                    type="switch"
-                                                    id="custom-switch"
-                                                    label="Friendly game"
-                                                    onClick={() => friendlyCheck()}
-                                                    onBlur={(e) => checkError(e)}
-                                                />                                            
-                                            </Form>
-                                            <Container className='font fw-bold my-3'>{errorInputField.friendlyError}</Container>
-                                        </Modal.Body>        
-                                    <Modal.Footer>
-                                        <Button variant="danger" onClick={() => handleAddGameClose()}>
-                                            Cancel Changes
-                                        </Button>
-                                        {
-                                            activeSubmit ? (
-                                                <Button variant="success" onClick={() => createGame()}>
-                                                    Save Changes
-                                                </Button>
-                                            ) : (
-                                                <Button variant="secondary">
-                                                    Save Changes
-                                                </Button>
-                                            )
-                                        }
-                                    </Modal.Footer>
-                                </Modal>
-                            ) : (
-                                <Modal show={showAddGame} onHide={() => handleAddGameClose()}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Add a new game for your data.</Modal.Title>
-                                    </Modal.Header>                        
-                                        <Modal.Body>
-                                            <h4 className='font fw-bold'>Season</h4>
-                                            <div>{season}</div>
-                                            <h4 className='font fw-bold'>Locale</h4>
-                                            {newGame.locale ? (<div>{team1}</div>) : (<div>{team2}</div>)}
-                                            <h4 className='font fw-bold'>Visitor</h4>
-                                            {newGame.locale ? (<div>{team2}</div>) : (<div>{team1}</div>)}
-                                            {newGame.friendly ? (<h4 className='font fw-bold'>Friendly game</h4>) : (<h4 className='font fw-bold'>Official game</h4>)}
-                                        </Modal.Body>        
-                                    <Modal.Footer>
-                                        <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
-                                    </Modal.Footer>
-                                </Modal>
-                            )
-                    }
+                                        </Modal.Footer>
+                                    </Modal>
+                                ) : (
+                                    <Modal show={showAddGame} onHide={() => handleAddGameClose()}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Add a new game for your data.</Modal.Title>
+                                        </Modal.Header>                        
+                                            <Modal.Body>
+                                                <h4 className='font fw-bold'>Season</h4>
+                                                <div>{season}</div>
+                                                <h4 className='font fw-bold'>Locale</h4>
+                                                {newGame.locale ? (<div>{team1}</div>) : (<div>{team2}</div>)}
+                                                <h4 className='font fw-bold'>Visitor</h4>
+                                                {newGame.locale ? (<div>{team2}</div>) : (<div>{team1}</div>)}
+                                                {newGame.friendly ? (<h4 className='font fw-bold'>Friendly game</h4>) : (<h4 className='font fw-bold'>Official game</h4>)}
+                                            </Modal.Body>        
+                                        <Modal.Footer>
+                                            <h4 className='d-flex justify-content-center font fw-bold'>{message}</h4>
+                                        </Modal.Footer>
+                                    </Modal>
+                                )
+                        }
                 </Container>            
             </>
         )    

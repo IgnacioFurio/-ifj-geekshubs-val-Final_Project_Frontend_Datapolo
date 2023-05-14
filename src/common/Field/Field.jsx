@@ -10,12 +10,6 @@ export const Field = ({clickFunction}) => {
     //HOOKS
     const [zone, setZone] = useState('');
 
-
-    //USEEFFECT
-    useEffect(() =>{
-        console.log(zone);
-    });
-
     return (
         <>
             <Container className='water'>
