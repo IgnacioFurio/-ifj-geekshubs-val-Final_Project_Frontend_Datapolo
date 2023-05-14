@@ -56,7 +56,7 @@ export const Home = () => {
                         src={team}
                         title={'Players, players and more players...'}
                         text={"Every team deserve to have players, at least 13 for every game. ¡Don't forget to populate your data with a bunch of players!"}
-                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/players')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/players') : () => navigate('/login')}
                         textLink={'My players'}
                     />
                 </Col>
@@ -65,7 +65,7 @@ export const Home = () => {
                         src={game}
                         title={'The players of the teams should match up.'}
                         text={"Teams, players... and games. Add as much games as you need with usefull information, like the season when the game was played..."}
-                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/games')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/games') : () => navigate('/login')}
                         textLink={'My games'}
                     />
                 </Col>
@@ -74,7 +74,7 @@ export const Home = () => {
                         src={goal}
                         title={'What would it be this game without goals.'}
                         text={"It's time to add some goals to your games, just by doing click at the info button to the side of your games."}
-                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/games')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/games') : () => navigate('/login')}
                         textLink={'My games'}
                     />
                 </Col>
@@ -83,7 +83,7 @@ export const Home = () => {
                         src={data}
                         title={'Filter you data and then analize your goals.'}
                         text={"Once you have all the previous data registered, you will be able to check some stadistic data. ¡No more pencil and paper anymore!"}
-                        link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/offensive-data')}
+                        link={userDataRdx.userCredentials.token ? () => navigate('/offensive-data') : () => navigate('/login')}
                         textLink={'Offensive Data'}
                     />
                 </Col>
