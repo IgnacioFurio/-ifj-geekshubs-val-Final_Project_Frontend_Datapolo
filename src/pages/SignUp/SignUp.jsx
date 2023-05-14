@@ -277,7 +277,7 @@ export const SignUp = () => {
                         </Row>
                         <Row className='fontNoHover '>
                             <Col xs={12} className='d-flex justify-content-center'>
-                                <p>If you have already an accountgi <b className='cursor-pointer' onClick={() => navigate('/login')}>click here</b>.</p>  
+                                <p>If you have already an account <b className='cursor-pointer' onClick={() => navigate('/login')}>click here</b>.</p>  
                             </Col>                           
                         </Row>
                         <div className='d-flex justify-content-center align-items-center my-5'>
