@@ -35,18 +35,18 @@ export const Home = () => {
             <Row>
                 <h3 className='font fw-bold'> One page to keep it all together.</h3>
                 <p>     
-                    Designed by a waterpolo coach, for waterpolo coaches, this tool will help you to keep track of the information that you may need to check later.
-                    Imagine to have a way of store all the goals of the match, "But I can just check at the FINA page or similar", and you will be right, but... Where 
-                    is the data of your friendly matches? And what about your training games? or even better... Do you know where is your strongest area?. Datapolo tries
-                    to solve all this problems.
+                    Designed by a waterpolo coach, for waterpolo coaches. This tool will help you keep track of the information that you may need to check later.
+                    Imagine a way of storing all the goals of the match, "But I can just check at the FINA page or similar", and you'd be right, but... Where 
+                    is your friendly matches data? And what about your training games? or even better... Do you know what is your strongest area?. Datapolo tries
+                    to solve all these problems.
                 </p>
             </Row>
             <Row className='py-5 ' >
                 <Col className='pt-3 d-flex justify-content-center' md={4}>
                     <Cards
                         src={turia}
-                        title={'¡Create teams without limits!'}
-                        text={'You may create your own teams and also your rival teams, ¡Without limits!, just visit the section "My teams" and explore the posibilities.'}
+                        title={'Create unlimited teams!'}
+                        text={'You can record as much data as you want from your own teams and your opponents, no limits!. Just visit the section "My teams" and explore the possibilities.'}
                         link={userDataRdx.userCredentials.token ? () => navigate('/teams') : () => navigate('/login')}
                         textLink={'My teams'}
                     />
@@ -64,7 +64,7 @@ export const Home = () => {
                     <Cards
                         src={game}
                         title={'The players of the teams should match up.'}
-                        text={"Teams, players... and games. Add as much games as you need with usefull information, like the season when the game was played..."}
+                        text={"Teams, players... and games. Add as many games as you need with useful information, like the season when the game was played..."}
                         link={userDataRdx.userCredentials.token ? () => navigate('/games') : () => navigate('/login')}
                         textLink={'My games'}
                     />
@@ -72,8 +72,8 @@ export const Home = () => {
                 <Col  className='pt-3 d-flex justify-content-center' md={4}>
                     <Cards
                         src={goal}
-                        title={'What would it be this game without goals.'}
-                        text={"It's time to add some goals to your games, just by doing click at the info button to the side of your games."}
+                        title={'What would it be of this game without goals.'}
+                        text={"It's time to record the goals on your games, just by clicking on the info button on the side of your games."}
                         link={userDataRdx.userCredentials.token ? () => navigate('/games') : () => navigate('/login')}
                         textLink={'My games'}
                     />
@@ -82,7 +82,7 @@ export const Home = () => {
                     <Cards
                         src={data}
                         title={'Filter you data and then analize your goals.'}
-                        text={"Once you have all the previous data registered, you will be able to check some stadistic data. ¡No more pencil and paper anymore!"}
+                        text={"Once you have all the previous data logged, you will be able to check statisticcal data on it. No more pencil and paper!"}
                         link={userDataRdx.userCredentials.token ? () => navigate('/offensive-data') : () => navigate('/login')}
                         textLink={'Offensive Data'}
                     />

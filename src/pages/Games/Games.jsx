@@ -449,12 +449,12 @@ export const Games = () => {
                     </Row>
                     <Row className='font fw-bold text-start pt-3'>
                         <Col>
-                            If you want to know more about a game, like the information about the goals, just click the information button to the side of the game.
+                        <p>If you want to know more about a game (like the information about the goals) just click the information button to the side of that specific game.</p> 
                         </Col>
                     </Row>
                     <Row className='font fw-bold text-start pt-3'>
                         <Col>
-                            Teams resalted in bold are your own teams.
+                        Teams highlighted in bold are your own teams.
                         </Col>
                     </Row>
                     <Row className='mt-5 mb-3'>
