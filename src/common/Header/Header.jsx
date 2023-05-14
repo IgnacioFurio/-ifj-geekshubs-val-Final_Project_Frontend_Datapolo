@@ -57,7 +57,7 @@ export const Header = () => {
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Container>
                         <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold cursor-pointer d-flex px-3 align-center'>                            
-                            <div className='align-middle'><img src={spinner} class="img-fluid mx-3 rounded logo" alt="..."></img>Datapolo</div> 
+                            <div className='align-middle'><img src={spinner} className="img-fluid mx-3 rounded logo" alt="..."></img>Datapolo</div> 
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
@@ -116,7 +116,7 @@ export const Header = () => {
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Container>
                         <Navbar.Brand onClick={() => navigate('/')} className='fontNav fw-bold cursor-pointer d-flex px-3 align-center'>                            
-                            <div className='align-middle'><img src={spinner} class="img-fluid mx-3 rounded logo" alt="..."></img>Datapolo</div> 
+                            <div className='align-middle'><img src={spinner} className="img-fluid mx-3 rounded logo" alt="..."></img>Datapolo</div> 
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">

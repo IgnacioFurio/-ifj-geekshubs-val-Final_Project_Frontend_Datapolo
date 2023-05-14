@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //apicalls
 import { Select } from '../../common/Select/Select';
 import { getAllMyGoalStadistics, getAllMyTeams, getAllSeasons } from '../../services/apiCalls';
@@ -23,6 +24,8 @@ export const OffensiveData = () => {
     const updateInfo = useSelector(bringData);
 
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     //HOOKS
     const [teamsData, setTeamsData] = useState([]);
@@ -75,7 +78,15 @@ export const OffensiveData = () => {
     //USEEFFECT
     useEffect(() => {
 
-        if (teamsData.length === 0) {
+        if( !userDataRdx.userCredentials.token ){
+            navigate('/')
+        };
+
+    }, []);
+
+    useEffect(() => {
+
+        if (teamsData.length === 0 && userDataRdx.userCredentials.token) {
             
             setTimeout(() => {
                 
@@ -214,7 +225,7 @@ export const OffensiveData = () => {
             <Container>
                 <Row>
                     <Col>
-                    <img src={stadistics} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                    <img src={stadistics} className="img-fluid mb-3 rounded-bottom" alt="..."></img>
                     </Col>
                 </Row>
                 <Row>

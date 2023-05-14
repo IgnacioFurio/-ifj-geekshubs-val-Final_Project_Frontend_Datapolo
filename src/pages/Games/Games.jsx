@@ -46,7 +46,7 @@ export const Games = () => {
         
         const [newGame, setNewGame] = useState(
             {
-                user_id: userDataRdx?.userCredentials?.user.id,
+                user_id: userDataRdx?.userCredentials?.user?.id,
                 season_id: '',
                 my_team_id: '',
                 my_rival_id: '',
@@ -99,7 +99,7 @@ export const Games = () => {
             
             setNewGame(
                 {
-                    user_id: userDataRdx?.userCredentials?.user.id,
+                    user_id: userDataRdx?.userCredentials?.user?.id,
                     season_id: '',
                     my_team_id: '',
                     my_rival_id: '',
@@ -138,6 +138,14 @@ export const Games = () => {
         };
     
         // USEEFFECT
+        useEffect(() => {
+
+            if( !userDataRdx.userCredentials.token ){
+                navigate('/')
+            };
+    
+        }, []);
+
         //manage information for the game and teams implied on it
         useEffect(() => {
 
@@ -209,7 +217,7 @@ export const Games = () => {
 
             dispatch(reload({updatedData: {}}))
 
-            if(gameData.length === 0){    
+            if(gameData.length === 0 && userDataRdx.userCredentials.token){    
                 
                 try {
                     
@@ -338,7 +346,7 @@ export const Games = () => {
                         
                         setNewGame(
                             {
-                                user_id: userDataRdx?.userCredentials?.user.id,
+                                user_id: userDataRdx?.userCredentials?.user?.id,
                                 season_id: '',
                                 my_team_id: '',
                                 my_rival_id: '',
@@ -381,7 +389,7 @@ export const Games = () => {
             if(newGame.locale === false){
                 setNewGame(
                     {
-                        user_id: userDataRdx?.userCredentials?.user.id,
+                        user_id: userDataRdx?.userCredentials?.user?.id,
                         season_id: newGame.season_id,
                         my_team_id: newGame.my_team_id,
                         my_rival_id: newGame.my_rival_id,
@@ -392,7 +400,7 @@ export const Games = () => {
             } else if (newGame.locale === true){
                 setNewGame(
                     {
-                        user_id: userDataRdx?.userCredentials?.user.id,
+                        user_id: userDataRdx?.userCredentials?.user?.id,
                         season_id: newGame.season_id,
                         my_team_id: newGame.my_team_id,
                         my_rival_id: newGame.my_rival_id,
@@ -408,7 +416,7 @@ export const Games = () => {
             if(newGame.friendly === false){
                 setNewGame(
                     {
-                        user_id: userDataRdx?.userCredentials?.user.id,
+                        user_id: userDataRdx?.userCredentials?.user?.id,
                         season_id: newGame.season_id,
                         my_team_id: newGame.my_team_id,
                         my_rival_id: newGame.my_rival_id,
@@ -419,7 +427,7 @@ export const Games = () => {
             } else if (newGame.friendly  === true){
                 setNewGame(
                     {
-                        user_id: userDataRdx?.userCredentials?.user.id,
+                        user_id: userDataRdx?.userCredentials?.user?.id,
                         season_id: newGame.season_id,
                         my_team_id: newGame.my_team_id,
                         my_rival_id: newGame.my_rival_id,
@@ -436,7 +444,7 @@ export const Games = () => {
                 <Container fluid>
                     <Row>
                         <Col>
-                            <img src={games} class="img-fluid mb-3 rounded-bottom" alt="..."></img>
+                            <img src={games} className="img-fluid mb-3 rounded-bottom" alt="..."></img>
                         </Col>
                     </Row>
                     <Row className='font fw-bold text-start pt-3'>
