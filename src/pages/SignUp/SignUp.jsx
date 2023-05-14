@@ -4,15 +4,23 @@ import { useNavigate } from 'react-router-dom';
 import { validate } from '../../helpers/useful';
 //apicall
 import { createUser } from '../../services/apiCalls';
+//redux
+import { useSelector } from 'react-redux';
+import { userData } from '../Slices/userSlice';
 //render
 import Form from 'react-bootstrap/Form';
 import { Input } from '../../common/Input/Input';
 import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import './SignUp.css';
 
 export const SignUp = () => {
 
     const navigate = useNavigate()
+    const dataRdx = useSelector(userData);
+
 
     //HOOKS
 
@@ -216,56 +224,72 @@ export const SignUp = () => {
 
     return (
         <>
-            <div>
-                <Input
-                    className={errorInputField.usernameError === '' ? 'shadowBox' : 'shadowBoxError'}
-                    type={'text'}
-                    name={'username'}
-                    placeholder={'CDW Turia'}
-                    required={true}
-                    error={errorInputField.usernameError}
-                    changeFunction={(e)=>inputHandler(e)}
-                    blurFunction={(e)=>checkError(e)}
-                />
-                <Input
-                    className={errorInputField.emailError === '' ? 'shadowBox' : 'shadowBoxError'}
-                    type={'email'}
-                    name={'email'}
-                    placeholder={'cdwturia@email.com'}
-                    required={true}
-                    error={errorInputField.emailError}
-                    changeFunction={(e)=>inputHandler(e)}
-                    blurFunction={(e)=>checkError(e)}
-                />
-                <Input
-                    className={errorInputField.passwordError === '' ? 'shadowBox' : 'shadowBoxError'}
-                    type={'password'}
-                    name={'password'}
-                    placeholder={'1234567W'}
-                    required={true}
-                    error={errorInputField.passwordError}
-                    changeFunction={(e)=>inputHandler(e)}
-                    blurFunction={(e)=>checkError(e)}
-                    />
-                <Input
-                    className={errorInputField.password2Error === '' ? 'shadowBox' : 'shadowBoxError'}
-                    type={'password'}
-                    name={'password2'}
-                    placeholder={'1234567W'}
-                    required={true}
-                    error={errorInputField.password2Error}
-                    changeFunction={(e)=>inputHandler(e)}
-                    blurFunction={(e)=>confirmPass(e)}
-                    />
-            </div>
-            <div className='d-flex justify-content-center align-items-center my-5'>
-                <SubmitButton
-                className={submitActive ? 'activeSubmit' : 'disableSubmit'}
-                name={'submit'}
-                clickFunction={submitActive ? () => submitUser() : () => {}}
-                />
-            </div>
-            
+            {dataRdx.userCredentials.token ?
+                (
+                    navigate('/') 
+                ):(
+                    <Container fluid>
+                        <Row>
+                            <Col></Col>
+                            <Col md={6}>
+                                <Input
+                                    className={errorInputField.usernameError === '' ? 'shadowBox' : 'shadowBoxError'}
+                                    type={'text'}
+                                    name={'username'}
+                                    placeholder={'CDW Turia'}
+                                    required={true}
+                                    error={errorInputField.usernameError}
+                                    changeFunction={(e)=>inputHandler(e)}
+                                    blurFunction={(e)=>checkError(e)}
+                                    />
+                                <Input
+                                    className={errorInputField.emailError === '' ? 'shadowBox' : 'shadowBoxError'}
+                                    type={'email'}
+                                    name={'email'}
+                                    placeholder={'cdwturia@email.com'}
+                                    required={true}
+                                    error={errorInputField.emailError}
+                                    changeFunction={(e)=>inputHandler(e)}
+                                    blurFunction={(e)=>checkError(e)}
+                                    />
+                                <Input
+                                    className={errorInputField.passwordError === '' ? 'shadowBox' : 'shadowBoxError'}
+                                    type={'password'}
+                                    name={'password'}
+                                    placeholder={'1234567W'}
+                                    required={true}
+                                    error={errorInputField.passwordError}
+                                    changeFunction={(e)=>inputHandler(e)}
+                                    blurFunction={(e)=>checkError(e)}
+                                    />
+                                <Input
+                                    className={errorInputField.password2Error === '' ? 'shadowBox' : 'shadowBoxError'}
+                                    type={'password'}
+                                    name={'password2'}
+                                    placeholder={'1234567W'}
+                                    required={true}
+                                    error={errorInputField.password2Error}
+                                    changeFunction={(e)=>inputHandler(e)}
+                                    blurFunction={(e)=>confirmPass(e)}
+                                    />
+                            </Col>
+                            <Col></Col>                            
+                        </Row>
+                        <Row className='fontNoHover '>
+                            <Col xs={12} className='d-flex justify-content-center'>
+                                <p>If you have already an accountgi <b className='cursor-pointer' onClick={() => navigate('/login')}>click here</b>.</p>  
+                            </Col>                           
+                        </Row>
+                        <div className='d-flex justify-content-center align-items-center my-5'>
+                            <SubmitButton
+                            className={submitActive ? 'activeSubmit' : 'disableSubmit'}
+                            name={'submit'}
+                            clickFunction={submitActive ? () => submitUser() : () => {}}
+                            />
+                        </div>
+                    </Container>
+                )
+            }            
         </>
     )
 }
