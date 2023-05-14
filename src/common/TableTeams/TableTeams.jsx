@@ -219,11 +219,11 @@ export const TableTeams = ({id, teamName}) => {
         <>
             <Container fluid>
                 <Row className='teamName my-3 mx-2'>
-                    <Col xs={10} className='d-flex justify-content-start'>
+                    <Col xs={8} md={10} className='text-start'>
                     {teamName}
                     </Col>
-                    <Col><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
-                    <Col><img src={del} alt="delete" className='deleteIcon' onClick={() => handleDeleteShow()}/></Col>
+                    <Col xs={2} md={1}><img src={update} alt="update" className='updateIcon' onClick={() => handleUpdateShow()}/></Col>                    
+                    <Col xs={2} md={1}><img src={del} alt="delete" className='deleteIcon' onClick={() => handleDeleteShow()}/></Col>
                 </Row>
             </Container>
             {
