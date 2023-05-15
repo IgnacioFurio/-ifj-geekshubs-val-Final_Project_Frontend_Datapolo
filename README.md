@@ -1,34 +1,34 @@
 # Welcome to my frontend app  
 
 <details>
-  <summary>Contenido 📝</summary>
+  <summary>Content 📝</summary>
   <ol>
-    <li><a href="#objetivo-🎯">Objetivo</a></li>
-    <li><a href="#sobre-el-proyecto-🔎">Sobre el proyecto</a></li>
+    <li><a href="#objective-🎯">Objective</a></li>
+    <li><a href="#about-the-project-🔎">About the project</a></li>
     <li><a href="#deploy-🚀">Deploy</a></li>
     <li><a href="#stack">Stack</a></li>
-    <li><a href="#instalación-en-local">Instalación</a></li>
-    <li><a href="#vistas">Vistas</a></li>
-    <li><a href="#futuras-funcionalidades">Futuras funcionalidades</a></li>
-    <li><a href="#contribuciones">Contribuciones</a></li>
-    <li><a href="#licencia">Licencia</a></li>
+    <li><a href="#local-instalation">Local instalation</a></li>
+    <li><a href="#views">Vistas</a></li>
+    <li><a href="#future-features">Future features</a></li>
+    <li><a href="#contributions">Contributions</a></li>
+    <li><a href="#license">License</a></li>
     <li><a href="#webgrafia">Webgrafia</a></li>
-    <li><a href="#desarrollo">Desarrollo</a></li>
-    <li><a href="#agradecimientos">Agradecimientos</a></li>
-    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#development">Development</a></li>
+    <li><a href="#special-thanks">Special thanks</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
 ---
 
-## Objetivo 🎯
+## Objective 🎯
 
 ---
 This project belongs to the last one made for GeekHubs Academy and the goal is to make a FullStack aplication that connects with an API to show the information needed bnby the user throught React.
 
 ---
 
-## Sobre el proyecto 🔎
+## About the project 🔎
 
 ---
 
@@ -74,7 +74,7 @@ So I though, maybe there's a way to make this easy, and that is how i came with 
  </div>
 
 ---
-## Instalación en local
+## Local instalation
 ---
 1. Clone the repository.
 2. Command to install the dependences: ` $ npm install `
@@ -94,7 +94,7 @@ Responsive view:
 <img src="./src/assets/responsiveView.gif">
 
 ---
-## Futuras funcionalidades
+## Future features
 ---
 
 [ ] Defensive stadistics
@@ -103,7 +103,7 @@ Responsive view:
 [ ] ...
 
 ---
-## Contribuciones
+## Contributions
 ---
 
 Advices and feedback are always welcome. 
@@ -128,7 +128,7 @@ These are some ways you may do it:
 
 ---
 
-## Licencia
+## License
 
 ---
 
@@ -146,7 +146,7 @@ I got some support information from:
   - React-Bootstrap: https://react-bootstrap.netlify.app/
 
 ---
-## Desarrollo:
+## Development:
 ---
 
 ``` js
@@ -156,7 +156,7 @@ I got some support information from:
 ```  
 
 ---
-## Agradecimientos:
+## Special thanks:
 
 ---
 
@@ -180,7 +180,7 @@ And also i  want to say thank you to the GeeksHubs Academy professors and the CD
 
 ---
 
-## Contacto
+## Contact
 
 ---
 <a href = "mailto:bichoifj@gmail.com"><img src="https://img.shields.io/badge/Gmail-C6362C?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
