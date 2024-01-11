@@ -42,7 +42,7 @@ So I though, maybe there's a way to make this easy, and that is how i came with 
 ## Deploy 🚀
 ---
 <div align="center">
-    <a href="https://master.d3axn9txrlwi1i.amplifyapp.com/"><strong>URL to Datapolo webpage  </strong></a>🚀🚀🚀
+    <a href="https://master.d3ef6i4arc48a3.amplifyapp.com/"><strong>URL to Datapolo webpage  </strong></a>🚀🚀🚀
 </div>
 
 ---
