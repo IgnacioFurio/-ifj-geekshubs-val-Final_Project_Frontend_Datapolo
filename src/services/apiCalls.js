@@ -2,7 +2,8 @@ import axios from "axios";
 
 // const root = 'http://127.0.0.1:8000'
 // const root = 'https://ifj-backend-datapolo-production.up.railway.app'
-const root = 'https://ifj-backend-datapolo-production-7634.up.railway.app'
+// const root = 'https://ifj-backend-datapolo-production-7634.up.railway.app'
+const root = 'mysql://root:NOnoTuVO9zucWorlH7eC@containers-us-west-190.railway.app:7139/railway'
 
 //AUTH
 
